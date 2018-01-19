@@ -1,0 +1,24 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+  <configuration>
+	<settings>
+		<!-- 设置mybatis映射结果时自动略去“_” -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+
+		<!-- 打印sql -->
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+
+  <!--	<typeAliases>
+		&lt;!&ndash; 扫描注册实体别名 &ndash;&gt;
+  		<package name="java.com.oskyhang.*.PO"/>
+  	</typeAliases>-->
+
+	<plugins>
+		<plugin interceptor="framework.interceptor.SqlCostInterceptor" />
+	</plugins>
+
+</configuration>

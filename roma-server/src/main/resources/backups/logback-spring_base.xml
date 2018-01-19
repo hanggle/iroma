@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    #调用spring boot 默认的日志配置
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    #控制日志输出级别
+    <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="logging.level.root" level="WARN"/>
+    <logger name="logging.level.org.hibernate" level="DEBUG"/>
+
+
+</configuration>

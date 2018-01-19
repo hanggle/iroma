@@ -1,7 +1,9 @@
-package com.demo;
+package com.common.filter;
 
 import org.apache.catalina.filters.RemoteIpFilter;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 import javax.servlet.*;
@@ -16,6 +18,8 @@ import java.io.IOException;
 
 //@Configuration
 public class MyFilters {
+    private static Logger logger = LoggerFactory.getLogger(MyFilters.class);
+
     @Bean
     public RemoteIpFilter remoteIpFilter() {
         return new RemoteIpFilter();
@@ -23,7 +27,7 @@ public class MyFilters {
 
     @Bean
     public FilterRegistrationBean testFilterRegistration() {
-        System.out.println("-------------------filter is FilterRegistrationBean ");
+        logger.debug("--filter is FilterRegistrationBean ");
 
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new MyFilter());
@@ -36,6 +40,8 @@ public class MyFilters {
     }
 }
 class MyFilter implements Filter {
+    private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
+
     @Override
     public void destroy() {
     }
@@ -44,7 +50,7 @@ class MyFilter implements Filter {
     public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) srequest;
-        System.out.println("------------------this is MyFilter,url :"+request.getRequestURI());
+        logger.debug("-his is MyFilter,url :"+request.getRequestURI());
         filterChain.doFilter(srequest, sresponse);
     }
 

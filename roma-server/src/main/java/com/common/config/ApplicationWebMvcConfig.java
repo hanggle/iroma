@@ -1,5 +1,7 @@
-package com.demo;
+package com.common.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -10,6 +12,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //@Configuration
 //@EnableWebMvc
 public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
+    private static Logger logger = LoggerFactory.getLogger(ApplicationWebMvcConfig.class);
+
+  /*  @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //注册自定义拦截器，添加拦截路径和排除拦截路径
+        registry.addInterceptor(new SqlCostInterceptor());
+    }*/
 
     /*@Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

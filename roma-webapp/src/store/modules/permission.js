@@ -1,34 +1,72 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
+import { getMenu } from '@/api/permission'
+const _import = require('../../router/_import_' + process.env.NODE_ENV)
+
+import Layout from '../../views/layout/Layout'
 
 /**
- * 通过meta.role判断是否与当前用户权限匹配
+ * 动态加载菜单
  * @param roles
  * @param route
  */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.indexOf(role) >= 0)
-  } else {
-    return true
-  }
-}
-
-/**
- * 递归过滤异步路由表，返回符合用户角色权限的路由表
- * @param asyncRouterMap
- * @param roles
- */
-function filterAsyncRouter(asyncRouterMap, roles) {
-  const accessedRouters = asyncRouterMap.filter(route => {
-    if (hasPermission(roles, route)) {
-      if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, roles)
+function loadMenu(asyncRouterMap, menus) {
+  asyncRouterMap = [];
+  if (menus) {
+    for (let i = 0; i < menus.length; i++) {
+      const oneLevel = menus[i];
+      if (oneLevel.menuLevel === '1') {
+        const oneMenu = {};
+        const oneMeta = {};
+        const oneChild = [];
+        oneMenu.path = oneLevel.menuPath;
+        oneMenu.component = Layout;
+        oneMenu.name = oneLevel.menuName;
+        oneMenu.title = oneLevel.menuTitle;
+        oneMeta.title = oneLevel.menuTitle;
+        oneMeta.icon = oneLevel.menuIcon;
+        oneMenu.meta = oneMeta;
+        if (oneLevel.isMenu === '1') {
+          for (let j = 0; j < menus.length; j++) {
+            const twoLevel = menus[j];
+            if (twoLevel.parentId === oneLevel.menuId) {
+              const twoMenu = {};
+              const twoMeta = {};
+              // const twoChild = []
+              twoMenu.path = twoLevel.menuPath;
+              twoMenu.component = _import(twoLevel.component);
+              twoMenu.name = twoLevel.menuName;
+              twoMeta.title = twoLevel.menuTitle;
+              twoMeta.icon = twoLevel.menuIcon;
+              twoMenu.meta = twoMeta;
+              // 三级菜单暂时不用
+              /*
+              if (twoLevel.isMenu === '1') {
+                for (let z = 0; z < menus.length; z++) {
+                  const threeLevel = menus[z]
+                  if (threeLevel.parentId === twoLevel.menuId) {
+                    const threeMenu = {}
+                    const threeMeta = {}
+                    threeMenu.path = threeLevel.menuPath
+                    threeMenu.component = _import(threeLevel.component)
+                    threeMenu.name = threeLevel.menuName
+                    threeMeta.title = threeLevel.menuTitle
+                    threeMeta.icon = threeLevel.menuIcon
+                    threeMenu.meta = threeMeta
+                    twoChild.push(threeMenu)
+                  }
+                }
+              }
+              */
+              oneChild.push(twoMenu)
+            }
+          }
+        }
+        oneMenu.children = oneChild
+        asyncRouterMap.push(oneMenu)
       }
-      return true
     }
-    return false
-  })
-  return accessedRouters
+  }
+  return asyncRouterMap
 }
 
 const permission = {
@@ -44,16 +82,20 @@ const permission = {
   },
   actions: {
     GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { roles } = data
-        let accessedRouters
-        if (roles.indexOf('admin') >= 0) {
-          accessedRouters = asyncRouterMap
+      return new Promise((resolve, reject) => {
+        if (data.username !== 'adminmenu') {
+          commit('SET_ROUTERS', asyncRouterMap)
+          resolve()
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+          getMenu(data).then(response => {
+            const accessedRouters = loadMenu(asyncRouterMap, response.data)
+            commit('SET_ROUTERS', accessedRouters)
+            // commit('SET_ROUTERS', data)
+            resolve(response)
+          }).catch(error => {
+            reject(error)
+          })
         }
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
       })
     }
   }

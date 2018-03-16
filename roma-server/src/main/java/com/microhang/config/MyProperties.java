@@ -1,4 +1,4 @@
-package com.common;
+package com.microhang.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

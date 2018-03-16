@@ -1,13 +1,13 @@
 package com.oskyhang.system.entity;
 
 public class BdMenu {
-    private String menuId;
+    private String id;
 
     private String menuName;
 
-    private String menuSname;
+    private String sname;
 
-    private String menuUrl;
+    private String path;
 
     private String parentId;
 
@@ -15,28 +15,36 @@ public class BdMenu {
 
     private String orderCode;
 
-    private String menuIcon;
+    private String icon;
 
-    private String description;
-
-    private String menuParam;
+    private String param;
 
     private String menuCode;
 
-    private String appCode;
-
-    private String menuLevel;
-
-    private String ismenu;
+    private String isMenu;
 
     private String status;
 
-    public String getMenuId() {
-        return menuId;
+    private String flag;
+
+    private String title;
+
+    private String component;
+
+    private String description;
+
+    private String redirect;
+
+    private String level;
+
+    private String isCache;
+
+    public String getId() {
+        return id;
     }
 
-    public void setMenuId(String menuId) {
-        this.menuId = menuId == null ? null : menuId.trim();
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getMenuName() {
@@ -47,20 +55,20 @@ public class BdMenu {
         this.menuName = menuName == null ? null : menuName.trim();
     }
 
-    public String getMenuSname() {
-        return menuSname;
+    public String getSname() {
+        return sname;
     }
 
-    public void setMenuSname(String menuSname) {
-        this.menuSname = menuSname == null ? null : menuSname.trim();
+    public void setSname(String sname) {
+        this.sname = sname == null ? null : sname.trim();
     }
 
-    public String getMenuUrl() {
-        return menuUrl;
+    public String getPath() {
+        return path;
     }
 
-    public void setMenuUrl(String menuUrl) {
-        this.menuUrl = menuUrl == null ? null : menuUrl.trim();
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
     }
 
     public String getParentId() {
@@ -87,28 +95,20 @@ public class BdMenu {
         this.orderCode = orderCode == null ? null : orderCode.trim();
     }
 
-    public String getMenuIcon() {
-        return menuIcon;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setMenuIcon(String menuIcon) {
-        this.menuIcon = menuIcon == null ? null : menuIcon.trim();
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
     }
 
-    public String getDescription() {
-        return description;
+    public String getParam() {
+        return param;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public String getMenuParam() {
-        return menuParam;
-    }
-
-    public void setMenuParam(String menuParam) {
-        this.menuParam = menuParam == null ? null : menuParam.trim();
+    public void setParam(String param) {
+        this.param = param == null ? null : param.trim();
     }
 
     public String getMenuCode() {
@@ -119,28 +119,12 @@ public class BdMenu {
         this.menuCode = menuCode == null ? null : menuCode.trim();
     }
 
-    public String getAppCode() {
-        return appCode;
+    public String getIsMenu() {
+        return isMenu;
     }
 
-    public void setAppCode(String appCode) {
-        this.appCode = appCode == null ? null : appCode.trim();
-    }
-
-    public String getMenuLevel() {
-        return menuLevel;
-    }
-
-    public void setMenuLevel(String menuLevel) {
-        this.menuLevel = menuLevel == null ? null : menuLevel.trim();
-    }
-
-    public String getIsmenu() {
-        return ismenu;
-    }
-
-    public void setIsmenu(String ismenu) {
-        this.ismenu = ismenu == null ? null : ismenu.trim();
+    public void setIsMenu(String isMenu) {
+        this.isMenu = isMenu == null ? null : isMenu.trim();
     }
 
     public String getStatus() {
@@ -149,5 +133,61 @@ public class BdMenu {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag == null ? null : flag.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component == null ? null : component.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public String getRedirect() {
+        return redirect;
+    }
+
+    public void setRedirect(String redirect) {
+        this.redirect = redirect == null ? null : redirect.trim();
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level == null ? null : level.trim();
+    }
+
+    public String getIsCache() {
+        return isCache;
+    }
+
+    public void setIsCache(String isCache) {
+        this.isCache = isCache == null ? null : isCache.trim();
     }
 }

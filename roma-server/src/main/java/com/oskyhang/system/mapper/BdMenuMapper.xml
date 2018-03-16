@@ -2,142 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oskyhang.system.mapper.BdMenuMapper" >
   <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdMenu" >
-    <id column="menu_id" property="menuId" jdbcType="CHAR" />
+    <id column="id" property="id" jdbcType="CHAR" />
     <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
-    <result column="menu_sname" property="menuSname" jdbcType="VARCHAR" />
-    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="CHAR" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="menu_type" property="menuType" jdbcType="VARCHAR" />
     <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
-    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="menu_param" property="menuParam" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="param" property="param" jdbcType="VARCHAR" />
     <result column="menu_code" property="menuCode" jdbcType="VARCHAR" />
-    <result column="app_code" property="appCode" jdbcType="VARCHAR" />
-    <result column="menu_level" property="menuLevel" jdbcType="VARCHAR" />
-    <result column="ismenu" property="ismenu" jdbcType="VARCHAR" />
+    <result column="is_menu" property="isMenu" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="CHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="component" property="component" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="redirect" property="redirect" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="is_cache" property="isCache" jdbcType="CHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List" >
-    menu_id, menu_name, menu_sname, menu_url, parent_id, menu_type, order_code, menu_icon, 
-    description, menu_param, menu_code, app_code, menu_level, ismenu, status
+    id, menu_name, sname, path, parent_id, menu_type, order_code, icon, param, menu_code,
+    is_menu, status, flag, title, component, description, redirect, level, is_cache
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.oskyhang.system.entity.BdMenuExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from bd_menu
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from bd_menu
-    where menu_id = #{menuId,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR} and 1=0
   </select>
+
+  <select id="selectMenuList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from bd_menu
+    order by  ${orderCode}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from bd_menu
-    where menu_id = #{menuId,jdbcType=CHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.oskyhang.system.entity.BdMenuExample" >
-    delete from bd_menu
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
+    where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdMenu" >
-    insert into bd_menu (menu_id, menu_name, menu_sname, 
-      menu_url, parent_id, menu_type, 
-      order_code, menu_icon, description, 
-      menu_param, menu_code, app_code, 
-      menu_level, ismenu, status
-      )
-    values (#{menuId,jdbcType=CHAR}, #{menuName,jdbcType=VARCHAR}, #{menuSname,jdbcType=VARCHAR}, 
-      #{menuUrl,jdbcType=VARCHAR}, #{parentId,jdbcType=CHAR}, #{menuType,jdbcType=VARCHAR}, 
-      #{orderCode,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{menuParam,jdbcType=VARCHAR}, #{menuCode,jdbcType=VARCHAR}, #{appCode,jdbcType=VARCHAR}, 
-      #{menuLevel,jdbcType=VARCHAR}, #{ismenu,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
-      )
+    insert into bd_menu (id, menu_name, sname,
+      path, parent_id, menu_type,
+      order_code, icon, param,
+      menu_code, is_menu, status,
+      flag, title, component,
+      description, redirect, level,
+      is_cache)
+    values (#{id,jdbcType=CHAR}, #{menuName,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR},
+      #{path,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR},
+      #{orderCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{param,jdbcType=VARCHAR},
+      #{menuCode,jdbcType=VARCHAR}, #{isMenu,jdbcType=CHAR}, #{status,jdbcType=VARCHAR},
+      #{flag,jdbcType=CHAR}, #{title,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR}, #{redirect,jdbcType=VARCHAR}, #{level,jdbcType=CHAR},
+      #{isCache,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.oskyhang.system.entity.BdMenu" >
     insert into bd_menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="menuId != null" >
-        menu_id,
+      <if test="id != null" >
+        id,
       </if>
       <if test="menuName != null" >
         menu_name,
       </if>
-      <if test="menuSname != null" >
-        menu_sname,
+      <if test="sname != null" >
+        sname,
       </if>
-      <if test="menuUrl != null" >
-        menu_url,
+      <if test="path != null" >
+        path,
       </if>
       <if test="parentId != null" >
         parent_id,
@@ -148,46 +84,58 @@
       <if test="orderCode != null" >
         order_code,
       </if>
-      <if test="menuIcon != null" >
-        menu_icon,
+      <if test="icon != null" >
+        icon,
       </if>
-      <if test="description != null" >
-        description,
-      </if>
-      <if test="menuParam != null" >
-        menu_param,
+      <if test="param != null" >
+        param,
       </if>
       <if test="menuCode != null" >
         menu_code,
       </if>
-      <if test="appCode != null" >
-        app_code,
-      </if>
-      <if test="menuLevel != null" >
-        menu_level,
-      </if>
-      <if test="ismenu != null" >
-        ismenu,
+      <if test="isMenu != null" >
+        is_menu,
       </if>
       <if test="status != null" >
         status,
       </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="component != null" >
+        component,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="redirect != null" >
+        redirect,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isCache != null" >
+        is_cache,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="menuId != null" >
-        #{menuId,jdbcType=CHAR},
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
       </if>
       <if test="menuName != null" >
         #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuSname != null" >
-        #{menuSname,jdbcType=VARCHAR},
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
       </if>
-      <if test="menuUrl != null" >
-        #{menuUrl,jdbcType=VARCHAR},
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=CHAR},
+        #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="menuType != null" >
         #{menuType,jdbcType=VARCHAR},
@@ -195,126 +143,58 @@
       <if test="orderCode != null" >
         #{orderCode,jdbcType=VARCHAR},
       </if>
-      <if test="menuIcon != null" >
-        #{menuIcon,jdbcType=VARCHAR},
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="menuParam != null" >
-        #{menuParam,jdbcType=VARCHAR},
+      <if test="param != null" >
+        #{param,jdbcType=VARCHAR},
       </if>
       <if test="menuCode != null" >
         #{menuCode,jdbcType=VARCHAR},
       </if>
-      <if test="appCode != null" >
-        #{appCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuLevel != null" >
-        #{menuLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="ismenu != null" >
-        #{ismenu,jdbcType=VARCHAR},
+      <if test="isMenu != null" >
+        #{isMenu,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null" >
+        #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="isCache != null" >
+        #{isCache,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.oskyhang.system.entity.BdMenuExample" resultType="java.lang.Integer" >
-    select count(*) from bd_menu
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update bd_menu
-    <set >
-      <if test="record.menuId != null" >
-        menu_id = #{record.menuId,jdbcType=CHAR},
-      </if>
-      <if test="record.menuName != null" >
-        menu_name = #{record.menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuSname != null" >
-        menu_sname = #{record.menuSname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuUrl != null" >
-        menu_url = #{record.menuUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.parentId != null" >
-        parent_id = #{record.parentId,jdbcType=CHAR},
-      </if>
-      <if test="record.menuType != null" >
-        menu_type = #{record.menuType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.orderCode != null" >
-        order_code = #{record.orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuIcon != null" >
-        menu_icon = #{record.menuIcon,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuParam != null" >
-        menu_param = #{record.menuParam,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuCode != null" >
-        menu_code = #{record.menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.appCode != null" >
-        app_code = #{record.appCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuLevel != null" >
-        menu_level = #{record.menuLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ismenu != null" >
-        ismenu = #{record.ismenu,jdbcType=VARCHAR},
-      </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update bd_menu
-    set menu_id = #{record.menuId,jdbcType=CHAR},
-      menu_name = #{record.menuName,jdbcType=VARCHAR},
-      menu_sname = #{record.menuSname,jdbcType=VARCHAR},
-      menu_url = #{record.menuUrl,jdbcType=VARCHAR},
-      parent_id = #{record.parentId,jdbcType=CHAR},
-      menu_type = #{record.menuType,jdbcType=VARCHAR},
-      order_code = #{record.orderCode,jdbcType=VARCHAR},
-      menu_icon = #{record.menuIcon,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      menu_param = #{record.menuParam,jdbcType=VARCHAR},
-      menu_code = #{record.menuCode,jdbcType=VARCHAR},
-      app_code = #{record.appCode,jdbcType=VARCHAR},
-      menu_level = #{record.menuLevel,jdbcType=VARCHAR},
-      ismenu = #{record.ismenu,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.BdMenu" >
     update bd_menu
     <set >
       <if test="menuName != null" >
         menu_name = #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuSname != null" >
-        menu_sname = #{menuSname,jdbcType=VARCHAR},
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
       </if>
-      <if test="menuUrl != null" >
-        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=CHAR},
+        parent_id = #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="menuType != null" >
         menu_type = #{menuType,jdbcType=VARCHAR},
@@ -322,49 +202,65 @@
       <if test="orderCode != null" >
         order_code = #{orderCode,jdbcType=VARCHAR},
       </if>
-      <if test="menuIcon != null" >
-        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="menuParam != null" >
-        menu_param = #{menuParam,jdbcType=VARCHAR},
+      <if test="param != null" >
+        param = #{param,jdbcType=VARCHAR},
       </if>
       <if test="menuCode != null" >
         menu_code = #{menuCode,jdbcType=VARCHAR},
       </if>
-      <if test="appCode != null" >
-        app_code = #{appCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuLevel != null" >
-        menu_level = #{menuLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="ismenu != null" >
-        ismenu = #{ismenu,jdbcType=VARCHAR},
+      <if test="isMenu != null" >
+        is_menu = #{isMenu,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null" >
+        redirect = #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="isCache != null" >
+        is_cache = #{isCache,jdbcType=CHAR},
+      </if>
     </set>
-    where menu_id = #{menuId,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.BdMenu" >
     update bd_menu
     set menu_name = #{menuName,jdbcType=VARCHAR},
-      menu_sname = #{menuSname,jdbcType=VARCHAR},
-      menu_url = #{menuUrl,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=CHAR},
+      sname = #{sname,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
       menu_type = #{menuType,jdbcType=VARCHAR},
       order_code = #{orderCode,jdbcType=VARCHAR},
-      menu_icon = #{menuIcon,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      menu_param = #{menuParam,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      param = #{param,jdbcType=VARCHAR},
       menu_code = #{menuCode,jdbcType=VARCHAR},
-      app_code = #{appCode,jdbcType=VARCHAR},
-      menu_level = #{menuLevel,jdbcType=VARCHAR},
-      ismenu = #{ismenu,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR}
-    where menu_id = #{menuId,jdbcType=CHAR}
+      is_menu = #{isMenu,jdbcType=CHAR},
+      status = #{status,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=CHAR},
+      title = #{title,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      redirect = #{redirect,jdbcType=VARCHAR},
+      level = #{level,jdbcType=CHAR},
+      is_cache = #{isCache,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>

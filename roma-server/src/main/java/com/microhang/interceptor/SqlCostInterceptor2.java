@@ -1,4 +1,4 @@
-package com.common.config;
+package com.microhang.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

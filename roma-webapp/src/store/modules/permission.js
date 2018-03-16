@@ -10,34 +10,34 @@ import Layout from '../../views/layout/Layout'
  * @param route
  */
 function loadMenu(asyncRouterMap, menus) {
-  asyncRouterMap = [];
+  asyncRouterMap = []
   if (menus) {
     for (let i = 0; i < menus.length; i++) {
-      const oneLevel = menus[i];
-      if (oneLevel.menuLevel === '1') {
-        const oneMenu = {};
-        const oneMeta = {};
-        const oneChild = [];
-        oneMenu.path = oneLevel.menuPath;
-        oneMenu.component = Layout;
-        oneMenu.name = oneLevel.menuName;
-        oneMenu.title = oneLevel.menuTitle;
-        oneMeta.title = oneLevel.menuTitle;
-        oneMeta.icon = oneLevel.menuIcon;
-        oneMenu.meta = oneMeta;
+      const oneLevel = menus[i]
+      if (oneLevel.level === '1') {
+        const oneMenu = {}
+        const oneMeta = {}
+        const oneChild = []
+        oneMenu.path = oneLevel.path
+        oneMenu.component = Layout
+        oneMenu.name = oneLevel.menuName
+        oneMenu.title = oneLevel.title
+        oneMeta.title = oneLevel.title
+        oneMeta.icon = oneLevel.icon
+        oneMenu.meta = oneMeta
         if (oneLevel.isMenu === '1') {
           for (let j = 0; j < menus.length; j++) {
-            const twoLevel = menus[j];
-            if (twoLevel.parentId === oneLevel.menuId) {
-              const twoMenu = {};
-              const twoMeta = {};
+            const twoLevel = menus[j]
+            if (twoLevel.parentId === oneLevel.id) {
+              const twoMenu = {}
+              const twoMeta = {}
               // const twoChild = []
-              twoMenu.path = twoLevel.menuPath;
-              twoMenu.component = _import(twoLevel.component);
-              twoMenu.name = twoLevel.menuName;
-              twoMeta.title = twoLevel.menuTitle;
-              twoMeta.icon = twoLevel.menuIcon;
-              twoMenu.meta = twoMeta;
+              twoMenu.path = twoLevel.path
+              twoMenu.component = _import(twoLevel.component)
+              twoMenu.name = twoLevel.menuName
+              twoMeta.title = twoLevel.title
+              twoMeta.icon = twoLevel.icon
+              twoMenu.meta = twoMeta
               // 三级菜单暂时不用
               /*
               if (twoLevel.isMenu === '1') {
@@ -46,11 +46,11 @@ function loadMenu(asyncRouterMap, menus) {
                   if (threeLevel.parentId === twoLevel.menuId) {
                     const threeMenu = {}
                     const threeMeta = {}
-                    threeMenu.path = threeLevel.menuPath
+                    threeMenu.path = threeLevel.path
                     threeMenu.component = _import(threeLevel.component)
                     threeMenu.name = threeLevel.menuName
-                    threeMeta.title = threeLevel.menuTitle
-                    threeMeta.icon = threeLevel.menuIcon
+                    threeMeta.title = threeLevel.title
+                    threeMeta.icon = threeLevel.icon
                     threeMenu.meta = threeMeta
                     twoChild.push(threeMenu)
                   }
@@ -83,7 +83,7 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise((resolve, reject) => {
-        if (data.username !== 'adminmenu') {
+        if (data.data.username === 'adminmenu') {
           commit('SET_ROUTERS', asyncRouterMap)
           resolve()
         } else {

@@ -8,7 +8,7 @@
     <properties resource="classpath:properties/jdbc.properties"/>
 -->
     <!--指定特定数据库的jdbc驱动jar包的位置-->
-    <classPathEntry location="E:\\file\\mvnRepository\\mysql\\mysql-connector-java\\5.1.36\\mysql-connector-java-5.1.36.jar"/>
+    <classPathEntry location="E:\\mvnRepository\\mysql\\mysql-connector-java\\5.1.41\\mysql-connector-java-5.1.41.jar"/>
 
     <context id="testTables" targetRuntime="Mybatis3">
 
@@ -18,7 +18,7 @@
         </commentGenerator>
 
         <!--JDBC连接配置，driver,url,user,password -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/roma?characterEncoding=UTF-8"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/iroma?characterEncoding=UTF-8"
                         userId="root" password="root">
         </jdbcConnection>
 
@@ -48,12 +48,8 @@
         </javaClientGenerator>
         <!--指定要生成的表  -->
 
-        <table tableName="bd_menu" >
-            <property name="enableCountByExample" value="false" />
-            <property name="enableUpdateByExample" value="false" />
-            <property name="enableDeleteByExample" value="false" />
-            <property name="enableSelectByExample" value="false" />
-            <property name="selectByExampleQueryId" value="false" />
+        <table tableName="bd_menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
 
     </context>

@@ -1,4 +1,4 @@
-package com.common.config;
+package com.microhang.interceptor;
 
 /**
  * description: mybatis 查询时间拦截器，用于控制台打印sql执行时间

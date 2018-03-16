@@ -6,6 +6,8 @@ import com.oskyhang.system.service.BdMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Description:
  * User: z.hang <br/>
@@ -22,5 +24,17 @@ public class BdMenuServiceImpl implements BdMenuService {
     public int insert(BdMenu bdMenu) {
 
         return bdMenuMapper.insertSelective(bdMenu);
+    }
+
+    @Override
+    public List<BdMenu> selectMenuList(String orderCode) {
+
+        return bdMenuMapper.selectMenuList(orderCode);
+    }
+
+    @Override
+    public BdMenu selectByPrimaryKey(String id) {
+
+        return bdMenuMapper.selectByPrimaryKey(id);
     }
 }

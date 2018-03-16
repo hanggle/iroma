@@ -1,4 +1,4 @@
-package com.common.base;
+package com.microhang.base;
 
 /**
  * description: 自定义异常类

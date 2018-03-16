@@ -1,4 +1,4 @@
-package com.common.base;
+package com.microhang.base;
 
 /**
  * description: 返回结果参数枚举类

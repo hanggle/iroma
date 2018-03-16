@@ -1,4 +1,4 @@
-package com.common.base;
+package com.microhang.base;
 
 /**
  * Description:  <br/>
@@ -6,6 +6,6 @@ package com.common.base;
  * Date: 2018-01-16 <br/>
  * Time: 0:04 <br/>
  */
-public class BaseHandler {
+public class BaseController {
 
 }

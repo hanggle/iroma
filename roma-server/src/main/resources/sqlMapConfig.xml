@@ -17,7 +17,7 @@
   	</typeAliases>-->
 
 	<plugins>
-		<plugin interceptor="com.microhang.interceptor.SqlCostInterceptor" />
+		<plugin interceptor="com.hanggle.interceptor.SqlCostInterceptor" />
 	</plugins>
 
 </configuration>

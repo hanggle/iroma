@@ -1,7 +1,7 @@
 package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.microhang.base.BaseController;
+import com.hanggle.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,10 +21,10 @@ public class BdUserController extends BaseController {
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response){
         JSONObject obj = new JSONObject();
-        String [] roles = {"/documentation", "index",  "/permission"};
+        String [] roles = {"/documentation", "index",  "/permission", "admin"};
         obj.put("roles", roles);
         obj.put("name", "tom");
-        obj.put("username", "adminmenu");
+        obj.put("username", "admin");
         obj.put("avatar", "qqq");
         obj.put("introduction", "this is introduction");
         return obj.toString();

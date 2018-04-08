@@ -1,4 +1,4 @@
-package com.microhang.config;
+package com.hanggle.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;

@@ -1,4 +1,4 @@
-package com.microhang.base;
+package com.hanggle.base;
 
 /**
  * Description:  <br/>

@@ -1,4 +1,4 @@
-package com.microhang.mybatis;
+package com.hanggle.mybatis;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
@@ -46,9 +46,8 @@ public class MapperRefresh implements java.lang.Runnable{
             e.printStackTrace();
             System.out.println("Load mybatis-refresh “"+filename+"” file error.");
         }
-
         enabled = "true".equalsIgnoreCase(getPropString("enabled"));
-
+        enabled = true;
         delaySeconds = getPropInt("delaySeconds");
         sleepSeconds = getPropInt("sleepSeconds");
         mappingPath = getPropString("mappingPath");
@@ -83,14 +82,14 @@ public class MapperRefresh implements java.lang.Runnable{
         if (enabled) {
             // 启动刷新线程
             final MapperRefresh runnable = this;
-            new Thread(new java.lang.Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-
                     if (location == null){
                         location = Sets.newHashSet();
                         log.debug("MapperLocation's length:" + mapperLocations.length);
                         for (Resource mapperLocation : mapperLocations) {
+                            System.out.println(mapperLocation.toString());
                             String s = mapperLocation.toString().replaceAll("\\\\", "/");
                             s = s.substring("file [".length(), s.lastIndexOf(mappingPath) + mappingPath.length());
                             if (!location.contains(s)) {
@@ -111,6 +110,7 @@ public class MapperRefresh implements java.lang.Runnable{
                     System.out.println("========= Enabled refresh mybatis mapper =========");
 
                     while (true) {
+
                         try {
                             for (String s : location) {
                                 runnable.refresh(s, beforeTime);

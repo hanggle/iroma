@@ -1,4 +1,4 @@
-package com.microhang.mybatis;
+package com.hanggle.mybatis;
 
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;

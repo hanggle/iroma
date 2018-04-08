@@ -1,4 +1,4 @@
-package com.microhang.base;
+package com.hanggle.base;
 
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;

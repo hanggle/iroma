@@ -1,6 +1,6 @@
 package com.oskyhang;
 
-import com.microhang.mybatis.SqlSessionFactoryBean;
+import com.hanggle.mybatis.SqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.*;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -35,8 +38,12 @@ public class DatasourceConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         // TODO
-        //bean.setConfigLocation(  );
-        //bean.setMapperLocations( );
+        // 加载全局的配置文件
+        bean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:sqlMapConfig.xml"));
+
+        Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:com/oskyhang/system/mapper/*.xml");
+        bean.setMapperLocations(resources);
+
         return bean.getObject();
     }
 

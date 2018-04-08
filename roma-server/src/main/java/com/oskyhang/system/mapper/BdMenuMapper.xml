@@ -30,7 +30,7 @@
     select
     <include refid="Base_Column_List" />
     from bd_menu
-    where id = #{id,jdbcType=CHAR} and 1=0
+    where id = #{id,jdbcType=CHAR}
   </select>
 
   <select id="selectMenuList" resultMap="BaseResultMap" parameterType="java.lang.String" >

@@ -13,7 +13,7 @@ public class ZhUtil {
     /**
      * 32位大写UUID
      *
-     * @author chenmc
+     * @author 11
      * @date 2018/1/14 9:56
      * @return java.lang.String
      */

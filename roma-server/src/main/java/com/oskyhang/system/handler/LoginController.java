@@ -1,12 +1,12 @@
 package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.microhang.base.BaseController;
+import com.hanggle.base.BaseController;
 import com.oskyhang.system.service.BdMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +16,16 @@ import javax.servlet.http.HttpServletResponse;
  * author: zh <br/>
  * date: 2018/3/12 <br/>
  */
-@Controller
+@RestController
+@Api(value = "sss", tags = "dddd")
+@RequestMapping("/login")
 public class LoginController extends BaseController {
 
     @Autowired
     private BdMenuService bdMenuService;
 
-    @RequestMapping("/login/login")
-    @ResponseBody
+    @ApiOperation(value = "dasfasdf", notes = "sdsdafasdf")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String testExc(HttpServletRequest request, HttpServletResponse response){
         JSONObject obj = new JSONObject();
         obj.put("code", "1");
@@ -31,8 +33,8 @@ public class LoginController extends BaseController {
         return obj.toString();
     }
 
-    @RequestMapping("/login/logout")
-    @ResponseBody
+    @ApiOperation(value = "dasfasdf", notes = "sdsdafasdf")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpServletRequest request, HttpServletResponse response){
         JSONObject obj = new JSONObject();
         obj.put("code", "1");

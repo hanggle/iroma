@@ -12,6 +12,8 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.defaults.DefaultSqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.sql.Statement;
@@ -27,7 +29,7 @@ import java.util.Properties;
         @Signature(type = StatementHandler.class, method = "update", args = {Statement.class}),
         @Signature(type = StatementHandler.class, method = "batch", args = { Statement.class })})
 public class SqlCostInterceptor implements Interceptor {
-
+    private static Logger logger = LoggerFactory.getLogger(SqlCostInterceptor.class);
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object target = invocation.getTarget();
@@ -47,8 +49,8 @@ public class SqlCostInterceptor implements Interceptor {
 
             // 格式化Sql语句，去除换行符，替换参数
             sql = formatSql(sql, parameterObject, parameterMappingList);
-
-            System.out.println("SQL：[" + sql + "]执行耗时[" + sqlCost + "ms]");
+            logger.info("耗时："+ sqlCost +"ms\n" + sql);
+            //System.out.println("SQL：\n [" + sql + "]执行耗时[" + sqlCost + "ms]");
         }
     }
 

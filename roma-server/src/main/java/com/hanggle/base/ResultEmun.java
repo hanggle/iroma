@@ -1,28 +1,39 @@
 package com.hanggle.base;
 
 /**
- * description: 返回结果参数枚举类
- * author: Smile
- * date: 2017/4/23
+ * description: 返回结果参数枚举类 <br/>
+ * author: Smile <br/>
+ * date: 2017/4/23 <br/>
  */
 public enum ResultEmun {
-    UNKNOWN_ERROR(0,"未知错误"),
-    SUCCESS(1,"请求成功");
+    UNKNOWN_ERROR(500,"未知错误", ""),
+    SUCCESS(200, "请求成功"),
+    REQUEST_ERROR(404, "请求失败", "");
 
-    private Integer code;
-    private String msg;
+    private Integer status;
+    private String message;
+    private Object data;
 
-    ResultEmun(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
+    ResultEmun(Integer status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
-    public Integer getCode() {
-        return code;
+    ResultEmun(Integer status, String message, Object data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
     }
 
-    public String getMsg() {
-        return msg;
+    public Integer getStatus() {
+        return status;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
+    }
 }

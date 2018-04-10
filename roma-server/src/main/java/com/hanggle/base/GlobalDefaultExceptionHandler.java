@@ -1,15 +1,14 @@
 package com.hanggle.base;
 
-import com.alibaba.fastjson.JSONObject;
+import com.hanggle.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Description: 全局异常 <br/>
+ * Description: 全局异常 500 <br/>
  * User: z.hang <br/>
  * Date: 2018-01-16 <br/>
  * Time: 0:03 <br/>
@@ -20,10 +19,21 @@ public class GlobalDefaultExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(GlobalDefaultExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
-    public String defaultErrorHandler(HttpServletRequest req, Exception e)  {
-        logger.debug("2222" ,e);
-        JSONObject obj = new JSONObject();
-        obj.put("!", "22222");
-        return obj.toString();
+    @ResponseBody
+    public Object defaultErrorHandler(HttpServletRequest req, Exception e)  {
+
+        Object result = "";
+
+        //业务异常
+        if(e instanceof ServiceException){
+            result = new Result(e);
+            logger.debug(result.toString(), e);
+            return result;
+        }
+
+        result = ResultUtil.unknowError();
+        logger.debug(result.toString(), e);
+
+        return result;
     }
 }

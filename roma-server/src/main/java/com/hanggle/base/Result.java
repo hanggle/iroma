@@ -1,45 +1,47 @@
 package com.hanggle.base;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * description: 返回结果实体类
  * author: Smile
  * date: 2017/4/23
  */
 public class Result {
-    private int code;
-    private String msg;
+    private int status;
+    private String message;
     private Object data;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
+    public Result(ResultEmun resultEmun, Object data) {
+        this.status = resultEmun.getStatus();
+        this.message = resultEmun.getMessage();
         this.data = data;
+    }
+
+    public Result(ResultEmun resultEmun) {
+        this.status = resultEmun.getStatus();
+        this.message = resultEmun.getMessage();
+        this.data = resultEmun.getData();
+    }
+
+    public Result(Object data) {
+        this.status = ResultEmun.SUCCESS.getStatus();
+        this.message = ResultEmun.SUCCESS.getMessage();
+        this.data = JSONObject.toJSONString(data);
+    }
+
+    public Result(Exception serviceException) {
+        this.status = ResultEmun.SUCCESS.getStatus();
+        this.message = ResultEmun.SUCCESS.getMessage();
+        this.data = serviceException.toString();
     }
 
     @Override
     public String toString() {
         return "Result{" +
-                "code='" + code + '\'' +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
+                "status='" + this.status + '\'' +
+                ", message='" + this.message + '\'' +
+                ", data=" + this.data +
                 '}';
     }
 }

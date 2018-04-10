@@ -8,7 +8,7 @@ import java.util.UUID;
  * Date: 2018-01-14
  * Time: 9:31
  */
-public class ZhUtil {
+public class HanggleUtil {
 
     /**
      * 32位大写UUID

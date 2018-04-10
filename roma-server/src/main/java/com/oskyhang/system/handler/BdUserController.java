@@ -2,9 +2,8 @@ package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.base.BaseController;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
  * author: zh <br/>
  * date: 2018/3/12 <br/>
  */
-@Controller
+@Api(value = "sss", tags = "用户")
+@RestController
+@RequestMapping("/user")
 public class BdUserController extends BaseController {
 
-    @RequestMapping("/user/info")
+    @RequestMapping(value = "/info" , method = RequestMethod.GET)
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response){
         JSONObject obj = new JSONObject();

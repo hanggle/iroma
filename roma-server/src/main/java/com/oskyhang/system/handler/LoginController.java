@@ -1,7 +1,7 @@
 package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.base.BaseController;
+import com.hanggle.base.*;
 import com.oskyhang.system.service.BdMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * date: 2018/3/12 <br/>
  */
 @RestController
-@Api(value = "sss", tags = "dddd")
+@Api(value = "sss", tags = "登录")
 @RequestMapping("/login")
 public class LoginController extends BaseController {
 

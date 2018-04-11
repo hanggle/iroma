@@ -2,10 +2,10 @@ import request from '@/utils/request'
 
 export function getMenu(userId) {
   const data = {
-    userId
+    userId: userId
   }
   return request({
-    url: '/system/user/menu',
+    url: '/menu/list',
     method: 'post',
     data
   })

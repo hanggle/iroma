@@ -169,7 +169,8 @@ export const asyncRouterMap = [
     },
     children: [
       { path: 'create-form', component: _import('form/create'), name: 'createForm', meta: { title: 'createForm', icon: 'table' }},
-      { path: 'edit-form', component: _import('form/edit'), name: 'editForm', meta: { title: 'editForm', icon: 'table' }}
+      { path: 'edit-form', component: _import('form/edit'), name: 'editForm', meta: { title: 'editForm', icon: 'table' }},
+      { path: 'demo-form', component: _import('form/demo'), name: 'demoForm', meta: { title: 'demoForm', icon: 'table' }}
     ]
   },
 

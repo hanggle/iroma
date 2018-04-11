@@ -8,29 +8,29 @@ package com.hanggle.base;
 public enum ResultEmun {
     UNKNOWN_ERROR(500,"未知错误", ""),
     SUCCESS(200, "请求成功"),
-    REQUEST_ERROR(404, "请求失败", "");
+    REQUEST_ERROR(400, "请求失败", "");
 
-    private Integer status;
-    private String message;
+    private Integer code;
+    private String desc;
     private Object data;
 
-    ResultEmun(Integer status, String message) {
-        this.status = status;
-        this.message = message;
+    ResultEmun(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
-    ResultEmun(Integer status, String message, Object data) {
-        this.status = status;
-        this.message = message;
+    ResultEmun(Integer code, String desc, Object data) {
+        this.code = code;
+        this.desc = desc;
         this.data = data;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getCode() {
+        return code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getDesc() {
+        return desc;
     }
 
     public Object getData() {

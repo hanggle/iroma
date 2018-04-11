@@ -8,39 +8,39 @@ import com.alibaba.fastjson.JSONObject;
  * date: 2017/4/23
  */
 public class Result {
-    private int status;
-    private String message;
+    private int code;
+    private String desc;
     private Object data;
 
     public Result(ResultEmun resultEmun, Object data) {
-        this.status = resultEmun.getStatus();
-        this.message = resultEmun.getMessage();
+        this.code = resultEmun.getCode();
+        this.desc = resultEmun.getDesc();
         this.data = data;
     }
 
     public Result(ResultEmun resultEmun) {
-        this.status = resultEmun.getStatus();
-        this.message = resultEmun.getMessage();
+        this.code = resultEmun.getCode();
+        this.desc = resultEmun.getDesc();
         this.data = resultEmun.getData();
     }
 
     public Result(Object data) {
-        this.status = ResultEmun.SUCCESS.getStatus();
-        this.message = ResultEmun.SUCCESS.getMessage();
+        this.code = ResultEmun.SUCCESS.getCode();
+        this.desc = ResultEmun.SUCCESS.getDesc();
         this.data = JSONObject.toJSONString(data);
     }
 
     public Result(Exception serviceException) {
-        this.status = ResultEmun.SUCCESS.getStatus();
-        this.message = ResultEmun.SUCCESS.getMessage();
+        this.code = ResultEmun.SUCCESS.getCode();
+        this.desc = ResultEmun.SUCCESS.getDesc();
         this.data = serviceException.toString();
     }
 
     @Override
     public String toString() {
         return "Result{" +
-                "status='" + this.status + '\'' +
-                ", message='" + this.message + '\'' +
+                "code='" + this.code + '\'' +
+                ", desc='" + this.desc + '\'' +
                 ", data=" + this.data +
                 '}';
     }

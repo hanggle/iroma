@@ -1,5 +1,7 @@
-package com.hanggle.base;
+package com.hanggle.exception;
 
+import com.hanggle.base.Result;
+import com.hanggle.config.ServiceException;
 import com.hanggle.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.hanggle.base;
+package com.hanggle.config;
 
 /**
  * description: 自定义异常类

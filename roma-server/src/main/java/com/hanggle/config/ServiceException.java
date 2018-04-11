@@ -1,4 +1,4 @@
-package com.hanggle.base;
+package com.hanggle.config;
 
 import com.alibaba.fastjson.JSONObject;
 

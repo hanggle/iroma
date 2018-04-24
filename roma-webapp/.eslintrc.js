@@ -8,6 +8,7 @@ module.exports = {
     browser: true,
     node: true,
     es6: true,
+    jquery: true
   },
   extends: 'eslint:recommended',
   // required to lint *.vue files
@@ -61,7 +62,7 @@ module.exports = {
       'beforeColon': false,
       'afterColon': true
     }],
-    'keyword-spacing': [2, {
+    'keyword-spacing': [0, {
       'before': true,
       'after': true
     }],
@@ -107,8 +108,8 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 2,
     'no-multi-spaces': 2,
     'no-multi-str': 2,
-    'no-multiple-empty-lines': [2, {
-      'max': 1
+    'no-multiple-empty-lines': [1, {
+      'max': 2
     }],
     'no-native-reassign': 2,
     'no-negated-in-lhs': 2,
@@ -132,7 +133,7 @@ module.exports = {
     'no-sparse-arrays': 2,
     'no-this-before-super': 2,
     'no-throw-literal': 2,
-    'no-trailing-spaces': 2,
+    'no-trailing-spaces': 1,
     'no-undef': 2,
     'no-undef-init': 2,
     'no-unexpected-multiline': 2,
@@ -166,12 +167,12 @@ module.exports = {
       'avoidEscape': true,
       'allowTemplateLiterals': true
     }],
-   /* 'semi': [2, 'always'], //语句强制分号结尾
-     'semi-spacing': [2, {
+    'semi': [0, 'always'], //语句强制分号结尾
+     'semi-spacing': [1, {
      'before': false,
      'after': true
-     }],*/
-    'space-before-blocks': [2, 'always'],
+     }],
+    'space-before-blocks': [1, 'always'],
     'space-before-function-paren': [2, 'never'],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
@@ -190,7 +191,7 @@ module.exports = {
     'yoda': [2, 'never'],
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'object-curly-spacing': [2, 'always', {
+    'object-curly-spacing': [0, 'always', {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never']

@@ -1,4 +1,4 @@
-package com.oskyhang;
+package com.hanggle.config;
 
 import com.hanggle.mybatis.SqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -37,7 +37,6 @@ public class DatasourceConfig {
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("test1DataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        // TODO
         // 加载全局的配置文件
         bean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:sqlMapConfig.xml"));
 

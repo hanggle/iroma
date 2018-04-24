@@ -1,4 +1,4 @@
-package com.hanggle.config;
+package com.hanggle.exception;
 
 import com.alibaba.fastjson.JSONObject;
 

@@ -18,8 +18,8 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
-    private static Logger logger = LoggerFactory.getLogger(ApplicationWebMvcConfig.class);
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
+    private static Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -48,6 +48,31 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
             ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
+
+    /**
+     * 利用fastjson替换掉jackson，且解决中文乱码问题
+     */
+   /* @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        *//*FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        List<MediaType> fastMediaTypes = new ArrayList<>();
+        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);
+        fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
+        converters.add(fastJsonHttpMessageConverter);
+*//*
+        //1.创建一个convert消息转换对象
+       *//* FastJsonHttpMessageConverter fastConvert = new FastJsonHttpMessageConverter();
+        //2.创建一个fastJson的配置对象,然后配置格式化信息
+        FastJsonConfig config = new FastJsonConfig();
+        config.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        //3.在convert中添加配置信息
+        fastConvert.setFastJsonConfig(config);
+        //4.将convert添加到converts里面
+        converters.add(fastConvert);*//*
+    }*/
 
   /*  @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -1,11 +1,11 @@
 package com.hanggle.exception;
 
 import com.hanggle.base.Result;
-import com.hanggle.config.ServiceException;
 import com.hanggle.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +21,6 @@ public class GlobalDefaultExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(GlobalDefaultExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
-    @ResponseBody
     public Object defaultErrorHandler(HttpServletRequest req, Exception e)  {
 
         Object result = "";
@@ -35,7 +34,6 @@ public class GlobalDefaultExceptionHandler {
 
         result = ResultUtil.unknowError();
         logger.debug(result.toString(), e);
-
         return result;
     }
 }

@@ -2,3 +2,5 @@
 *.iml
 rebel.xml
 node_modules
+roma-server/target/
+common-utils/target/

@@ -38,10 +38,10 @@ public class Result {
 
     @Override
     public String toString() {
-        return "Result{" +
-                "code='" + this.code + '\'' +
-                ", desc='" + this.desc + '\'' +
-                ", data=" + this.data +
-                '}';
+        JSONObject obj = new JSONObject();
+        obj.put("code", this.code);
+        obj.put("desc", this.desc);
+        obj.put("data", this.data);
+        return obj.toString();
     }
 }

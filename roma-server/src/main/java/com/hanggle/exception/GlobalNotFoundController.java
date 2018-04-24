@@ -5,7 +5,6 @@ import com.hanggle.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ErrorController;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * author: zh <br/>
  * date: 2018/4/9 <br/>
  */
-@Controller
+// @Controller
 public class GlobalNotFoundController implements ErrorController{
 
     private static Logger logger = LoggerFactory.getLogger(GlobalNotFoundController.class);
@@ -29,10 +28,10 @@ public class GlobalNotFoundController implements ErrorController{
         return jobj.toString();
     }
 
-    @RequestMapping(value="/error")
+    @RequestMapping(value="error")
     @ResponseBody
     public Object handleError(){
-
+        String str =  ResultUtil.requestError().toString();
         return ResultUtil.requestError();
     }
 }

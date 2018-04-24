@@ -33,11 +33,24 @@
     where id = #{id,jdbcType=CHAR}
   </select>
 
-  <select id="selectMenuList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectMenuList" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select
     <include refid="Base_Column_List" />
     from bd_menu
-    order by  ${orderCode}
+    where 1=1
+    <if test="level != null and level != ''">
+      and level = #{level}
+    </if>
+    order by is_menu desc,order_code
+  </select>
+
+  <select id="selectMenuTree" resultType="map" parameterType="java.lang.String" >
+    select
+      id,
+      menu_name as name,
+      parent_id as pid
+    from bd_menu
+    order by order_code
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

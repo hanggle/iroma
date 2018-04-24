@@ -2,10 +2,10 @@ package com.oskyhang.system.mapper;
 
 
 import com.oskyhang.system.entity.BdMenu;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BdMenuMapper {
@@ -17,7 +17,9 @@ public interface BdMenuMapper {
 
     BdMenu selectByPrimaryKey(String id);
 
-    List<BdMenu> selectMenuList(@Param("orderCode") String orderCode);
+    List<BdMenu> selectMenuList(Map<String, Object> params);
+
+    List<BdMenu> selectMenuTree();
 
     int updateByPrimaryKeySelective(BdMenu record);
 

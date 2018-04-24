@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * Description:
+ * Description: 菜单接口 <br/>
  * User: z.hang <br/>
  * Date: 2018-01-14 <br/>
  * Time: 18:25 <br/>
@@ -27,12 +28,36 @@ public class BdMenuServiceImpl implements BdMenuService {
         return bdMenuMapper.insertSelective(bdMenu);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public List<BdMenu> selectMenuList(String orderCode) {
+    public List<BdMenu> selectMenuList() {
 
-        return bdMenuMapper.selectMenuList(orderCode);
+        return bdMenuMapper.selectMenuList(null);
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<BdMenu> selectMenuList(Map<String, Object> params) {
+
+        return bdMenuMapper.selectMenuList(params);
+    }
+
+    @Override
+    public List<BdMenu> selectMenuTree() {
+        return bdMenuMapper.selectMenuTree();
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public BdMenu selectByPrimaryKey(String id) {
 

@@ -4,6 +4,7 @@ package com.oskyhang.system.service;
 import com.oskyhang.system.entity.BdMenu;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description:
@@ -15,7 +16,11 @@ public interface BdMenuService {
 
     int insert(BdMenu bdMenu);
 
-    List<BdMenu> selectMenuList(String orderCode);
+    List<BdMenu> selectMenuList();
+
+    List<BdMenu> selectMenuList(Map <String, Object> params);
+
+    List<BdMenu> selectMenuTree();
 
     BdMenu selectByPrimaryKey(String id);
 }

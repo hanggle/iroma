@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * author: zh <br/>
  * date: 2018/3/12 <br/>
  */
-@Api(value = "sss", tags = "用户")
+@Api(value = "", tags = "用户")
 @RestController
 @RequestMapping("/user")
 public class BdUserController extends BaseController {
@@ -21,12 +21,13 @@ public class BdUserController extends BaseController {
     @RequestMapping(value = "/info" , method = RequestMethod.GET)
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response){
+
         JSONObject obj = new JSONObject();
         String [] roles = {"/documentation", "index",  "/permission", "admin"};
         obj.put("roles", roles);
         obj.put("name", "tom");
         obj.put("username", "admin");
-        obj.put("avatar", "qqq");
+        obj.put("avatar", "avatar.gif");
         obj.put("introduction", "this is introduction");
         return obj.toString();
     }

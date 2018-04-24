@@ -1,7 +1,7 @@
 package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.base.*;
+import com.hanggle.base.BaseController;
 import com.oskyhang.system.service.BdMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,11 +25,13 @@ public class LoginController extends BaseController {
     private BdMenuService bdMenuService;
 
     @ApiOperation(value = "dasfasdf", notes = "sdsdafasdf")
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String testExc(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/login")
+    public String login(HttpServletRequest request, String username, String password){
         JSONObject obj = new JSONObject();
-        obj.put("code", "1");
+        String datas = request.getParameter("data2");
+        obj.put("code", "1o");
         obj.put("desc", "sss");
+        obj.put("token", "12wqs");
         return obj.toString();
     }
 

@@ -1,6 +1,7 @@
 package com.oskyhang.system.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hanggle.util.ResultUtil;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;
@@ -26,8 +27,21 @@ public class BdMenuControllerTest {
     @Test
     public void list() throws Exception {
 
-        List<BdMenu> list = bdMenuService.selectMenuList("is_menu desc,order_code");
+        List<BdMenu> list = bdMenuService.selectMenuList();
         System.out.println(JSONObject.toJSONString(list));
     }
 
+    public static void main(String[] args){
+        JSONObject obj = new JSONObject();
+        obj.put("a", 23);
+        obj.put("b", 23);
+        String str = ResultUtil.success(obj).toString();
+        System.out.println(str);
+    }
+
+
+    @Test
+    public void menuTree() throws Exception {
+        System.out.println(bdMenuService.selectMenuTree().get(1));
+    }
 }

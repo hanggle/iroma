@@ -21,11 +21,12 @@
       </sticky>
 
       <div class="createPost-main-container">
+
         <el-row>
-          <el-col :span="6">
-            <el-input placeholder="菜单名称" style='min-width:250px;' v-model="postForm.menu_name"></el-input>
+          <el-col :span="5">
+            <ztree  :show-checkbox="false" :expand-all="true" :url="'/menu/menuTree'" v-on:childMsg="showChildMsg"></ztree>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="18" class="form_deitor">
             <div class="postInfo-container">
                 <el-row>
                   <el-col :span="9">
@@ -52,7 +53,7 @@
                   </el-col>
                   <el-col :span="9">
                       <el-form-item label-width="100px" label="上级菜单:" class="postInfo-container-item" >
-                        <multiselect v-model="postForm.parent_id" :options="userLIstOptions" @search-change="getRemoteUserList" placeholder="请选择" selectLabel="选择"
+                        <multiselect v-model="postForm.parent_id" :options="menuLIstOptions" @search-change="getMenuList" placeholder="请选择" selectLabel="选择"
                                      deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
                           <span slot='noResult'>无结果</span>
                         </multiselect>
@@ -92,7 +93,7 @@
                 <el-row>
                   <el-col :span="9">
                     <el-form-item label-width="100px" label="redirect:" class="postInfo-container-item">
-                      <multiselect v-model="postForm.redirect" :options="redirectOptions" @search-change="getRedirectList" placeholder="请选择" selectLabel="选择"
+                      <multiselect v-model="postForm.redirect" :options="redirectOptions" placeholder="请选择" selectLabel="选择"
                                    deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
                         <span slot='noResult'>无结果</span>
                       </multiselect>
@@ -125,12 +126,13 @@
 
 <script>
 import Sticky from '@/components/Sticky' // 粘性header组件
+import Ztree from '@/components/Ztree' // 树组件
 import Multiselect from 'vue-multiselect'// 使用的一个多选框组件，element-ui的select不能满足所有需求
 import { validateURL } from '@/utils/validate'
 import { fetchArticle } from '@/api/article'
-import { userSearch } from '@/api/remoteSearch'
 import { postform } from '@/api/demo/demoForm'
-import { Message } from 'element-ui'
+import request from '@/utils/request'
+
 const defaultForm = {
   status: 'draft',
   id: undefined,
@@ -149,7 +151,7 @@ const defaultForm = {
 
 export default {
   name: 'demoForm',
-  components: { Sticky, Multiselect },
+  components: { Sticky, Multiselect, Ztree },
   props: {
     isEdit: {
       type: Boolean,
@@ -187,16 +189,11 @@ export default {
       postForm: Object.assign({}, defaultForm),
       fetchSuccess: true,
       loading: false,
-      userLIstOptions: [],
-      platformsOptions: [
-        { key: 'a-platform', name: 'a-platform' },
+      menuLIstOptions: [{ key: 'a-platform', name: 'a-platform' },
         { key: 'b-platform', name: 'b-platform' },
-        { key: 'c-platform', name: 'c-platform' }
-      ],
+        { key: 'c-platform', name: 'c-platform' }],
       redirectOptions: [
-        { key: '', name: '' },
-        { key: 'b-platform', name: 'b-platform' },
-        { key: 'c-platform', name: 'c-platform' }
+        { key: 'noredirect' }
       ],
       rules: {
         menu_name: [{ required: true, message: '请填写菜单名称', trigger: 'blur' }],
@@ -221,6 +218,7 @@ export default {
     } else {
       this.postForm = Object.assign({}, defaultForm)
     }
+    this.getMenuList()
   },
   methods: {
     fetchData() {
@@ -236,7 +234,6 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           const data = {
-            status: this.postForm.status,
             id: this.postForm.id,
             menuName: this.postForm.menu_name,
             sname: this.postForm.menu_sname,
@@ -250,16 +247,11 @@ export default {
             redirect: this.postForm.redirect,
             level: this.postForm.level
           }
-          console.log(data)
           postform(data).then(response => {
-            console.log(response)
             if (!response.data) {
               console.log(response.data)
             }
             // const data = response.data
-          }).catch(error => {
-            Message.error('Verification failed, please login again')
-            Promise.reject(error)
           })
           this.loading = true
           this.$notify({
@@ -292,19 +284,71 @@ export default {
       })
       this.postForm.status = 'draft'
     },
-    getRemoteUserList(query) {
-      userSearch(query).then(response => {
-        if (!response.data.items) return
-        console.log(response)
-        this.userLIstOptions = response.data.items.map(v => ({
-          key: v.name
+    getMenuList(query) {
+      // console.log(query)
+      request({
+        url: '/menu/oneLevelMenu',
+        method: 'get'
+      }).then(response => {
+        // console.log(response.data)
+        if (!response.data) return
+        this.menuLIstOptions = response.data.map(v => ({
+          key: v.menuName,
+          name: v.id
         }))
       })
     },
-    getRedirectList(query) {
-      console.log(query)
+    showChildMsg(data) {
+      const param = { id: data.id }
+      request({
+        url: '/menu',
+        method: 'get',
+        params: param
+      }).then(response => {
+        this.postForm.id = response.data.id
+        this.postForm.menu_name = response.data.menuName
+        this.postForm.menu_sname = response.data.sname
+        this.postForm.path = response.data.path
+        // this.postForm.parent_id = { key: 'form', name: response.data.parentId }
+        // this.menuLIstOptions.value = { key: 'form', name: response.data.parentId }
+        this.postForm.order_code = parseInt(response.data.orderCode)
+        this.postForm.icon = response.data.icon
+        this.postForm.title = response.data.title
+        this.postForm.component = response.data.component
+        this.postForm.description = response.data.description
+        // this.postForm.redirect = response.data.redirect
+        setMenuSelect(this, response.data.parentId)
+        setRedirectSelect(this, response.data.redirect)
+        console.log(this.postForm)
+        console.log(response.data)
+      })
+      /* if (data.level === 1 || data.level === 0) {
+        this.postForm.parent_id = { key: data.name, name: data.id }
+      } else {
+        this.postForm.parent_id = { key: '', name: '' }
+      }*/
     }
   }
+}
+// 设置上级
+function setMenuSelect(vue, name) {
+  vue.postForm.parent_id = { key: '', name: '' }
+  for (var x in vue.menuLIstOptions) {
+    if (vue.menuLIstOptions[x].name === name) {
+      vue.postForm.parent_id = { key: vue.menuLIstOptions[x].key, name: vue.menuLIstOptions[x].name }
+    }
+  }
+}
+
+// 设置上级
+function setRedirectSelect(vue, name) {
+  let key = key;
+  for(var x in vue.redirectOptions) {
+    if (vue.redirectOptions[x].key === name) {
+      key = name
+    }
+  }
+  vue.postForm.redirect = {key: key}
 }
 </script>
 
@@ -320,7 +364,7 @@ export default {
   .createPost-container {
     position: relative;
     .createPost-main-container {
-      padding: 40px 45px 20px 50px;
+      padding: 40px 45px 20px 30px;
       .postInfo-container {
         position: relative;
         @include clearfix;
@@ -346,6 +390,9 @@ export default {
       position: absolute;
       right: -10px;
       top: 0px;
+    }
+    .form_deitor{
+      margin-left: 20px;
     }
   }
 </style>

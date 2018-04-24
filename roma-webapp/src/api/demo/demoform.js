@@ -7,3 +7,13 @@ export function postform(data) {
     data
   })
 }
+export function getMenu(preId) {
+  const data = {
+    preId: preId
+  }
+  return request({
+    url: '/menu/list',
+    method: 'post',
+    data
+  })
+}

@@ -71,6 +71,7 @@ const user = {
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
+          // console.log(store.getters.roles)
           resolve(response)
         }).catch(error => {
           reject(error)

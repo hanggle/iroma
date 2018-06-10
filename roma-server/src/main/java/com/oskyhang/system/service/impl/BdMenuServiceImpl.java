@@ -3,7 +3,7 @@ package com.oskyhang.system.service.impl;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
-import com.oskyhang.utils.HanggleUtil;
+import com.hanggle.utils.HanggleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

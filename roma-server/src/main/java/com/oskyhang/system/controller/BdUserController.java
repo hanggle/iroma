@@ -1,4 +1,4 @@
-package com.oskyhang.system.handler;
+package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.base.BaseController;

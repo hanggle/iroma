@@ -173,7 +173,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
      *
      * @since 1.0.1
      *
-     * @param typeHandlers Type handler list
+     * @param typeHandlers Type controller list
      */
     public void setTypeHandlers(TypeHandler<?>[] typeHandlers) {
         this.typeHandlers = typeHandlers;
@@ -386,7 +386,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
         if (!isEmpty(this.typeHandlers)) {
             for (TypeHandler<?> typeHandler : this.typeHandlers) {
                 configuration.getTypeHandlerRegistry().register(typeHandler);
-                    LOGGER.debug("Registered type handler: '" + typeHandler + "'");
+                    LOGGER.debug("Registered type controller: '" + typeHandler + "'");
             }
         }
 

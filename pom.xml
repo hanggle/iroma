@@ -35,6 +35,7 @@
         <mysql-connector.version>5.1.6</mysql-connector.version>
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
         <jackson.version>2.5.4</jackson.version>
+        <httpclient.version>4.5.2</httpclient.version>
     </properties>
 
     <dependencyManagement>
@@ -136,6 +137,11 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

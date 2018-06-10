@@ -23,7 +23,7 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                //.apis(RequestHandlerSelectors.basePackage("com.oskyhang.*.handler"))
+                //.apis(RequestHandlerSelectors.basePackage("com.oskyhang.*.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

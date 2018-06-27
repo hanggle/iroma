@@ -1,7 +1,7 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.util.ResultUtil;
+import com.frames.util.ResultUtil;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;

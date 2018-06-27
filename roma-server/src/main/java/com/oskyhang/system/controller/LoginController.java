@@ -1,7 +1,7 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.base.BaseController;
+import com.frames.base.BaseController;
 import com.oskyhang.system.service.BdMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

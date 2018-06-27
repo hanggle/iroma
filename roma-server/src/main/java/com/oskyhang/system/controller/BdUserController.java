@@ -1,7 +1,7 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.base.BaseController;
+import com.frames.base.BaseController;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 

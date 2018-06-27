@@ -1,7 +1,5 @@
 package com.oskyhang.wechat.service;
 
-import com.hanggle.utils.HttpClientUtil;
-
 /**
  * description: <br/>
  * author: zh <br/>
@@ -17,7 +15,8 @@ public class WeChatService {
 
     //?grant_type=client_credential&appid=APPID&secret=APPSECRET
     public String getAccessToken(){
-        HttpClientUtil.po
+        // HttpClientUtil.post();
+        return "";
     }
 
 }

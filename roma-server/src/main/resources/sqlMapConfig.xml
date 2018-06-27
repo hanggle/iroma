@@ -17,7 +17,7 @@
   	</typeAliases>-->
 
 	<plugins>
-		<plugin interceptor="com.hanggle.interceptor.SqlCostInterceptor" />
+		<plugin interceptor="com.frames.interceptor.SqlCostInterceptor" />
 	</plugins>
 
 </configuration>

@@ -25,6 +25,7 @@ public class Application {
 		//第二种启动方式自定义配置可以使用这种方式试试再说吧
 		SpringApplication app = new SpringApplication(Application.class);
 		app.setBannerMode(Banner.Mode.OFF);
+		app.setAdditionalProfiles("dev");
 		app.run(args);
 		
 	}

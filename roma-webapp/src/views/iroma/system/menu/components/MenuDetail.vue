@@ -53,7 +53,7 @@
                   </el-col>
                   <el-col :span="9">
                       <el-form-item label-width="100px" label="上级菜单:" class="postInfo-container-item" >
-                        <multiselect v-model="postForm.parent_id" :options="menuLIstOptions" @search-change="getMenuList" placeholder="请选择" selectLabel="选择"
+                        <multiselect v-model="postForm.parent_id" :options="menuListOptions" @search-change="getMenuList" placeholder="请选择" selectLabel="选择"
                                      deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
                           <span slot='noResult'>无结果</span>
                         </multiselect>
@@ -92,8 +92,8 @@
                 </el-row>
                 <el-row>
                   <el-col :span="9">
-                    <el-form-item label-width="100px" label="redirect:" class="postInfo-container-item">
-                      <multiselect v-model="postForm.redirect" :options="redirectOptions" placeholder="请选择" selectLabel="选择"
+                    <el-form-item label-width="100px" label="flag:" class="postInfo-container-item">
+                      <multiselect v-model="postForm.flag" :options="flagOptions" placeholder="请选择" selectLabel="选择"
                                    deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
                         <span slot='noResult'>无结果</span>
                       </multiselect>
@@ -145,8 +145,9 @@ const defaultForm = {
   title: '', // 前台展示时间
   component: '',
   description: '',
-  redirect: '',
-  level: ''
+  flag: '是',
+  level: '',
+  click_node: {}
 }
 
 export default {
@@ -189,11 +190,12 @@ export default {
       postForm: Object.assign({}, defaultForm),
       fetchSuccess: true,
       loading: false,
-      menuLIstOptions: [{ key: 'a-platform', name: 'a-platform' },
+      menuListOptions: [{ key: 'a-platform', name: 'a-platform' },
         { key: 'b-platform', name: 'b-platform' },
         { key: 'c-platform', name: 'c-platform' }],
-      redirectOptions: [
-        { key: 'noredirect' }
+      flagOptions: [
+        { key: '是', value: 'Y' },
+        { key: '否', value: 'N' }
       ],
       rules: {
         menu_name: [{ required: true, message: '请填写菜单名称', trigger: 'blur' }],
@@ -202,8 +204,7 @@ export default {
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
         source_uri: [{ validator: validateSourceUri, trigger: 'blur' }],
-        order_code: [{ required: true, message: '请填写排序编号', trigger: 'blur' },
-          { type: 'number', message: '编号必须为数字值' }]
+        order_code: [{ required: true, message: '请填写排序编号', trigger: 'blur' }]
       }
     }
   },
@@ -229,6 +230,18 @@ export default {
         console.log(err)
       })
     },
+    add() {
+      const node = this.postForm.click_node
+      if (node.level === undefined || node.level === 2) {
+        this.$message({
+          message: '请选择根菜单或二级菜单',
+          type: 'warning'
+        })
+        return
+      }
+      this.postForm = Object.assign({}, defaultForm)
+      setMenuSelect(this, node.id)
+    },
     submitForm() {
       this.postForm.display_time = parseInt(this.display_time / 1000)
       this.$refs.postForm.validate(valid => {
@@ -238,13 +251,13 @@ export default {
             menuName: this.postForm.menu_name,
             sname: this.postForm.menu_sname,
             path: this.postForm.path,
-            parentID: this.postForm.parent_id,
+            parentId: this.postForm.parent_id.value,
             orderCode: this.postForm.order_code,
             icon: this.postForm.icon,
             title: this.postForm.title,
             component: this.postForm.component,
             description: this.postForm.description,
-            redirect: this.postForm.redirect,
+            flag: this.postForm.flag.value,
             level: this.postForm.level
           }
           postform(data).then(response => {
@@ -285,20 +298,19 @@ export default {
       this.postForm.status = 'draft'
     },
     getMenuList(query) {
-      // console.log(query)
       request({
         url: '/menu/oneLevelMenu',
         method: 'get'
       }).then(response => {
-        // console.log(response.data)
         if (!response.data) return
-        this.menuLIstOptions = response.data.map(v => ({
+        this.menuListOptions = response.data.map(v => ({
           key: v.menuName,
-          name: v.id
+          value: v.id
         }))
       })
     },
     showChildMsg(data) {
+      this.postForm.click_node = data
       const param = { id: data.id }
       request({
         url: '/menu',
@@ -309,46 +321,34 @@ export default {
         this.postForm.menu_name = response.data.menuName
         this.postForm.menu_sname = response.data.sname
         this.postForm.path = response.data.path
-        // this.postForm.parent_id = { key: 'form', name: response.data.parentId }
-        // this.menuLIstOptions.value = { key: 'form', name: response.data.parentId }
-        this.postForm.order_code = parseInt(response.data.orderCode)
+        this.postForm.order_code = response.data.orderCode
         this.postForm.icon = response.data.icon
         this.postForm.title = response.data.title
         this.postForm.component = response.data.component
         this.postForm.description = response.data.description
-        // this.postForm.redirect = response.data.redirect
-        setMenuSelect(this, response.data.parentId)
-        setRedirectSelect(this, response.data.redirect)
-        console.log(this.postForm)
-        console.log(response.data)
+        setMenuSelect(this, response.data.parentId, response.data.level)
+        setFlagSelect(this, response.data.flag)
       })
-      /* if (data.level === 1 || data.level === 0) {
-        this.postForm.parent_id = { key: data.name, name: data.id }
-      } else {
-        this.postForm.parent_id = { key: '', name: '' }
-      }*/
     }
   }
 }
 // 设置上级
-function setMenuSelect(vue, name) {
-  vue.postForm.parent_id = { key: '', name: '' }
-  for (var x in vue.menuLIstOptions) {
-    if (vue.menuLIstOptions[x].name === name) {
-      vue.postForm.parent_id = { key: vue.menuLIstOptions[x].key, name: vue.menuLIstOptions[x].name }
+function setMenuSelect(vue, value, level) {
+  vue.postForm.parent_id = { key: '', value: '' }
+  for (var x in vue.menuListOptions) {
+    if (vue.menuListOptions[x].value === value) {
+      vue.postForm.parent_id = { key: vue.menuListOptions[x].key, value: vue.menuListOptions[x].value }
     }
   }
 }
 
-// 设置上级
-function setRedirectSelect(vue, name) {
-  let key = key;
-  for(var x in vue.redirectOptions) {
-    if (vue.redirectOptions[x].key === name) {
-      key = name
+// 设置是否可用
+function setFlagSelect(vue, value) {
+  for(var x in vue.flagOptions) {
+    if (vue.flagOptions[x].value === value) {
+      vue.postForm.flag = { key: vue.flagOptions[x].key, value: vue.flagOptions[x].value }
     }
   }
-  vue.postForm.redirect = {key: key}
 }
 </script>
 
@@ -364,7 +364,7 @@ function setRedirectSelect(vue, name) {
   .createPost-container {
     position: relative;
     .createPost-main-container {
-      padding: 40px 45px 20px 30px;
+      padding: 20px 45px 20px 30px;
       .postInfo-container {
         position: relative;
         @include clearfix;

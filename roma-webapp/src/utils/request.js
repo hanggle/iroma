@@ -3,6 +3,8 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
@@ -18,14 +20,25 @@ service.interceptors.request.use(config => {
   return config
 }, error => {
   // Do something with request error
-  console.log(error) // for debug
+  console.log('my error') // for debug
   Promise.reject(error)
 })
 
 // respone interceptor
 service.interceptors.response.use(
   response => {
-    // console.log(response)
+    const res = response.data;
+    console.log(res)
+    if(res.code !== 2000) {
+      if(res.code === 4000) {
+        Message({
+          message: res.desc,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return Promise.reject()
+      }
+    }
     return response
   },
   /**
@@ -56,6 +69,7 @@ service.interceptors.response.use(
   //       return response.data;
   //     }
   error => {
+    console.log(error)
     console.log('err' + error)// for debug
     Message({
       message: error.message,

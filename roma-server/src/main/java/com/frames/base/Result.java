@@ -1,5 +1,6 @@
 package com.frames.base;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -7,33 +8,35 @@ import com.alibaba.fastjson.JSONObject;
  * author: Smile
  * date: 2017/4/23
  */
-public class Result {
+public class Result<T> {
+
+    public static final int CODE_SUCCESS = 2000;
+    public static final int CODE_UNKNOWN_ERROR = 5000;
+    public static final int CODE_REQUEST_ERROR = 4000;
+    public static final String DESC_FAIL = "请求失败！";
+    public static final String DESC_SUCCESS = "请求成功！";
+
     private int code;
     private String desc;
-    private Object data;
+    private T data;
 
-    public Result(ResultEmun resultEmun, Object data) {
-        this.code = resultEmun.getCode();
-        this.desc = resultEmun.getDesc();
+    public Result(){}
+
+    public Result(int code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    public Result(int code, String desc, T data) {
+        this.code = code;
+        this.desc = desc;
         this.data = data;
     }
 
-    public Result(ResultEmun resultEmun) {
-        this.code = resultEmun.getCode();
-        this.desc = resultEmun.getDesc();
-        this.data = resultEmun.getData();
-    }
-
-    public Result(Object data) {
-        this.code = ResultEmun.SUCCESS.getCode();
-        this.desc = ResultEmun.SUCCESS.getDesc();
-        this.data = JSONObject.toJSONString(data);
-    }
-
-    public Result(Exception serviceException) {
-        this.code = ResultEmun.SUCCESS.getCode();
-        this.desc = ResultEmun.SUCCESS.getDesc();
-        this.data = serviceException.toString();
+    public Result(T data) {
+        this.code = Result.CODE_SUCCESS;
+        this.desc = Result.DESC_SUCCESS;
+        this.data = data;
     }
 
     @Override
@@ -41,7 +44,31 @@ public class Result {
         JSONObject obj = new JSONObject();
         obj.put("code", this.code);
         obj.put("desc", this.desc);
-        obj.put("data", this.data);
+        obj.put("data", JSON.toJSON(this.data));
         return obj.toString();
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

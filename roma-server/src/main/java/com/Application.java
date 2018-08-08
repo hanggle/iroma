@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication  //@SpringBootApplication等价于@Configuration @EnableAutoConfiguration
-// @MapperScan("com.oskyhang.*.mapper")
+// @MapperScan("com.oskyhang.*.mapper")// 正式环境需打开，并注释掉DatasourceConfig.java
 public class Application {
 
 	public static void main(String[] args) throws Exception {
@@ -18,6 +18,5 @@ public class Application {
 		//以开发配置文件启动
 		app.setAdditionalProfiles("dev");
 		app.run(args);
-		
 	}
 }

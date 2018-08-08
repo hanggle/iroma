@@ -23,9 +23,19 @@ public class BdMenuServiceImpl implements BdMenuService {
     private BdMenuMapper bdMenuMapper;
 
     @Override
+    public int deleteByPrimaryKey(String id) {
+        return bdMenuMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
     public int insert(BdMenu bdMenu) {
         bdMenu.setId(HanggleUtil.getUUID());
         return bdMenuMapper.insertSelective(bdMenu);
+    }
+
+    @Override
+    public int updateByPrimaryKey(BdMenu bdMenu) {
+        return bdMenuMapper.updateByPrimaryKey(bdMenu);
     }
 
     /**

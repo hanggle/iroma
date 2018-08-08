@@ -2,6 +2,7 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
+import com.frames.util.ResultUtil;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import io.swagger.annotations.*;
@@ -67,16 +68,16 @@ public class BdMenuController extends BaseController {
     @ApiOperation(value = "新增菜单", notes = "")
     @RequestMapping(value = "", method= RequestMethod.POST)
     public String insert(@RequestBody BdMenu bdMenu, HttpServletRequest request){
-        //int i = bdMenuService.insert(bdMenu);
-        System.out.println(123);
+        int i = bdMenuService.insert(bdMenu);
+        System.out.println(i);
         return "";
     }
 
     @ApiOperation(value = "更新菜单", notes = "")
     @ApiImplicitParam(name = "id", value = "菜单ID", required = true, dataType = "String")
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public String update(@PathVariable("id") String id) {
-        logger.info(id);
+    public String update(BdMenu bdMenu) {
+        bdMenuService.updateByPrimaryKey(bdMenu);
         return "";
     }
 
@@ -84,7 +85,7 @@ public class BdMenuController extends BaseController {
     @ApiImplicitParam(name = "id", value = "菜单ID", required = true, dataType = "String")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable("id") String id, HttpServletRequest request) {
-        logger.info(id);
-        return "";
+        bdMenuService.deleteByPrimaryKey(id);
+        return JSONObject.toJSONString(ResultUtil.success(""));
     }
 }

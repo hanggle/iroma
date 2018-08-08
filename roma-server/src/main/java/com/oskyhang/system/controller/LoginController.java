@@ -2,6 +2,7 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
+import com.frames.config.RedisProperties;
 import com.oskyhang.system.service.BdMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * description: 用户登录模块<br/>
@@ -24,11 +26,15 @@ public class LoginController extends BaseController {
     @Autowired
     private BdMenuService bdMenuService;
 
+    @Autowired
+    private RedisProperties redisProperties;
+
     @ApiOperation(value = "dasfasdf", notes = "sdsdafasdf")
-    @RequestMapping(value = "/login")
-    public String login(HttpServletRequest request, String username, String password){
+    @RequestMapping(value = "/login", method= RequestMethod.POST)
+    public String login(HttpServletRequest request, @RequestBody Map dataMap){
         JSONObject obj = new JSONObject();
-        String datas = request.getParameter("data2");
+        String datas = (String) dataMap.get("username");
+        // System.out.println(redisProperties.getHost());
         obj.put("code", "1o");
         obj.put("desc", "sss");
         obj.put("token", "12wqs");

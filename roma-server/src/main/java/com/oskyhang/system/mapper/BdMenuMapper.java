@@ -23,5 +23,5 @@ public interface BdMenuMapper {
 
     int updateByPrimaryKeySelective(BdMenu record);
 
-    int updateByPrimaryKey(BdMenu record);
+    int updateByPrimaryKey(BdMenu bdMenu);
 }

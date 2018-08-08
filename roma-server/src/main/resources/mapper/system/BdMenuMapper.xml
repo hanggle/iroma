@@ -37,9 +37,9 @@
     select
     <include refid="Base_Column_List" />
     from bd_menu
-    where 1=1
+    where flag = 'Y'
     <if test="level != null and level != ''">
-      and level = #{level}
+      and level = #{level} or LEVEL = 0
     </if>
     order by is_menu desc,order_code
   </select>

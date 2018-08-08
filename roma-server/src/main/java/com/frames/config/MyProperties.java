@@ -2,6 +2,7 @@ package com.frames.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import sun.security.jca.GetInstance;
 
 /**
  * description: 加载配置文件
@@ -10,29 +11,33 @@ import org.springframework.stereotype.Component;
  */
 // 获去方式二
 @Component
-@ConfigurationProperties(prefix="com.neo")
+@ConfigurationProperties(prefix="com.prop")
 public class MyProperties {
 
-    private String  cnName;
+    private static MyProperties myProperties ;
 
-    private String enName;
+    private MyProperties(){}
+
+    public static MyProperties getInstance(){
+        if(null == myProperties){
+            synchronized (MyProperties.class){
+                if(null == myProperties){
+                    myProperties = new MyProperties();
+                }
+            }
+        }
+        return myProperties;
+    }
+
+    private String  cnName;
 
     public String getCnName() {
         return cnName;
     }
 
-    public void setCnName(String cnName) {
+    public void setCnName(String cnName) {;
         this.cnName = cnName;
     }
-
-    public String getEnName() {
-        return enName;
-    }
-
-    public void setEnName(String engName) {
-        this.enName = engName;
-    }
-
 }
 /*
 //获去方式一

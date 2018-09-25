@@ -3,7 +3,6 @@ package com.oskyhang.system.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
-import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  * author: zh <br/>
  * date: 2018/3/12 <br/>
  */
-@Api(value = "", tags = "用户")
 @RestController
 @RequestMapping("/user")
 public class BdUserController extends BaseController {
@@ -35,8 +33,6 @@ public class BdUserController extends BaseController {
         return obj.toString();
     }
 
-    @ApiOperation(value = "查询菜单", notes = "根据菜单ID详细信息")
-    @ApiImplicitParam(name = "list", value = "用户ID", required = true, dataType = "String")
     @RequestMapping(value = "list", method= RequestMethod.GET)
     public String select(String id, String data) {
         JSONArray arr = new JSONArray();

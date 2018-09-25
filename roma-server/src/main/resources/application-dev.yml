@@ -1,7 +1,8 @@
 #配置端口和项目根路径
 server:
   port: 8081
-  context-path: /
+  servlet:
+    context-path: /
 
 app:
   name: MyApp

@@ -12,7 +12,7 @@ public class Application {
 		//第一种启动方式
 		//SpringApplication.run(com.Application.class, args);
 
-		//第二种启动方式自定义配置可以使用这种方式试试再说吧
+		//第二种启动方式自定义配置
 		SpringApplication app = new SpringApplication(Application.class);
 		app.setBannerMode(Banner.Mode.OFF);
 		//以开发配置文件启动

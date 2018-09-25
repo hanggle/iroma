@@ -1,7 +1,6 @@
 package com.oskyhang.wechat.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +19,6 @@ import java.io.PrintWriter;
 @RequestMapping("/wechat")
 public class WechatController {
 
-    @ApiOperation(value = "微信URL认证", notes = "sdsdafasdf")
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public void check(HttpServletRequest request, HttpServletResponse response, String echostr2){
         String echost = request.getParameter("echostr");

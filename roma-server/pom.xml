@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>iroma</artifactId>
-        <groupId>com.oskyhang</groupId>
+        <groupId>com.hanggle</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -15,7 +15,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.oskyhang</groupId>
+            <groupId>com.hanggle</groupId>
             <artifactId>common-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -23,7 +23,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${springboot.version}</version>
         </dependency>
 
         <dependency>
@@ -34,7 +33,6 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.2.4</version>
         </dependency>
 
         <dependency>
@@ -65,16 +63,6 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
         <dependency>

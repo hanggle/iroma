@@ -1,6 +1,5 @@
 package com.frames.mybatis;
 
-import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * description: <br/>
@@ -66,7 +64,7 @@ public class MybatisConfiguration {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean
+    /*@Bean
     public PageHelper pageHelper(){
         logger.info("MyBatis分页插件PageHelper");
         //分页插件
@@ -80,5 +78,5 @@ public class MybatisConfiguration {
         properties.setProperty("params", "count=countSql");
         pageHelper.setProperties(properties);
         return pageHelper;
-    }
+    }*/
 }

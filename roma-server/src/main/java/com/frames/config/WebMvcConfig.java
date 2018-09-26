@@ -1,6 +1,7 @@
 package com.frames.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,7 @@ import java.text.DateFormat;
  * date: 2017/4/8
  */
 @Configuration
-@EnableWebMvc
+@Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -30,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public MappingJackson2HttpMessageConverter MappingJsonpHttpMessageConverter() {
-        System.out.println("init");
+        log.info("WebMvcConfig init");
         ObjectMapper mapper = jackson2ObjectMapperBuilder.build();
 
         // ObjectMapper为了保障线程安全性，里面的配置类都是一个不可变的对象

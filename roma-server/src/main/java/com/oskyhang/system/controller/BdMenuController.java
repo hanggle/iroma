@@ -5,8 +5,7 @@ import com.frames.base.BaseController;
 import com.frames.util.ResultUtil;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,8 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/menu")
+@Slf4j
 public class BdMenuController extends BaseController {
-    private static Logger logger = LoggerFactory.getLogger(BdMenuController.class);
 
     @Autowired
     private BdMenuService bdMenuService;

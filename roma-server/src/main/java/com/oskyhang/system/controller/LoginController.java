@@ -3,8 +3,10 @@ package com.oskyhang.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
 import com.frames.config.RedisProperties;
+import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.entity.Demo;
 import com.oskyhang.system.service.BdMenuService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/login")
+@Slf4j
 public class LoginController extends BaseController {
 
     @Autowired
@@ -46,12 +49,16 @@ public class LoginController extends BaseController {
         return obj.toString();
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String test(@RequestBody Demo demo){
+    @PostMapping("/test")
+    public Object test(@RequestBody Demo demo){
         JSONObject obj = new JSONObject();
+        log.debug("test:demo{}");
+        log.info("test:demo{}", demo);
         obj.put("code", "1");
         obj.put("desc", "sss");
-        return obj.toString();
+        BdMenu bdMenu = new BdMenu();
+        log.error("this is error");
+        return demo;
     }
 
 }

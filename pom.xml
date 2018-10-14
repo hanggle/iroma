@@ -36,6 +36,7 @@
         <mysql-connector.version>5.1.6</mysql-connector.version>
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
         <httpclient.version>4.5.2</httpclient.version>
+        <lombok.version>1.16.22</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -117,6 +118,13 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <optional>true</optional>
+                <version>${lombok.version}</version>
             </dependency>
 
         </dependencies>

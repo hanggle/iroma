@@ -1,14 +1,12 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.frames.util.ResultUtil;
+import com.frames.util.*;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 
@@ -17,15 +15,20 @@ import java.util.List;
  * author: zh <br/>
  * date: 2018/4/10 <br/>
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BdMenuControllerTest {
+
+public class BdMenuControllerTest extends BaseTestController {
 
     @Autowired
     private BdMenuService bdMenuService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private BaseRedisDao redisDAO;
+
     @Test
-    public void list() throws Exception {
+    public void list() {
 
         List<BdMenu> list = bdMenuService.selectMenuList();
         System.out.println(JSONObject.toJSONString(list));
@@ -41,7 +44,17 @@ public class BdMenuControllerTest {
 
 
     @Test
-    public void menuTree() throws Exception {
+    public void menuTree() {
         System.out.println(bdMenuService.selectMenuTree().get(1));
+    }
+
+    @Test
+    public void redisTest() {
+        boolean b;
+        b = redisDAO.exists("hello");
+        redisDAO.set("hello", "world");
+        Object obj = redisDAO.get("hello");
+
+        System.out.println(123);
     }
 }

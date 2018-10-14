@@ -22,7 +22,7 @@ import java.util.*;
 public class MapperRefresh implements java.lang.Runnable{
     public static Logger log = LoggerFactory.getLogger(MapperRefresh.class);
 
-    private static String filename = "/mybatis-refresh.properties";
+    private static String filename = "/config/mybatis-refresh.properties";
     private static Properties prop = new Properties();
 
     private static boolean enabled;         // 是否启用Mapper刷新线程功能
@@ -238,10 +238,7 @@ public class MapperRefresh implements java.lang.Runnable{
      * @return 需要刷新返回true，否则返回false
      */
     private boolean checkFile(File file, Long beforeTime) {
-        if (file.lastModified() > beforeTime) {
-            return true;
-        }
-        return false;
+        return file.lastModified() > beforeTime;
     }
 
     /**

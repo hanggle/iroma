@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -31,7 +29,7 @@ public class LoginController extends BaseController {
     private RedisProperties redisProperties;
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
-    public String login(HttpServletRequest request, @RequestBody Map dataMap){
+    public String login(@RequestBody Map dataMap){
         JSONObject obj = new JSONObject();
         String datas = (String) dataMap.get("username");
         // System.out.println(redisProperties.getHost());
@@ -42,7 +40,7 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(HttpServletRequest request, HttpServletResponse response){
+    public String logout(){
         JSONObject obj = new JSONObject();
         obj.put("code", "1");
         obj.put("desc", "sss");

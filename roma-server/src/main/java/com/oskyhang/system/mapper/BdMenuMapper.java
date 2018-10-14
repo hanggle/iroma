@@ -9,13 +9,13 @@ import java.util.Map;
 
 @Repository
 public interface BdMenuMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(BdMenu record);
 
     int insertSelective(BdMenu record);
 
-    BdMenu selectByPrimaryKey(String id);
+    BdMenu selectByPrimaryKey(Long id);
 
     List<BdMenu> selectMenuList(Map<String, Object> params);
 

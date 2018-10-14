@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -28,25 +27,27 @@ public class BdMenuController extends BaseController {
     private BdMenuService bdMenuService;
 
     @RequestMapping(value = "", method= RequestMethod.GET)
-    public String select(String id, String data) {
+    public String select(Long id) {
         BdMenu bdMenu = bdMenuService.selectByPrimaryKey(id);
         return JSONObject.toJSONString(bdMenu);
     }
 
     @ResponseBody
-    public String list(HttpServletRequest request, HttpServletResponse response, @RequestBody String data){
+    @RequestMapping(value="/list", method= RequestMethod.POST)
+    public String list(@RequestBody String data){
         List<BdMenu> list = bdMenuService.selectMenuList();
         return JSONObject.toJSONString(list);
     }
 
     @ResponseBody
-    public String menuTree(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value="/menuTree", method= RequestMethod.GET)
+    public String menuTree(){
         List<BdMenu> list = bdMenuService.selectMenuTree();
         return JSONObject.toJSONString(list);
     }
 
     @RequestMapping(value="/oneLevelMenu", method= RequestMethod.GET)
-    public String oneLevelMenu(HttpServletRequest request, HttpServletResponse response){
+    public String oneLevelMenu(){
 
         Map<String, Object> params = new HashMap<>();
         params.put("level", "1");
@@ -68,8 +69,8 @@ public class BdMenuController extends BaseController {
         return "";
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable("id") String id, HttpServletRequest request) {
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(@RequestParam("id") Long id) {
         bdMenuService.deleteByPrimaryKey(id);
         return JSONObject.toJSONString(ResultUtil.success(""));
     }

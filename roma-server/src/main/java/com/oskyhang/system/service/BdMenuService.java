@@ -22,9 +22,9 @@ public interface BdMenuService {
 
     List<BdMenu> selectMenuTree();
 
-    BdMenu selectByPrimaryKey(String id);
+    BdMenu selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(BdMenu bdMenu);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 }

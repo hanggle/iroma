@@ -3,7 +3,6 @@ package com.oskyhang.system.service.impl;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
-import com.hanggle.utils.HanggleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +22,13 @@ public class BdMenuServiceImpl implements BdMenuService {
     private BdMenuMapper bdMenuMapper;
 
     @Override
-    public int deleteByPrimaryKey(String id) {
+    public int deleteByPrimaryKey(Long id) {
         return bdMenuMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int insert(BdMenu bdMenu) {
-        bdMenu.setId(HanggleUtil.getUUID());
+        bdMenu.setId(1L);
         return bdMenuMapper.insertSelective(bdMenu);
     }
 
@@ -69,7 +68,7 @@ public class BdMenuServiceImpl implements BdMenuService {
      * @return
      */
     @Override
-    public BdMenu selectByPrimaryKey(String id) {
+    public BdMenu selectByPrimaryKey(Long id) {
 
         return bdMenuMapper.selectByPrimaryKey(id);
     }

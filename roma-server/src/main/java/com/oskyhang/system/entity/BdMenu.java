@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BdMenu {
-    private String id;
+    private long id;
 
     private String menuName;
 
@@ -16,7 +16,7 @@ public class BdMenu {
 
     private String menuType;
 
-    private String orderCode;
+    private Integer orderCode;
 
     private String icon;
 

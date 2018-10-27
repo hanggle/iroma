@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
  * author: Smile
  * date: 2017/4/23
  */
-public class Result<T> {
+public class BaseResult<T> {
 
     public static final int CODE_SUCCESS = 2000;
     public static final int CODE_UNKNOWN_ERROR = 5000;
@@ -20,22 +20,22 @@ public class Result<T> {
     private String desc;
     private T data;
 
-    public Result(){}
+    public BaseResult(){}
 
-    public Result(int code, String desc) {
+    public BaseResult(int code, String desc) {
         this.code = code;
         this.desc = desc;
     }
 
-    public Result(int code, String desc, T data) {
+    public BaseResult(int code, String desc, T data) {
         this.code = code;
         this.desc = desc;
         this.data = data;
     }
 
-    public Result(T data) {
-        this.code = Result.CODE_SUCCESS;
-        this.desc = Result.DESC_SUCCESS;
+    public BaseResult(T data) {
+        this.code = BaseResult.CODE_SUCCESS;
+        this.desc = BaseResult.DESC_SUCCESS;
         this.data = data;
     }
 

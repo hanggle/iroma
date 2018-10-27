@@ -33,7 +33,7 @@ import java.nio.charset.Charset;
 import java.security.cert.X509Certificate;
 import java.util.*;
 public class HttpClientUtils {
-    private static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);
     private final static int CONNECT_TIMEOUT = 4000;// 连接超时毫秒
     private final static int SOCKET_TIMEOUT = 10000;// 传输超时毫秒
     private final static int REQUESTCONNECT_TIMEOUT = 3000;// 获取请求超时毫秒

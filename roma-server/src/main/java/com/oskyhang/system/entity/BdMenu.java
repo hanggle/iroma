@@ -12,7 +12,7 @@ public class BdMenu {
 
     private String path;
 
-    private String parentId;
+    private Long parentId;
 
     private String menuType;
 

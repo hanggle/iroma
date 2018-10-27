@@ -1,74 +1,77 @@
 package com.frames.base;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
 
 /**
  * description: 返回结果实体类
  * author: Smile
  * date: 2017/4/23
  */
+@Data
 public class BaseResult<T> {
 
     public static final int CODE_SUCCESS = 2000;
     public static final int CODE_UNKNOWN_ERROR = 5000;
     public static final int CODE_REQUEST_ERROR = 4000;
-    public static final String DESC_FAIL = "请求失败！";
-    public static final String DESC_SUCCESS = "请求成功！";
+    public static final String MESSAGE_FAIL = "请求失败！";
+    public static final String MESSAGE_SUCCESS = "请求成功！";
 
+    private Boolean success;
+    private Long timestamp = System.currentTimeMillis();
     private int code;
-    private String desc;
+    private String message;
     private T data;
 
     public BaseResult(){}
 
-    public BaseResult(int code, String desc) {
+    public BaseResult(Boolean success, int code, String message) {
+        this.success = success;
         this.code = code;
-        this.desc = desc;
+        this.message = message;
     }
 
-    public BaseResult(int code, String desc, T data) {
+    public BaseResult(Boolean success, int code, String message, T data) {
+        this.success = success;
         this.code = code;
-        this.desc = desc;
+        this.message = message;
         this.data = data;
     }
 
     public BaseResult(T data) {
+        this.success = true;
         this.code = BaseResult.CODE_SUCCESS;
-        this.desc = BaseResult.DESC_SUCCESS;
+        this.message = BaseResult.MESSAGE_SUCCESS;
+        this.data = data;
+    }
+    public BaseResult(T data, String message) {
+        this.success = true;
+        this.code = BaseResult.CODE_SUCCESS;
+        this.message = message;
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        JSONObject obj = new JSONObject();
-        obj.put("code", this.code);
-        obj.put("desc", this.desc);
-        obj.put("data", JSON.toJSON(this.data));
-        return obj.toString();
+    public BaseResult<T> setSuccess(Boolean success) {
+        this.success = success;
+        return this;
     }
 
-    public int getCode() {
-        return code;
+    public BaseResult<T> setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+        return this;
     }
 
-    public void setCode(int code) {
+    public BaseResult<T> setCode(int code) {
         this.code = code;
+        return this;
     }
 
-    public String getDesc() {
-        return desc;
+    public BaseResult<T> setMessage(String message) {
+        this.message = message;
+        return this;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
+    public BaseResult<T> setData(T data) {
         this.data = data;
+        return this;
     }
 }

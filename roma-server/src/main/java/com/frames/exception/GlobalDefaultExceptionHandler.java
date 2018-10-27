@@ -1,6 +1,5 @@
 package com.frames.exception;
 
-import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseResult;
 import com.frames.util.ResultUtil;
 import com.google.common.base.Throwables;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Description: 全局异常 500 <br/>
- * User: z.hang <br/>
+ * @author : z.hang <br/>
  * Date: 2018-01-16 <br/>
  * Time: 0:03 <br/>
  */
@@ -22,21 +21,17 @@ public class GlobalDefaultExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Object defaultErrorHandler(HttpServletRequest req, Exception e)  {
+    public BaseResult defaultErrorHandler(HttpServletRequest req, Exception e)  {
 
-        BaseResult baseResult = null;
         //业务异常
         if(e instanceof ServiceException){
-            baseResult = new BaseResult(e);
-            return JSONObject.toJSONString(baseResult);
+            return ResultUtil.requestError(e);
         }
 
         if(e instanceof HttpRequestMethodNotSupportedException){
-            baseResult = new BaseResult(BaseResult.CODE_REQUEST_ERROR, e.getMessage());
-            return JSONObject.parse(baseResult.toString());
+            return ResultUtil.requestError(e);
         }
-        baseResult = ResultUtil.unknowError();
-        log.info(baseResult.toString(), Throwables.getStackTraceAsString(e));
-        return JSONObject.parse(baseResult.toString());
+        log.info("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", Throwables.getStackTraceAsString(e));
+        return ResultUtil.unknowError(e);
     }
 }

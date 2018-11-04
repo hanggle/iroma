@@ -7,7 +7,7 @@ import com.frames.base.BaseResult;
  * author: zh <br/>
  * date: 2018/4/10 <br/>
  */
-public class ResultUtil {
+public class Response {
 
     /**
      *  请求成功时返回

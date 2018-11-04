@@ -1,6 +1,6 @@
 package com.frames.exception;
 
-import com.frames.util.ResultUtil;
+import com.frames.util.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +18,6 @@ public class GlobalNotFoundController{
     @RequestMapping(value="error")
     @ResponseBody
     public Object handleError(){
-        return ResultUtil.requestError();
+        return Response.requestError();
     }
 }

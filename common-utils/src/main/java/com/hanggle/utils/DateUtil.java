@@ -137,13 +137,13 @@ public class DateUtil {
     }
 
 
-    public static void main(String[] args){
-        System.out.println("10000000000000000001".length());
-        System.out.println("9223372036854775807".length());
-        System.out.println(getDate());
-        System.out.println(getDateTime(YYYY_MM_DD_HH_MM_SS));
-        System.out.println(getDateTime(getDateTime000000(), YYYY_MM_DD_HH_MM_SS));
-        System.out.println(getYearAndMonth());
-    }
+    //public static void main(String[] args){
+    //    System.out.println("10000000000000000001".length());
+    //    System.out.println("9223372036854775807".length());
+    //    System.out.println(getDate());
+    //    System.out.println(getDateTime(YYYY_MM_DD_HH_MM_SS));
+    //    System.out.println(getDateTime(getDateTime000000(), YYYY_MM_DD_HH_MM_SS));
+    //    System.out.println(getYearAndMonth());
+    //}
 
 }

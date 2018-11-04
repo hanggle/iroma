@@ -2,20 +2,21 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
-import com.frames.util.ResultUtil;
+import com.frames.base.BaseResult;
+import com.frames.util.Response;
+import com.oskyhang.system.dto.BdMenuDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
- * Description:
- * User: z.hang
- * Date: 2018-01-14
+ * @Description:
+ * @author : z.hang
+ * @Date: 2018-01-14
  * Time: 18:16
  */
 @RestController
@@ -26,44 +27,42 @@ public class BdMenuController extends BaseController {
     @Autowired
     private BdMenuService bdMenuService;
 
-    @RequestMapping(value = "", method= RequestMethod.GET)
-    public String select(Long id) {
+    @RequestMapping(value = "/get", method= RequestMethod.GET)
+    public BaseResult<BdMenu> select(@RequestParam Long id) {
         BdMenu bdMenu = bdMenuService.selectByPrimaryKey(id);
-        return JSONObject.toJSONString(bdMenu);
+        return Response.success(bdMenu);
     }
 
-    @ResponseBody
     @RequestMapping(value="/list", method= RequestMethod.POST)
-    public String list(@RequestBody String data){
+    public BaseResult<List<BdMenu>> list(@RequestBody BdMenuDto menuDto){
+        log.info("list:{}", menuDto);
         List<BdMenu> list = bdMenuService.selectMenuList();
-        return JSONObject.toJSONString(list);
+        return Response.success(list);
     }
 
-    @ResponseBody
     @RequestMapping(value="/menuTree", method= RequestMethod.GET)
-    public String menuTree(){
+    public BaseResult<BdMenu> menuTree(){
         List<BdMenu> list = bdMenuService.selectMenuTree();
-        return JSONObject.toJSONString(list);
+        return Response.success(list);
     }
 
     @RequestMapping(value="/oneLevelMenu", method= RequestMethod.GET)
-    public String oneLevelMenu(){
+    public BaseResult<List<BdMenu>> oneLevelMenu(){
 
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>(16);
         params.put("level", "1");
 
         List<BdMenu> list = bdMenuService.selectMenuList(params);
-        return JSONObject.toJSONString(list);
+        return Response.success(list);
     }
 
-    @RequestMapping(value = "", method= RequestMethod.POST)
-    public String insert(@RequestBody BdMenu bdMenu, HttpServletRequest request){
+    @RequestMapping(value = "/insert", method= RequestMethod.POST)
+    public String insert(@RequestBody BdMenu bdMenu){
         int i = bdMenuService.insert(bdMenu);
-        System.out.println(i);
         return "";
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(BdMenu bdMenu) {
         bdMenuService.updateByPrimaryKey(bdMenu);
         return "";
@@ -72,6 +71,6 @@ public class BdMenuController extends BaseController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(@RequestParam("id") Long id) {
         bdMenuService.deleteByPrimaryKey(id);
-        return JSONObject.toJSONString(ResultUtil.success(""));
+        return JSONObject.toJSONString(Response.success(""));
     }
 }

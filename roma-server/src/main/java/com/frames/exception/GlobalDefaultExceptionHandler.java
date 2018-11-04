@@ -1,7 +1,7 @@
 package com.frames.exception;
 
 import com.frames.base.BaseResult;
-import com.frames.util.ResultUtil;
+import com.frames.util.Response;
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -25,13 +25,13 @@ public class GlobalDefaultExceptionHandler {
 
         //业务异常
         if(e instanceof ServiceException){
-            return ResultUtil.requestError(e);
+            return Response.requestError(e);
         }
 
         if(e instanceof HttpRequestMethodNotSupportedException){
-            return ResultUtil.requestError(e);
+            return Response.requestError(e);
         }
         log.info("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", Throwables.getStackTraceAsString(e));
-        return ResultUtil.unknowError(e);
+        return Response.unknowError(e);
     }
 }

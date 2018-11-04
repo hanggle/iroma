@@ -2,7 +2,9 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
+import com.frames.base.BaseResult;
 import com.frames.config.RedisProperties;
+import com.frames.util.Response;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +29,21 @@ public class LoginController extends BaseController {
     private RedisProperties redisProperties;
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
-    public String login(@RequestBody Map dataMap){
+    public BaseResult<JSONObject> login(@RequestBody Map dataMap){
         JSONObject obj = new JSONObject();
         String datas = (String) dataMap.get("username");
-        // System.out.println(redisProperties.getHost());
         obj.put("code", "1o");
-        obj.put("desc", "sss");
+        obj.put("message", "sss");
         obj.put("token", "12wqs");
-        return obj.toString();
+        return Response.success(obj);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(){
+    public BaseResult<JSONObject> logout(){
         JSONObject obj = new JSONObject();
         obj.put("code", "1");
         obj.put("desc", "sss");
-        return obj.toString();
+        return Response.success(obj);
     }
 
 

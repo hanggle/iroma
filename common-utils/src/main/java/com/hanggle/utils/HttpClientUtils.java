@@ -91,10 +91,7 @@ public class HttpClientUtils {
                 HttpClientContext clientContext = HttpClientContext.adapt(context);
                 HttpRequest request = clientContext.getRequest();
                 // 如果请求是幂等的，就再次尝试
-                if (!(request instanceof HttpEntityEnclosingRequest)) {
-                    return true;
-                }
-                return false;
+                return !(request instanceof HttpEntityEnclosingRequest);
             }
         };
         httpClient = HttpClients.custom().setConnectionManager(connManager).setDefaultRequestConfig(requestConfig)
@@ -240,21 +237,18 @@ public class HttpClientUtils {
             }
             @Override
             public void checkClientTrusted(X509Certificate[] arg0, String authType) {
-// TODO Auto-generated method stub
             }
             @Override
             public void checkServerTrusted(X509Certificate[] arg0, String authType) {
-// TODO Auto-generated method stub
             }
         };
         SSLContext sslContext;
         try {
             sslContext = SSLContext.getInstance(SSLConnectionSocketFactory.TLS);
-            sslContext.init(null, new TrustManager[] {(TrustManager)trustManager}, null);
+            sslContext.init(null, new TrustManager[] {trustManager}, null);
 // 创建SSLSocketFactory , // 不校验域名 ,取代以前验证规则
             sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         } catch (Exception e) {
-// TODO Auto-generated catch block
             e.printStackTrace();
         }
         return sslsf;
@@ -293,14 +287,14 @@ public class HttpClientUtils {
             }
         }
     }
-    public static void main(String[] args){
-        String access_token = "10_wbIiakakArr7fpFMghk8Ma3MRorHFKC6afq9TAARSlQM1Xtq2VLH-CPX_VQndwxHpxne7A3ALx8kaoWAAjIWC-_EEO5MRCeencs4PYvbggAArdqitsuzSXlm0D8hoj8nV-zpLLQknrxgDl9AGDXiAJAXUO";
-        //System.out.println(HttpClientUtils.get("http://www.baidu.com", ""));
-       // System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxac8561a0f5021639&secret=606eee037f460f9f6185b0b015b1745a", ""));
-       // System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/user/get", "access_token="+access_token));
-        System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/template/get_all_private_template", "access_token="+access_token));
-        //System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/tags/get?access_token="+access_token, ""));
-        //System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+access_token, ""));
-        System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token="+access_token, ""));
-    }
+    //public static void main(String[] args){
+    //    String access_token = "10_wbIiakakArr7fpFMghk8Ma3MRorHFKC6afq9TAARSlQM1Xtq2VLH-CPX_VQndwxHpxne7A3ALx8kaoWAAjIWC-_EEO5MRCeencs4PYvbggAArdqitsuzSXlm0D8hoj8nV-zpLLQknrxgDl9AGDXiAJAXUO";
+    //    //System.out.println(HttpClientUtils.get("http://www.baidu.com", ""));
+    //   // System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxac8561a0f5021639&secret=606eee037f460f9f6185b0b015b1745a", ""));
+    //   // System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/user/get", "access_token="+access_token));
+    //    System.out.println(HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/template/get_all_private_template", "access_token="+access_token));
+    //    //System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/tags/get?access_token="+access_token, ""));
+    //    //System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+access_token, ""));
+    //    System.out.println(HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token="+access_token, ""));
+    //}
 }

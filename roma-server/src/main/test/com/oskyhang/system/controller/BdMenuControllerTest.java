@@ -38,7 +38,7 @@ public class BdMenuControllerTest extends BaseTestController {
         JSONObject obj = new JSONObject();
         obj.put("a", 23);
         obj.put("b", 23);
-        String str = ResultUtil.success(obj).toString();
+        String str = Response.success(obj).toString();
         System.out.println(str);
     }
 

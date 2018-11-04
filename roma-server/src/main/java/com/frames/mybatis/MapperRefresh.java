@@ -1,12 +1,11 @@
 package com.frames.mybatis;
 
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.session.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedIOException;
 import org.springframework.core.io.Resource;
 
@@ -19,8 +18,8 @@ import java.util.*;
  * author: zh <br/>
  * date: 2018/3/15 <br/>
  */
+@Slf4j
 public class MapperRefresh implements java.lang.Runnable{
-    public static Logger log = LoggerFactory.getLogger(MapperRefresh.class);
 
     private static String filename = "/config/mybatis-refresh.properties";
     private static Properties prop = new Properties();
@@ -56,7 +55,7 @@ public class MapperRefresh implements java.lang.Runnable{
         sleepSeconds = sleepSeconds == 0 ? 3 : sleepSeconds;
         mappingPath = StringUtils.isBlank(mappingPath) ? "mappings" : mappingPath;
 
-        log.debug("[enabled] " + enabled);
+        log.info("[enabled] " + enabled);
         log.debug("[delaySeconds] " + delaySeconds);
         log.debug("[sleepSeconds] " + sleepSeconds);
         log.debug("[mappingPath] " + mappingPath);
@@ -87,7 +86,7 @@ public class MapperRefresh implements java.lang.Runnable{
                 public void run() {
                     if (location == null){
                         location = Sets.newHashSet();
-                        log.debug("MapperLocation's length:" + mapperLocations.length);
+                        log.info("MapperLocation's length:" + mapperLocations.length);
                         for (Resource mapperLocation : mapperLocations) {
                             System.out.println(mapperLocation.toString());
                             String s = mapperLocation.toString().replaceAll("\\\\", "/");
@@ -294,6 +293,7 @@ public class MapperRefresh implements java.lang.Runnable{
         }
 
         @SuppressWarnings("unchecked")
+        @Override
         public V put(String key, V value) {
             // ThinkGem 如果现在状态为刷新，则刷新(先删除后添加)
             if (MapperRefresh.isRefresh()) {
@@ -314,7 +314,7 @@ public class MapperRefresh implements java.lang.Runnable{
             }
             return super.put(key, value);
         }
-
+        @Override
         public V get(Object key) {
             V value = super.get(key);
             if (value == null) {

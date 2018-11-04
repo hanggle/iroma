@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 /**
  * description: mapper.xml 自动刷新，开发时打开，正式环境需关闭<br/>
- * author: zh <br/>
+ * @author: zh <br/>
  * date: 2018/3/15 <br/>
  */
 @Slf4j
@@ -47,7 +47,6 @@ public class DatasourceConfig {
         bean.setDataSource(dataSource);
         // 加载全局的配置文件
         bean.setConfigLocation(new DefaultResourceLoader().getResource(mybatisConfigLocation));
-
         Resource[] resources = new PathMatchingResourcePatternResolver().getResources(mybatisMapperLocation);
         bean.setMapperLocations(resources);
         return bean.getObject();

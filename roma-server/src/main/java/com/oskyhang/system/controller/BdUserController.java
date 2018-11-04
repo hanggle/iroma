@@ -3,6 +3,8 @@ package com.oskyhang.system.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.frames.base.BaseController;
+import com.frames.base.BaseResult;
+import com.frames.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class BdUserController extends BaseController {
 
     @RequestMapping(value = "/info" , method = RequestMethod.GET)
     @ResponseBody
-    public String test(HttpServletRequest request, HttpServletResponse response){
+    public BaseResult<JSONObject> test(HttpServletRequest request, HttpServletResponse response){
 
         JSONObject obj = new JSONObject();
         String [] roles = {"/documentation", "index",  "/permission", "admin"};
@@ -32,7 +34,7 @@ public class BdUserController extends BaseController {
         obj.put("username", "admin");
         obj.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         obj.put("introduction", "this is introduction");
-        return obj.toString();
+        return Response.success(obj);
     }
 
     @RequestMapping(value = "list", method= RequestMethod.GET)

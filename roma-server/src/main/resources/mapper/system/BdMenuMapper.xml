@@ -26,11 +26,14 @@
     id, menu_name, sname, path, parent_id, menu_type, order_code, icon, param, menu_code,
     is_menu, status, flag, title, component, description, redirect, level, is_cache
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <sql id="table_name">bd_menu</sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select
     <include refid="Base_Column_List" />
-    from bd_menu
-    where id = #{id,jdbcType=CHAR}
+    from
+    <include refid="table_name"/>
+    where id = #{id}
   </select>
 
   <select id="selectMenuList" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -44,29 +47,29 @@
     order by is_menu desc,order_code
   </select>
 
-  <select id="selectMenuTree" resultType="map" parameterType="java.lang.String" >
+  <select id="selectMenuTree" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
       id,
       menu_name as name,
       parent_id as pid
-    from bd_menu
+    from <include refid="table_name"/>
     order by order_code
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from bd_menu
-    where id = #{id,jdbcType=CHAR}
+    delete from <include refid="table_name"/>
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdMenu" >
-    insert into bd_menu (id, menu_name, sname,
+    insert into <include refid="table_name"/> (id, menu_name, sname,
       path, parent_id, menu_type,
       order_code, icon, param,
       menu_code, is_menu, status,
       flag, title, component,
       description, redirect, level,
       is_cache)
-    values (#{id,jdbcType=CHAR}, #{menuName,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR},
-      #{path,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR},
+    values (#{id}, #{menuName,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR},
+      #{path,jdbcType=VARCHAR}, #{parentId}, #{menuType,jdbcType=VARCHAR},
       #{orderCode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{param,jdbcType=VARCHAR},
       #{menuCode,jdbcType=VARCHAR}, #{isMenu,jdbcType=CHAR}, #{status,jdbcType=VARCHAR},
       #{flag,jdbcType=CHAR}, #{title,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
@@ -74,7 +77,7 @@
       #{isCache,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.oskyhang.system.entity.BdMenu" >
-    insert into bd_menu
+    insert into <include refid="table_name"/>
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -136,7 +139,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=CHAR},
+        #{id},
       </if>
       <if test="menuName != null" >
         #{menuName,jdbcType=VARCHAR},
@@ -148,7 +151,7 @@
         #{path,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=VARCHAR},
+        #{parentId},
       </if>
       <if test="menuType != null" >
         #{menuType,jdbcType=VARCHAR},
@@ -195,7 +198,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.BdMenu" >
-    update bd_menu
+    update <include refid="table_name"/>
     <set >
       <if test="menuName != null" >
         menu_name = #{menuName,jdbcType=VARCHAR},
@@ -207,7 +210,7 @@
         path = #{path,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=VARCHAR},
+        parent_id = #{parentId},
       </if>
       <if test="menuType != null" >
         menu_type = #{menuType,jdbcType=VARCHAR},
@@ -252,14 +255,14 @@
         is_cache = #{isCache,jdbcType=CHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.BdMenu" >
-    update bd_menu
+    update <include refid="table_name"/>
     set menu_name = #{menuName,jdbcType=VARCHAR},
       sname = #{sname,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=VARCHAR},
+      parent_id = #{parentId},
       menu_type = #{menuType,jdbcType=VARCHAR},
       order_code = #{orderCode,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
@@ -274,6 +277,6 @@
       redirect = #{redirect,jdbcType=VARCHAR},
       level = #{level,jdbcType=CHAR},
       is_cache = #{isCache,jdbcType=CHAR}
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id} and flag = 'Y'
   </update>
 </mapper>

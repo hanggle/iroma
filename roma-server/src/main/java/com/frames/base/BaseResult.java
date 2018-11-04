@@ -4,15 +4,15 @@ import lombok.Data;
 
 /**
  * description: 返回结果实体类
- * author: Smile
+ * @author: Smile
  * date: 2017/4/23
  */
 @Data
 public class BaseResult<T> {
 
-    public static final int CODE_SUCCESS = 2000;
-    public static final int CODE_UNKNOWN_ERROR = 5000;
-    public static final int CODE_REQUEST_ERROR = 4000;
+    public static final int CODE_SUCCESS = 20000;
+    public static final int CODE_UNKNOWN_ERROR = 50000;
+    public static final int CODE_REQUEST_ERROR = 40000;
     public static final String MESSAGE_FAIL = "请求失败！";
     public static final String MESSAGE_SUCCESS = "请求成功！";
 

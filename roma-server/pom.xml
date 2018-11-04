@@ -10,7 +10,6 @@
     <artifactId>roma-server</artifactId>
     <packaging>jar</packaging>
     <name>roma-server Maven Webapp</name>
-    <url>http://maven.apache.org</url>
 
     <dependencies>
 

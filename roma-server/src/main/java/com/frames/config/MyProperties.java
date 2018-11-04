@@ -2,7 +2,6 @@ package com.frames.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import sun.security.jca.GetInstance;
 
 /**
  * description: 加载配置文件
@@ -35,7 +34,7 @@ public class MyProperties {
         return cnName;
     }
 
-    public void setCnName(String cnName) {;
+    public void setCnName(String cnName) {
         this.cnName = cnName;
     }
 }

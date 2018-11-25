@@ -1,9 +1,9 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.frames.base.BaseController;
-import com.frames.base.BaseResult;
-import com.frames.util.Response;
+import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.BaseResult;
+import com.hanggle.frames.util.Response;
 import com.oskyhang.system.dto.BdMenuDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
@@ -33,10 +33,15 @@ public class BdMenuController extends BaseController {
         return Response.success(bdMenu);
     }
 
+    /**
+     * 查询菜单列表
+     * @param menuDto queryType=1 包括根菜单
+     * @return 菜单list
+     */
     @RequestMapping(value="/list", method= RequestMethod.POST)
-    public BaseResult<List<BdMenu>> list(@RequestBody BdMenuDto menuDto){
-        log.info("list:{}", menuDto);
-        List<BdMenu> list = bdMenuService.selectMenuList();
+    public BaseResult<List<BdMenu>> list(@RequestBody BdMenuDto bdMenuDto){
+        log.info("list:{}", bdMenuDto);
+        List<BdMenu> list = bdMenuService.list(bdMenuDto);
         return Response.success(list);
     }
 
@@ -52,7 +57,7 @@ public class BdMenuController extends BaseController {
         Map<String, Object> params = new HashMap<>(16);
         params.put("level", "1");
 
-        List<BdMenu> list = bdMenuService.selectMenuList(params);
+        List<BdMenu> list = bdMenuService.list(params);
         return Response.success(list);
     }
 

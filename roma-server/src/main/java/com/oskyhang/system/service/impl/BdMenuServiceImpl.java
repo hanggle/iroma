@@ -1,13 +1,13 @@
 package com.oskyhang.system.service.impl;
 
+import com.oskyhang.system.dto.BdMenuDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Description: 菜单接口 <br/>
@@ -23,38 +23,31 @@ public class BdMenuServiceImpl implements BdMenuService {
 
     @Override
     public int deleteByPrimaryKey(Long id) {
-        return bdMenuMapper.deleteByPrimaryKey(id);
+        return bdMenuMapper.delete(id);
     }
 
     @Override
     public int insert(BdMenu bdMenu) {
         bdMenu.setId(1L);
-        return bdMenuMapper.insertSelective(bdMenu);
+        return bdMenuMapper.insert(bdMenu);
     }
 
     @Override
     public int updateByPrimaryKey(BdMenu bdMenu) {
-        return bdMenuMapper.updateByPrimaryKey(bdMenu);
+        return bdMenuMapper.update(bdMenu);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
-    public List<BdMenu> selectMenuList() {
-
-        return bdMenuMapper.selectMenuList(null);
+    public List<BdMenu> list(BdMenuDto bdMenuDto) {
+        Map<String, Object> params = new HashMap<>(16);
+        params.put("orderBy", "level, order_code");
+        return bdMenuMapper.list(params);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
-    public List<BdMenu> selectMenuList(Map<String, Object> params) {
-
-        return bdMenuMapper.selectMenuList(params);
+    public List<BdMenu> list(Map<String, Object> params) {
+        params.put("orderBy", "level, order_code");
+        return bdMenuMapper.list(params);
     }
 
     @Override
@@ -70,6 +63,6 @@ public class BdMenuServiceImpl implements BdMenuService {
     @Override
     public BdMenu selectByPrimaryKey(Long id) {
 
-        return bdMenuMapper.selectByPrimaryKey(id);
+        return bdMenuMapper.load(id);
     }
 }

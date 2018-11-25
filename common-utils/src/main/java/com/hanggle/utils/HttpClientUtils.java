@@ -306,7 +306,7 @@ public class HttpClientUtils {
         try {
             httpClient.close();
         } catch (IOException e) {
-            log.error("common-utils[]HttpClientUtils[]releaseHttpClient faile! case:{}", Throwables.getStackTraceAsString(e));
+            log.error("common-utils[]HttpClientUtils[]releaseHttpClient fail! case:{}", Throwables.getStackTraceAsString(e));
         } finally {
             if (connManager != null) {
                 connManager.shutdown();

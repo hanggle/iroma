@@ -39,7 +39,9 @@ public class BdMenuDto {
     private String redirect;
 
     private String level;
-
-    private String isCache;
+    /**
+     *
+     */
+    private String queryType;
 
 }

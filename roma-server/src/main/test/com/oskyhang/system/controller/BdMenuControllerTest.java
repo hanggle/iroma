@@ -1,12 +1,12 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.frames.util.*;
+import com.hanggle.frames.util.RedisUtils;
+import com.hanggle.frames.util.Response;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 
@@ -22,15 +22,12 @@ public class BdMenuControllerTest extends BaseTestController {
     private BdMenuService bdMenuService;
 
     @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private BaseRedisDao redisDAO;
+    private RedisUtils redisTemplate;
 
     @Test
     public void list() {
 
-        List<BdMenu> list = bdMenuService.selectMenuList();
+        List<BdMenu> list = bdMenuService.list();
         System.out.println(JSONObject.toJSONString(list));
     }
 
@@ -50,11 +47,9 @@ public class BdMenuControllerTest extends BaseTestController {
 
     @Test
     public void redisTest() {
-        boolean b;
-        b = redisDAO.exists("hello");
-        redisDAO.set("hello", "world");
-        Object obj = redisDAO.get("hello");
+        String b;
+        b = redisTemplate.getStr("hello");
 
-        System.out.println(123);
+        System.out.println(b);
     }
 }

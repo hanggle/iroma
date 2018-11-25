@@ -1,10 +1,10 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.frames.base.BaseController;
-import com.frames.base.BaseResult;
-import com.frames.config.RedisProperties;
-import com.frames.util.Response;
+import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.BaseResult;
+import com.hanggle.frames.config.RedisProperties;
+import com.hanggle.frames.util.Response;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,9 +2,9 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.frames.base.BaseController;
-import com.frames.base.BaseResult;
-import com.frames.util.Response;
+import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.BaseResult;
+import com.hanggle.frames.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,7 @@
 package com.oskyhang.system.service;
 
 
+import com.oskyhang.system.dto.BdMenuDto;
 import com.oskyhang.system.entity.BdMenu;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public interface BdMenuService {
 
     int insert(BdMenu bdMenu);
 
-    List<BdMenu> selectMenuList();
+    List<BdMenu> list(BdMenuDto bdMenuDto);
 
-    List<BdMenu> selectMenuList(Map <String, Object> params);
+    List<BdMenu> list(Map <String, Object> params);
 
     List<BdMenu> selectMenuTree();
 

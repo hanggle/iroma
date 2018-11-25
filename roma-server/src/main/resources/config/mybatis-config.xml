@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration  
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
-  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
   <configuration>
 	<settings>
 		<!-- 设置mybatis映射结果时自动略去“_” -->
@@ -17,7 +17,7 @@
   	</typeAliases>-->
 
 	<plugins>
-		<plugin interceptor="com.frames.interceptor.SqlCostInterceptor" />
+		<plugin interceptor="com.hanggle.frames.interceptor.SqlCostInterceptor" />
 	</plugins>
 
 </configuration>

@@ -1,18 +1,14 @@
-package com.oskyhang.system.mapper;
-
-
-import com.oskyhang.system.entity.BdMenu;
-import org.springframework.stereotype.Repository;
+package com.hanggle.frames.base;
 
 import java.util.List;
 import java.util.Map;
+
 /**
- * description: <br/>
- * @author: zh <br/>
- * date: 2018/3/12 <br/>
+ * @Description: mapper 基类<br/>
+ * @Author: zh <br/>
+ * @Date: 2018/11/3 <br/>
  */
-@Repository
-public interface BdMenuMapper{
+public interface BaseMapper<T> {
     /**
      * 删除
      * @param id id
@@ -25,31 +21,34 @@ public interface BdMenuMapper{
      * @param object 实体
      * @return id
      */
-    int insert(BdMenu object);
+    int insert(T object);
 
     /**
      * 根据id选择
      * @param id id
      * @return 查询的对象
      */
-    BdMenu load(Long id);
+    T load(Long id);
+
+    /**
+     * 根据id动态更新
+     * @param object 对象
+     * @return id
+     */
+    int updateSelective(T object);
 
     /**
      *  据id更新
      * @param record  对象
      * @return id
      */
-    int update(BdMenu record);
+    int update(T record);
 
     /**
      *  据id更新
      * @param params  对象
      * @return id
      */
-    List<BdMenu> list(Map params);
-    /**
-     * 查询集合
-     * @return 集合
-     */
-    List<BdMenu> selectMenuTree();
+    List<T> list(Map params);
+
 }

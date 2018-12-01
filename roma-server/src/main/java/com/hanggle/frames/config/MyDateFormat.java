@@ -6,9 +6,9 @@ import java.text.*;
 import java.util.*;
 
 /**
- * description: <br/>
- * author: zh <br/>
- * date: 2018/9/23 <br/>
+ * @description: <br/>
+ * @author: zh <br/>
+ * @date: 2018/9/23 <br/>
  */
 @Slf4j
 public class MyDateFormat extends DateFormat {

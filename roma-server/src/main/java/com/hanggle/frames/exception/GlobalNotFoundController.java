@@ -1,6 +1,6 @@
 package com.hanggle.frames.exception;
 
-import com.hanggle.frames.util.Response;
+import com.hanggle.frames.base.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +18,6 @@ public class GlobalNotFoundController{
     @RequestMapping(value="error")
     @ResponseBody
     public Object handleError(){
-        return Response.requestError();
+        return Response.error(Response.CODE_REQUEST_ERROR, Response.MESSAGE_FAIL);
     }
 }

@@ -35,14 +35,7 @@ public interface BaseMapper<T> {
      * @param object 对象
      * @return id
      */
-    int updateSelective(T object);
-
-    /**
-     *  据id更新
-     * @param record  对象
-     * @return id
-     */
-    int update(T record);
+    int update(T object);
 
     /**
      *  据id更新

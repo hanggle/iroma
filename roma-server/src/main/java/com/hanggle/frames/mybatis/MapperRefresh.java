@@ -35,7 +35,7 @@ public class MapperRefresh implements java.lang.Runnable{
     private Long beforeTime = 0L;           // 上一次刷新时间
     private static int delaySeconds;        // 延迟刷新秒数
     private static int sleepSeconds;        // 休眠时间
-    private static String mappingPath;      // xml文件夹匹配字符串，需要根据需要修改
+    private static String mappingPath;      /*// xml文件夹匹配字符串，需要根据需要修改*/
 
     static {
 
@@ -106,7 +106,7 @@ public class MapperRefresh implements java.lang.Runnable{
                     }
                     refresh = true;
 
-                    System.out.println("========= Enabled refresh mybatis mapper =========");
+                    log.info("========= Enabled refresh mybatis mapper =========");
 
                     while (true) {
 
@@ -191,7 +191,7 @@ public class MapperRefresh implements java.lang.Runnable{
             } finally {
                 ErrorContext.instance().reset();
             }
-            System.out.println("Refresh file: " + mappingPath + StringUtils.substringAfterLast(fileList.get(i).getAbsolutePath(), mappingPath));
+            log.info("Refresh file: " + mappingPath + StringUtils.substringAfterLast(fileList.get(i).getAbsolutePath(), mappingPath));
             if (log.isDebugEnabled()) {
                 log.debug("Refresh file: " + fileList.get(i).getAbsolutePath());
                 log.debug("Refresh filename: " + fileList.get(i).getName());

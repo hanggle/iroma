@@ -15,9 +15,9 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 
 /**
- * description:
- * author: Smile
- * date: 2017/4/8
+ * @description:
+ * @author: Smile
+ * @date: 2017/4/8
  */
 @Configuration
 @Slf4j
@@ -33,8 +33,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // ObjectMapper为了保障线程安全性，里面的配置类都是一个不可变的对象
         // 所以这里的setDateFormat的内部原理其实是创建了一个新的配置类
-        DateFormat dateFormat = mapper.getDateFormat();
-        mapper.setDateFormat(new MyDateFormat(dateFormat));
+        //DateFormat dateFormat = mapper.getDateFormat();
+        //mapper.setDateFormat(new MyDateFormat(dateFormat));
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(BigInteger.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);

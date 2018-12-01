@@ -3,8 +3,7 @@ package com.oskyhang.system.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.frames.base.BaseController;
-import com.hanggle.frames.base.BaseResult;
-import com.hanggle.frames.util.Response;
+import com.hanggle.frames.base.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * description: 用户登录模块<br/>
- * author: zh <br/>
- * date: 2018/3/12 <br/>
+ * @description: 用户登录模块<br/>
+ * @author: zh <br/>
+ * @date: 2018/3/12 <br/>
  */
 @RestController
 @RequestMapping("/user")
@@ -25,7 +24,7 @@ public class BdUserController extends BaseController {
 
     @RequestMapping(value = "/info" , method = RequestMethod.GET)
     @ResponseBody
-    public BaseResult<JSONObject> test(HttpServletRequest request, HttpServletResponse response){
+    public Response test(HttpServletRequest request, HttpServletResponse response){
 
         JSONObject obj = new JSONObject();
         String [] roles = {"/documentation", "index",  "/permission", "admin"};
@@ -34,7 +33,8 @@ public class BdUserController extends BaseController {
         obj.put("username", "admin");
         obj.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         obj.put("introduction", "this is introduction");
-        return Response.success(obj);
+        obj.put("id", 123);
+        return Response2.success(obj);
     }
 
     @RequestMapping(value = "list", method= RequestMethod.GET)

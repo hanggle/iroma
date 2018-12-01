@@ -1,14 +1,9 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.frames.util.RedisUtils;
-import com.hanggle.frames.util.Response;
-import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * description: <br/>
@@ -21,35 +16,35 @@ public class BdMenuControllerTest extends BaseTestController {
     @Autowired
     private BdMenuService bdMenuService;
 
-    @Autowired
-    private RedisUtils redisTemplate;
+//    @Autowired
+//    private RedisUtils redisTemplate;
 
     @Test
     public void list() {
 
-        List<BdMenu> list = bdMenuService.list();
-        System.out.println(JSONObject.toJSONString(list));
+//        List<BdMenu> list = bdMenuService.list();
+//        System.out.println(JSONObject.toJSONString(list));
     }
 
     public static void main(String[] args){
         JSONObject obj = new JSONObject();
         obj.put("a", 23);
         obj.put("b", 23);
-        String str = Response.success(obj).toString();
+        String str = Response2.success(obj).toString();
         System.out.println(str);
     }
 
 
     @Test
     public void menuTree() {
-        System.out.println(bdMenuService.selectMenuTree().get(1));
+        //System.out.println(bdMenuService.selectMenuTree().get(1));
     }
 
     @Test
     public void redisTest() {
         String b;
-        b = redisTemplate.getStr("hello");
+//        b = redisTemplate.getStr("hello");
 
-        System.out.println(b);
+//        System.out.println(b);
     }
 }

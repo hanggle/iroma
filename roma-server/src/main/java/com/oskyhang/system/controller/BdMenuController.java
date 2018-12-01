@@ -1,10 +1,13 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Throwables;
 import com.hanggle.frames.base.BaseController;
-import com.hanggle.frames.base.BaseResult;
-import com.hanggle.frames.util.Response;
-import com.oskyhang.system.dto.BdMenuDto;
+import com.hanggle.frames.base.Response;
+import com.hanggle.frames.base.ErrorCode;
+import com.oskyhang.system.dto.MenuQueryParam;
+import com.oskyhang.system.dto.SelectDto;
+import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,54 +31,64 @@ public class BdMenuController extends BaseController {
     private BdMenuService bdMenuService;
 
     @RequestMapping(value = "/get", method= RequestMethod.GET)
-    public BaseResult<BdMenu> select(@RequestParam Long id) {
-        BdMenu bdMenu = bdMenuService.selectByPrimaryKey(id);
+    public Response<BdMenu> select(@RequestParam Long id) {
+        BdMenu bdMenu = bdMenuService.load(id);
         return Response.success(bdMenu);
     }
 
     /**
      * 查询菜单列表
-     * @param menuDto queryType=1 包括根菜单
+     * @param menuQueryParam 参数
      * @return 菜单list
      */
     @RequestMapping(value="/list", method= RequestMethod.POST)
-    public BaseResult<List<BdMenu>> list(@RequestBody BdMenuDto bdMenuDto){
-        log.info("list:{}", bdMenuDto);
-        List<BdMenu> list = bdMenuService.list(bdMenuDto);
+    public Response<List<BdMenu>> list(@RequestBody MenuQueryParam menuQueryParam){
+        List<BdMenu> list = bdMenuService.list(menuQueryParam);
         return Response.success(list);
     }
 
     @RequestMapping(value="/menuTree", method= RequestMethod.GET)
-    public BaseResult<BdMenu> menuTree(){
-        List<BdMenu> list = bdMenuService.selectMenuTree();
-        return Response.success(list);
+    public Response<MenuTreeDto> menuTree(){
+        MenuTreeDto menuTreeDto = bdMenuService.selectMenuTree();
+        return Response.success(menuTreeDto);
     }
 
-    @RequestMapping(value="/oneLevelMenu", method= RequestMethod.GET)
-    public BaseResult<List<BdMenu>> oneLevelMenu(){
-
-        Map<String, Object> params = new HashMap<>(16);
-        params.put("level", "1");
-
-        List<BdMenu> list = bdMenuService.list(params);
-        return Response.success(list);
+    /**
+     * 菜单下拉选择
+     * @return
+     */
+    @RequestMapping(value="/menuSelect", method= RequestMethod.GET)
+    public Response<List<SelectDto>> menuSelect(MenuQueryParam menuQueryParam){
+        List<SelectDto> menuTreeDto = bdMenuService.menuSelect(menuQueryParam);
+        return Response.success(menuTreeDto);
     }
 
+    /**
+     *
+     * @param bdMenu 菜单
+     * @return id
+     */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
-    public String insert(@RequestBody BdMenu bdMenu){
-        int i = bdMenuService.insert(bdMenu);
-        return "";
+    public Response insert(@RequestBody BdMenu bdMenu){
+
+        try {
+            int i = bdMenuService.insert(bdMenu);
+            return Response.success(i);
+        } catch (Exception e) {
+            log.error("find exception! case:{}", Throwables.getStackTraceAsString(e));
+            return Response.fail(ErrorCode.CREATE_FAIL);
+        }
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(BdMenu bdMenu) {
-        bdMenuService.updateByPrimaryKey(bdMenu);
+        bdMenuService.update(bdMenu);
         return "";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String delete(@RequestParam("id") Long id) {
-        bdMenuService.deleteByPrimaryKey(id);
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam Long id) {
+        bdMenuService.delete(id);
         return JSONObject.toJSONString(Response.success(""));
     }
 }

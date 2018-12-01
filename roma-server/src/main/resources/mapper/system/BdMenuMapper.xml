@@ -10,7 +10,7 @@
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="BIT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
     <result column="is_delete" property="isDelete" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -19,19 +19,22 @@
     id, name, path, parent_id, order_code, icon, title, description, level,
     is_delete, create_time, update_time
   </sql>
+
   <sql id="table_name">bd_menu</sql>
+
   <select id="load" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
     from bd_menu
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <select id="list" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select
     <include refid="Base_Column_List" />
     from
     <include refid="table_name" />
-    where is_delete = 0
+    where is_delete = false
     <if test="level != null and level != ''">
       and level = #{level} or LEVEL = 0
     </if>
@@ -42,11 +45,25 @@
       order by order_code
     </if>
   </select>
+
+  <select id="menuSelect" resultType="com.oskyhang.system.dto.SelectDto" parameterType="java.util.Map" >
+    select
+      id,
+      name as label,
+      id as value
+    from
+    <include refid="table_name" />
+    where is_delete = false
+    and locate( 'dashboard', NAME ) = 0
+    order by order_code
+  </select>
+
   <delete id="delete" parameterType="java.lang.Long" >
     update bd_menu
     set is_delete = 1
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdMenu" >
     insert into
     <include refid="table_name" />
@@ -101,9 +118,6 @@
       <if test="parentId != null" >
         #{parentId},
       </if>
-      <if test="menuId != null" >
-        #{menuId},
-      </if>
       <if test="orderCode != null" >
         #{orderCode},
       </if>
@@ -130,6 +144,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="update" parameterType="com.oskyhang.system.entity.BdMenu" >
     update
     <include refid="table_name" />

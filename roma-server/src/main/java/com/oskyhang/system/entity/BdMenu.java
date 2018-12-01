@@ -2,6 +2,7 @@ package com.oskyhang.system.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * @Description: <br/>
@@ -9,7 +10,8 @@ import java.util.Date;
  * @Date: 2018/11/4 <br/>
  */
 @Data
-public class BdMenu {
+public class BdMenu implements Serializable {
+    private static final long serialVersionUID = -221896583108389192L;
     private Long id;
 
     private String name;
@@ -17,8 +19,6 @@ public class BdMenu {
     private String path;
 
     private Long parentId;
-
-    private String menuId;
 
     private Integer orderCode;
 
@@ -28,7 +28,7 @@ public class BdMenu {
 
     private String description;
 
-    private Boolean level;
+    private Integer level;
 
     private Boolean isDelete;
 

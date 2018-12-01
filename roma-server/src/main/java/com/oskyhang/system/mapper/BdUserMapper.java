@@ -1,17 +1,11 @@
 package com.oskyhang.system.mapper;
 
+import com.hanggle.frames.base.BaseMapper;
 import com.oskyhang.system.entity.BdUser;
 
-public interface BdUserMapper {
-    int deleteByPrimaryKey(Long id);
+/**
+ * @author hanggle
+ */
+public interface BdUserMapper extends BaseMapper<BdUser> {
 
-    int insert(BdUser record);
-
-    int insertSelective(BdUser record);
-
-    BdUser selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(BdUser record);
-
-    int updateByPrimaryKey(BdUser record);
 }

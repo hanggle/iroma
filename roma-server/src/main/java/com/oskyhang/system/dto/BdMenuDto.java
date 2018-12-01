@@ -2,8 +2,14 @@ package com.oskyhang.system.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
+/**
+ * @author zh
+ */
 @Data
-public class BdMenuDto {
+public class BdMenuDto implements Serializable {
+    private static final long serialVersionUID = 4831737375641480965L;
     private Long id;
 
     private String menuName;

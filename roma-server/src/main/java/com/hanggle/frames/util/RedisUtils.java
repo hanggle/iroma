@@ -371,18 +371,6 @@ public class RedisUtils {
     }
 
     /**
-     * 删除map中的某个对象
-     * @author lh
-     * @date 2016年8月10日
-     * @param key   map对应的key
-     * @param field map中该对象的key
-     */
-    public void delMapField(String key, String... field){
-        BoundHashOperations<String, String, ?> boundHashOperations = stringRedisTemplate.boundHashOps(key);
-        boundHashOperations.delete(field);
-    }
-
-    /**
      * 指定缓存的失效时间
      *
      * @author FangJun
@@ -403,15 +391,6 @@ public class RedisUtils {
      */
     public static void sadd(String key, String... value) {
         stringRedisTemplate.boundSetOps(key).add(value);
-    }
-
-    /**
-     * 删除set集合中的对象
-     * @param key
-     * @param value
-     */
-    public static void srem(String key, String... value) {
-        stringRedisTemplate.boundSetOps(key).remove(value);
     }
 
     /**

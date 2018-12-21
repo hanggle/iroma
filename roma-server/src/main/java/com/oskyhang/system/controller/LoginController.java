@@ -34,7 +34,7 @@ public class LoginController extends BaseController {
         obj.put("code", "1o");
         obj.put("message", "sss");
         obj.put("token", "12wqs");
-        return Response2.success(obj);
+        return Response.success(obj);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
         JSONObject obj = new JSONObject();
         obj.put("code", "1");
         obj.put("desc", "sss");
-        return Response2.success(obj);
+        return Response.success(obj);
     }
 
 

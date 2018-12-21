@@ -1,6 +1,7 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hanggle.frames.base.Response;
 import com.oskyhang.system.service.BdMenuService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,6 @@ public class BdMenuControllerTest extends BaseTestController {
 //        List<BdMenu> list = bdMenuService.list();
 //        System.out.println(JSONObject.toJSONString(list));
     }
-
-    public static void main(String[] args){
-        JSONObject obj = new JSONObject();
-        obj.put("a", 23);
-        obj.put("b", 23);
-        String str = Response2.success(obj).toString();
-        System.out.println(str);
-    }
-
 
     @Test
     public void menuTree() {

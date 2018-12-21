@@ -34,11 +34,11 @@ public class BdUserController extends BaseController {
         obj.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         obj.put("introduction", "this is introduction");
         obj.put("id", 123);
-        return Response2.success(obj);
+        return Response.success(obj);
     }
 
     @RequestMapping(value = "list", method= RequestMethod.GET)
-    public String select(String id, String data) {
+    public Response<JSONObject> select(String id, String data) {
         JSONArray arr = new JSONArray();
         JSONObject obj = new JSONObject();
         obj.put("author", "Gary");
@@ -79,7 +79,7 @@ public class BdUserController extends BaseController {
         result.put("total", arr.size());
         result.put("items", arr);
 
-        return JSONObject.toJSONString(result);
+        return Response.success(result);
     }
 }
 

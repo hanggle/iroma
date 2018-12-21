@@ -15,5 +15,10 @@ import java.util.List;
  */
 @Repository
 public interface BdMenuMapper extends BaseMapper<BdMenu> {
+
+    /**
+     *  菜单下拉选择
+     * @return SelectDto
+     */
     List<SelectDto> menuSelect();
 }

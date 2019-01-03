@@ -1,6 +1,7 @@
 package com.oskyhang.system.service.impl;
 
 import com.google.common.base.Objects;
+import com.hanggle.frames.util.IdUtil;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.hanggle.frames.util.Arguments.notNull;
+
 /**
  * Description: 菜单接口 <br/>
  * @author : z.hang <br/>
@@ -23,44 +26,51 @@ import java.util.stream.Collectors;
 public class BdMenuServiceImpl implements BdMenuService {
 
     @Autowired
-    private BdMenuMapper bdMenuMapper;
+    private BdMenuMapper bdMenuDao;
 
     @Override
     public int delete(Long id) {
-        return bdMenuMapper.delete(id);
+        return bdMenuDao.delete(id);
     }
 
     @Override
-    public int insert(BdMenu bdMenu) {
-        bdMenu.setId(1L);
-        return bdMenuMapper.insert(bdMenu);
+    public void insertAndUpdate(BdMenu bdMenu) {
+        BdMenu parentMenu = bdMenuDao.load(bdMenu.getParentId());
+        bdMenu.setLevel(parentMenu.getLevel()+1);
+        if (notNull(bdMenu.getId())) {
+            update(bdMenu);
+        } else {
+            bdMenu.setId(IdUtil.getNextId());
+            bdMenuDao.insert(bdMenu);
+        }
     }
 
     @Override
     public int update(BdMenu bdMenu) {
-        return bdMenuMapper.update(bdMenu);
+        return bdMenuDao.update(bdMenu);
     }
 
     @Override
     public List<SelectDto> menuSelect(MenuQueryParam menuQueryParam) {
-        return bdMenuMapper.menuSelect();
+        return bdMenuDao.menuSelect();
     }
 
     @Override
     public List<BdMenu> list(MenuQueryParam menuQueryParam) {
         Map<String, Object> params = new HashMap<>(16);
         params.put("orderBy", "level, order_code");
-        return bdMenuMapper.list(params);
+        return bdMenuDao.list(params);
     }
 
     @Override
     public MenuTreeDto selectMenuTree() {
         Map<String, Object> params = new HashMap<>(16);
-        List<BdMenu> bdMenus = bdMenuMapper.list(params);
+        List<BdMenu> bdMenus = bdMenuDao.list(params);
         // 根菜单
         MenuTreeDto menuTreeDto = new MenuTreeDto();
         menuTreeDto.setId(bdMenus.get(0).getId());
         menuTreeDto.setLabel(bdMenus.get(0).getName());
+        menuTreeDto.setLevel(bdMenus.get(0).getLevel());
         return getChildMenu(menuTreeDto, bdMenus);
     }
     private MenuTreeDto getChildMenu(MenuTreeDto menuTreeDto, List<BdMenu> bdMenus) {
@@ -76,6 +86,6 @@ public class BdMenuServiceImpl implements BdMenuService {
     @Override
     public BdMenu load(Long id) {
 
-        return bdMenuMapper.load(id);
+        return bdMenuDao.load(id);
     }
 }

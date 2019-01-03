@@ -16,10 +16,9 @@ import java.util.List;
  */
 public interface BdMenuService {
 
-    int insert(BdMenu bdMenu);
+    void insertAndUpdate(BdMenu bdMenu);
 
     List<BdMenu> list(MenuQueryParam menuQueryParam);
-
     /**
      * 菜单树
      * @return list

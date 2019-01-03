@@ -14,6 +14,7 @@ import java.util.List;
 public class MenuTreeDto {
     private Long id;
     private String label;
+    private Integer level;
     private List<MenuTreeDto> children;
 
     public MenuTreeDto() {
@@ -21,5 +22,6 @@ public class MenuTreeDto {
     public MenuTreeDto(BdMenu bdMenu) {
         this.id = bdMenu.getId();
         this.label = bdMenu.getName();
+        this.level = bdMenu.getLevel();
     }
 }

@@ -50,7 +50,8 @@
     select
       id,
       name as label,
-      id as value
+      id as value,
+      level
     from
     <include refid="table_name" />
     where is_delete = false
@@ -60,7 +61,7 @@
 
   <delete id="delete" parameterType="java.lang.Long" >
     update bd_menu
-    set is_delete = 1
+    set is_delete = 1, update_time = now()
     where id = #{id,jdbcType=BIGINT}
   </delete>
 

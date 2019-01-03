@@ -1,4 +1,4 @@
-package com.hanggle.frames.util;
+package com.hanggle.frames.base;
 
 /**
  * @description:
@@ -14,7 +14,7 @@ public class IdGenerator {
     private long workerId;
     private long datacenterId;
     private long sequence = 0L;
-    private long twepoch = 1288834974657L; //Thu, 04 Nov 2010 01:42:54 GMT
+    private long twepoch = 1545442152941L; //2018-12-22 9:29:50 GMT
     private long workerIdBits = 5L; //节点ID长度
     private long datacenterIdBits = 5L; //数据中心ID长度
     private long maxWorkerId = -1L ^ (-1L << workerIdBits); //最大支持机器节点数0~31，一共32个
@@ -74,7 +74,7 @@ public class IdGenerator {
         lastTimestamp = timestamp;
         // 最后按照规则拼出ID。
         // 000000000000000000000000000000000000000000  00000            00000       000000000000
-        // time                                                               datacenterId   workerId    sequence
+        // time                                        datacenterId     workerId    sequence
         return ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift)
                 | (workerId << workerIdShift) | sequence;
     }

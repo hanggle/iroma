@@ -1,5 +1,7 @@
 package com.hanggle.frames.base;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +45,19 @@ public interface BaseMapper<T> {
      * @return id
      */
     List<T> list(Map params);
+
+    /**
+     *  统计
+     * @param params  对象
+     * @return id
+     */
+    int count(Map params);
+
+    /**
+     *  分页
+     * @param params  对象
+     * @return id
+     */
+    List<T> page(Map params);
 
 }

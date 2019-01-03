@@ -83,8 +83,8 @@ public class Response<T> implements Serializable {
      * @param message 返回的错误信息
      * @return {"code":2000,"data":"","message":""}
      */
-    public static Response fail(String message){
-        return new Response(false, CODE_FAIL, message);
+    public static<T> Response<T> fail(String message){
+        return new Response<>(false, CODE_FAIL, message);
     }
 
     /**

@@ -10,6 +10,7 @@ import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,13 +70,13 @@ public class BdMenuController extends BaseController {
      * @return id
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
-    public Response insert(@RequestBody BdMenu bdMenu){
+    public Response<Boolean> insert(@RequestBody BdMenu bdMenu){
 
         try {
-            int i = bdMenuService.insert(bdMenu);
-            return Response.success(i);
+            bdMenuService.insertAndUpdate(bdMenu);
+            return Response.success();
         } catch (Exception e) {
-            log.error("find exception! case:{}", Throwables.getStackTraceAsString(e));
+            log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
             return Response.fail(ErrorCode.CREATE_FAIL);
         }
     }

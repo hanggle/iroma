@@ -1,5 +1,7 @@
 package com.hanggle.frames.util;
 
+import com.hanggle.frames.base.IdGenerator;
+
 /**
  * @description: 获去ID
  * @author: hanggle
@@ -13,11 +15,5 @@ public class IdUtil {
      */
     public static long getNextId() {
         return IdGenerator.get().nextId();
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        for (int i = 0; i < 10000; i++) {
-            System.out.println(getNextId());
-        }
     }
 }

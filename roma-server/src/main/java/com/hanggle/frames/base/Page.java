@@ -11,17 +11,17 @@ import java.util.List;
  * @date: 2018/12/2
  */
 @Data
-public class Page<T> implements Serializable {
+public class Page<E> implements Serializable {
 
     private static final long serialVersionUID = -1404833718627071453L;
 
-    private Long total;
-    private List<T> item;
+    private int total;
+    private List<E> item;
 
     public Page() {
     }
 
-    public Page(Long total, List<T> item) {
+    public Page(int total, List<E> item) {
         this.total = total;
         this.item = item;
     }

@@ -9,6 +9,8 @@ import lombok.Data;
  */
 @Data
 public class QueryParam {
+    private Integer pageNo;
+    private Integer pageSize;
     private Long id;
     private Long name;
 }

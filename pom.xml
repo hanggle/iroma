@@ -36,6 +36,7 @@
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
         <httpclient.version>4.5.2</httpclient.version>
         <lombok.version>1.16.22</lombok.version>
+        <poi.version>3.17</poi.version>
     </properties>
 
     <dependencyManagement>
@@ -120,6 +121,17 @@
                 <version>${lombok.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

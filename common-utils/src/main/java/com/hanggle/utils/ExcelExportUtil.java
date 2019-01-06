@@ -1,57 +1,47 @@
 package com.hanggle.utils;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.*;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ExcelExportUtil {
-    /**
-     *
-     * @param sheetName sheet 名
-     * @param list 要导出的数据
-     * @param rootPath 导出的路径位置
-     * @param fieldMap 导出的字段
-     * @param formatMap 导出的数据的格式化
-     * @return 导出路径
-     */
-    @Deprecated
-	public String exportXLS(String sheetName, List<?> list, String rootPath, Map<String, String> fieldMap,
-							Map<String, Object> formatMap)
+
+
+	/**
+	 *
+	 * @param sheetName sheet 名
+	 * @param list 要导出的数据
+	 * @param rootPath 导出的路径位置
+	 * @param fieldMap 导出的字段
+	 * @param formatMap 导出的数据的格式化
+	 * @return 导出路径
+	 */
+	public String exportXLSX(Workbook workbook, String sheetName, List<?> list, String rootPath, Map<String, String> fieldMap,
+							 Map<String, Object> formatMap)
+
 			throws ClassNotFoundException,
 			IllegalArgumentException,
 			IllegalAccessException,
 			IOException {
 
-		/**
-		 * 创建表头Map对象
-		 */
+		// 创建表头Map对象
 		Map<String, String> headMap = new HashMap<>();
 
-		/**
-		 * 封装表头名称，同时封闭表头key的数组它的先后顺序决定了导出是每行各单元格顺序
-		 */
+		// 封装表头名称，同时封闭表头key的数组它的先后顺序决定了导出是每行各单元格顺序
 		String[] keyAry = assembleKeyAry(fieldMap, headMap);
 
-		/**
-		 * 创建一个webbook，对应一个Excel文件
-		 */
-		HSSFWorkbook workbook = new HSSFWorkbook();
-
-		/**
-		 * 在webbook中添加一个sheet,对应Excel文件中的sheet
-		 */
-
+		// 在webbook中添加一个sheet,对应Excel文件中的sheet
 		int pageSize = 50000;
 
 		Integer dataSize = list.size();
@@ -62,7 +52,7 @@ public class ExcelExportUtil {
 			int sheetIndex = s + 1;
 
 			String sheetName1 = "(" + sheetIndex + ")" + sheetName;
-			HSSFSheet sheet = workbook.createSheet(sheetName1);
+			Sheet sheet = workbook.createSheet(sheetName1);
 
 			int beginNum = s * pageSize;
 
@@ -86,15 +76,11 @@ public class ExcelExportUtil {
 			}
 		}
 
-		/**
-		 * 以下是保存EXCEL文件
-		 */
+		// 保存EXCEL文件
 		String filePath = saveExportFile(rootPath, workbook);
 
 		return filePath;
-
 	}
-
 	private String saveExportFile(String rootPath, Workbook workbook)
             throws IOException {
 		String filePath = "";
@@ -212,14 +198,14 @@ public class ExcelExportUtil {
     }
 	/**
 	 * 封闭表头key的数组，先后顺序决定了导出的顺序
-	 * @param map
-	 * @param headMap
+	 * @param map 要导出的列
+	 * @param headMap sheet表头
 	 * @return
 	 */
 	private String[] assembleKeyAry(Map<String, String> map, Map<String, String> headMap) {
 
 		// 封闭表头key的数组，先后顺序决定了导出的顺序
-		String keyAry[] = new String[map.keySet().size()];
+		String[] keyAry = new String[map.keySet().size()];
 		int index = 0;
 		for (String key : map.keySet()) {
 			keyAry[index] = key;
@@ -230,84 +216,15 @@ public class ExcelExportUtil {
 		return keyAry;
 	}
 
-	private void writeRow(Map<String, String> dataMap, String[] keyAry, HSSFSheet sheet, int rowIndex) {
+	/**
+	 *
+	 * @param dataMap 导出的所有数据
+	 * @param keyAry 要导出的key
+	 * @param sheet 导出的sheet
+	 * @param rowIndex 导出的行
+	 */
+    private void writeRow(Map<String, String> dataMap, String[] keyAry, Sheet sheet, int rowIndex) {
 
-		// 在sheet中添加表头第0行
-		HSSFRow row = sheet.createRow(rowIndex);
-
-		for (int i = 0; i < keyAry.length; i++) {
-			HSSFCell cell = row.createCell(i);
-			cell.setCellValue(dataMap.get(keyAry[i]));
-		}
-	}
-
-    /**
-     *
-     * @param sheetName sheet 名
-     * @param list 要导出的数据
-     * @param rootPath 导出的路径位置
-     * @param fieldMap 导出的字段
-     * @param formatMap 导出的数据的格式化
-     * @return 导出路径
-     */
-    public String exportXLSX(Workbook workbook, String sheetName, List<?> list, String rootPath, Map<String, String> fieldMap,
-                            Map<String, Object> formatMap)
-
-            throws ClassNotFoundException,
-            IllegalArgumentException,
-            IllegalAccessException,
-            IOException {
-
-        // 创建表头Map对象
-        Map<String, String> headMap = new HashMap<>();
-
-        // 封装表头名称，同时封闭表头key的数组它的先后顺序决定了导出是每行各单元格顺序
-        String[] keyAry = assembleKeyAry(fieldMap, headMap);
-
-        // 在webbook中添加一个sheet,对应Excel文件中的sheet
-        int pageSize = 50000;
-
-        Integer dataSize = list.size();
-        int sheetNums = (dataSize / pageSize) + 1;
-
-        for (int s = 0; s < sheetNums; s++) {
-
-            int sheetIndex = s + 1;
-
-            String sheetName1 = "(" + sheetIndex + ")" + sheetName;
-            Sheet sheet = workbook.createSheet(sheetName1);
-
-            int beginNum = s * pageSize;
-
-            // 写入标题行
-            writeXLXSRow(headMap, keyAry, sheet, 0);
-
-            // 写入实体数据
-            int rowIndex = 1;
-            for (int i = beginNum; i < beginNum + pageSize; i++) {
-
-                if (list.size() < (i + 1)) {
-                    break;
-                }
-
-                // 将本行的数据封闭到map中
-                Map<String, String> dataMap = getRowMap(list.get(i), keyAry, formatMap);
-
-                writeXLXSRow(dataMap, keyAry, sheet, rowIndex);
-
-                rowIndex++;
-            }
-        }
-
-        // 保存EXCEL文件
-        String filePath = saveExportFile(rootPath, workbook);
-
-        return filePath;
-    }
-
-    private void writeXLXSRow(Map<String, String> dataMap, String[] keyAry, Sheet sheet, int rowIndex) {
-
-        // 在sheet中添加表头第0行
         Row row = sheet.createRow(rowIndex);
 
         for (int i = 0; i < keyAry.length; i++) {

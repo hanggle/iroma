@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date: 2018/3/12 <br/>
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/base/user")
 @Slf4j
 public class BdUserController extends BaseController {
     @Autowired

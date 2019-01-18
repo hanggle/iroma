@@ -14,13 +14,6 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = -1277927133193484182L;
 
-    public static final int CODE_SUCCESS = 20000;
-    public static final int CODE_UNKNOWN_ERROR = 50000;
-    public static final int CODE_REQUEST_ERROR = 40000;
-    public static final int CODE_FAIL = 60000;
-    public static final String MESSAGE_FAIL = "请求失败！";
-    public static final String MESSAGE_SUCCESS = "请求成功！";
-
     private boolean success;
     private int code;
     private String message;
@@ -43,13 +36,13 @@ public class Response<T> implements Serializable {
 
     public Response(T data) {
         this.success = true;
-        this.code = CODE_SUCCESS;
-        this.message = MESSAGE_SUCCESS;
+        this.code = ResponseCode.SUCCESS.code();
+        this.message = ResponseCode.SUCCESS.message();
         this.data = data;
     }
     public Response(T data, String message) {
         this.success = true;
-        this.code = CODE_SUCCESS;
+        this.code = ResponseCode.SUCCESS.code();
         this.message = message;
         this.data = data;
     }
@@ -84,7 +77,16 @@ public class Response<T> implements Serializable {
      * @return {"code":2000,"data":"","message":""}
      */
     public static<T> Response<T> fail(String message){
-        return new Response<>(false, CODE_FAIL, message);
+        return new Response<>(false, ResponseCode.FAIL.code(), message);
+    }
+
+    /**
+     *  请求成功，处理失败时返回
+     * @param message 返回的错误信息
+     * @return {"code":2000,"data":"","message":""}
+     */
+    public static<T> Response<T> fail(int code, String message){
+        return new Response<>(false, code, message);
     }
 
     /**

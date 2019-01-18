@@ -3,8 +3,8 @@ package com.oskyhang.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.frames.base.BaseController;
 import com.hanggle.frames.base.Response;
+import com.hanggle.frames.base.ResponseCode;
 import com.hanggle.frames.config.RedisProperties;
-import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +17,9 @@ import java.util.Map;
  * date: 2018/3/12 <br/>
  */
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/base/login")
 @Slf4j
 public class LoginController extends BaseController {
-
-    @Autowired
-    private BdMenuService bdMenuService;
 
     @Autowired
     private RedisProperties redisProperties;
@@ -45,6 +42,9 @@ public class LoginController extends BaseController {
         return Response.success(obj);
     }
 
-
+    @RequestMapping(value = "/notLogin")
+    public Response<JSONObject> unLogin(){
+        return Response.fail(ResponseCode.FAIL_NOTLOGIN.code(), ResponseCode.FAIL_NOTLOGIN.message());
+    }
 }
 

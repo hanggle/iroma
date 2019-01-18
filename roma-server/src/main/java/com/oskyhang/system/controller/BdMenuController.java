@@ -10,7 +10,6 @@ import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.service.BdMenuService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ import java.util.*;
  * Time: 18:16
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/base/menu")
 @Slf4j
 public class BdMenuController extends BaseController {
 

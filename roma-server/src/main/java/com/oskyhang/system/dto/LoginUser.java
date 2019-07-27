@@ -1,5 +1,6 @@
 package com.oskyhang.system.dto;
 
+import com.oskyhang.system.entity.BdUser;
 import lombok.Data;
 
 /**
@@ -10,8 +11,15 @@ import lombok.Data;
 @Data
 public class LoginUser {
     private Long userId;
+    private String token;
     private Long personId;
     private String personName;
     private Integer gender;
 
+    public LoginUser() {
+    }
+
+    public LoginUser(BdUser bdUser) {
+        this.userId = bdUser.getId();
+    }
 }

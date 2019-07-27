@@ -33,6 +33,9 @@ public class IdGenerator {
     public static IdGenerator get(){
         return IdGenHolder.instance;
     }
+    public static Long getId(){
+        return get().nextId();
+    }
 
     public IdGenerator() {
         this(0L, 0L);

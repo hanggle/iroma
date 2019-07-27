@@ -1,21 +1,20 @@
 package com.hanggle.frames.shiro;
 
+import com.hanggle.utils.HanggleUtil;
 import com.oskyhang.system.entity.BdPermission;
 import com.oskyhang.system.entity.BdRole;
 import com.oskyhang.system.entity.BdUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.stereotype.Service;
+import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,31 +32,35 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.debug("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+
         BdUser userInfo  = (BdUser) principals.getPrimaryPrincipal();
         List<BdRole> roles = shiroService.selectRoleByUser(userInfo);
-
-        for (BdRole role : roles) {
-            authorizationInfo.addRole(role.getRole());
-        }
+        Set<String> rolesSet = roles.stream().map(BdRole::getRole).collect(Collectors.toSet());
+        authorizationInfo.setRoles(rolesSet);
 
         List<Long> roleIds = roles.stream().map(BdRole::getId).collect(Collectors.toList());
         List<BdPermission> bdPermissions = shiroService.selectPermission(roleIds);
-        for (BdPermission p : bdPermissions) {
-            authorizationInfo.addStringPermission(p.getUrl());
-        }
+        Set<String> permissions = bdPermissions.stream().map(BdPermission::getUrl).collect(Collectors.toSet());
+        authorizationInfo.setStringPermissions(permissions);
+
         return authorizationInfo;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        log.debug("账号认证-->MyShiroRealm.doGetAuthenticationInfo()");
         //获取用户账号
         String username = String.valueOf(token.getPrincipal());
+        BdUser bdUser = shiroService.getUserInfoByUsername(username);
+        String password = bdUser.getPassword();
 
-        String password = shiroService.getPasswordByUsername(username);
+        // 获取盐值，即用户名
+        ByteSource salt = ByteSource.Util.bytes(HanggleUtil.MD5(username));
         if (password != null) {
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                     username,   //认证通过后，存放在session,一般存放user对象
                     password,   //用户数据库中的密码
+                    salt,
                     getName());    //返回Realm名
             return authenticationInfo;
         }

@@ -1,5 +1,6 @@
 package com.oskyhang;
 
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,7 +16,7 @@ public class Application {
 
 		//第二种启动方式自定义配置
 		SpringApplication app = new SpringApplication(Application.class);
-		// app.setBannerMode(Banner.Mode.OFF);
+		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
 }

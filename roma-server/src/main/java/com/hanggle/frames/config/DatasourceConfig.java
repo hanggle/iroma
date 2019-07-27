@@ -16,6 +16,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 
 /**
  * description: mapper.xml 自动刷新，开发时打开，正式环境需关闭<br/>

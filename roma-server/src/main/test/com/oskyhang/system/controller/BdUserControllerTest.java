@@ -1,11 +1,13 @@
 package com.oskyhang.system.controller;
 
+import com.hanggle.frames.Properties.ShiroRedisConfig;
 import com.hanggle.frames.util.RedisUtils;
 import com.hanggle.frames.util.SpringContextUtils;
 import com.hanggle.utils.HanggleUtil;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.mapper.BdMenuMapper;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * description: <br/>
@@ -13,15 +15,21 @@ import org.junit.Test;
  * date: 2018/4/13 <br/>
  */
 public class BdUserControllerTest extends BaseTestController{
+
+    @Autowired
+    private ShiroRedisConfig shiroRedisConfig;
+
     @Test
     public void test1() {
-        BdMenuMapper bdUserDao = SpringContextUtils.getBeanByType(BdMenuMapper.class);
-        BdMenu bdMenu = bdUserDao.load(1000000000000000003L);
-        System.out.println(bdMenu);
+        System.out.println(shiroRedisConfig.getHost());
     }
     @Test
     public void test2() {
-        System.out.println(RedisUtils.getLock("lockTest", HanggleUtil.getUUID(), "10"));
+        System.out.println(RedisUtils.getLock("lockTest", HanggleUtil.getUUID(), "100"));
     }
 
+    @Test
+    public void test(){
+
+    }
 }

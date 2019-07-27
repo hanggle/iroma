@@ -1,5 +1,6 @@
 package com.oskyhang.system.service.impl;
 
+import com.hanggle.frames.Properties.ShiroRedisConfig;
 import com.oskyhang.system.controller.BaseTestController;
 import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.service.BdMenuService;
@@ -19,10 +20,13 @@ import static org.junit.Assert.*;
 public class BdMenuServiceImplTest extends BaseTestController {
     @Autowired
     private BdMenuService bdMenuService;
+    @Autowired
+    private ShiroRedisConfig shiroRedisConfig;
 
     @Test
     public void selectMenuTree() {
         MenuTreeDto menuTreeDtos = bdMenuService.selectMenuTree();
         System.out.println(menuTreeDtos);
+        System.out.println(shiroRedisConfig.getHost());
     }
 }

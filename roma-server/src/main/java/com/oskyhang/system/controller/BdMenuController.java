@@ -23,7 +23,7 @@ import java.util.*;
  * Time: 18:16
  */
 @RestController
-@RequestMapping("/base/menu")
+@RequestMapping("/api/base/menu")
 @Slf4j
 public class BdMenuController extends BaseController {
 

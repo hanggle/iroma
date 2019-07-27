@@ -3,26 +3,25 @@
 <mapper namespace="com.oskyhang.system.mapper.BdUserMapper" >
   <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdUser" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
-    <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
-    <result column="person_id" property="personId" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="is_delete" property="isDelete" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, login_name, login_pwd, email, tel, person_id, status, is_delete, create_time, update_time
+    id, username, password, email, tel, status, is_delete, create_time, update_time
   </sql>
 
   <sql id="condition" >
     <if test="id != null" >
       id = #{id}
     </if>
-    <if test="loginName != null" >
-      login_name = #{loginName}
+    <if test="username != null" >
+      username = #{username}
     </if>
   </sql>
 
@@ -32,6 +31,19 @@
     from bd_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getUserInfo" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from bd_user
+    where
+    <if test="type == null" >1=0</if>
+    <if test='type == "username"' >username = #{username}</if>
+    <if test='type == "tel"' >tel = #{username}</if>
+    <if test='type == "email"' >email = #{username}</if>
+  </select>
+
+
   <select id="list" resultMap="BaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
@@ -56,7 +68,7 @@
     count(*)
     from bd_user
     <where>
-      <if test="loginName != null" >
+      <if test="username != null" >
         id = #{id}
       </if>
     </where>
@@ -73,20 +85,17 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="loginName != null" >
-        login_name,
+      <if test="username != null" >
+        username,
       </if>
-      <if test="loginPwd != null" >
-        login_pwd,
+      <if test="password != null" >
+        password,
       </if>
       <if test="email != null" >
         email,
       </if>
       <if test="tel != null" >
         tel,
-      </if>
-      <if test="personId != null" >
-        person_id,
       </if>
       <if test="status != null" >
         status,
@@ -105,20 +114,17 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="loginName != null" >
-        #{loginName,jdbcType=VARCHAR},
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="loginPwd != null" >
-        #{loginPwd,jdbcType=VARCHAR},
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="tel != null" >
         #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="personId != null" >
-        #{personId,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -137,20 +143,17 @@
   <update id="update" parameterType="com.oskyhang.system.entity.BdUser" >
     update bd_user
     <set >
-      <if test="loginName != null" >
-        login_name = #{loginName,jdbcType=VARCHAR},
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="loginPwd != null" >
-        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="tel != null" >
         tel = #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="personId != null" >
-        person_id = #{personId,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

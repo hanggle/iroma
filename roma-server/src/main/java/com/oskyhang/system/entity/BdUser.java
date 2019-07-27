@@ -12,19 +12,15 @@ import java.util.Date;
 @Data
 public class BdUser implements Serializable {
 
-    private static final long serialVersionUID = -3126211260404267281L;
-
     private Long id;
 
-    private String loginName;
+    private String username;
 
-    private String loginPwd;
+    private String password;
 
     private String email;
 
     private String tel;
-
-    private String personId;
 
     private Integer status;
 

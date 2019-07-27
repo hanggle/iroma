@@ -1,28 +1,21 @@
 package com.oskyhang.system.service.impl;
 
-import com.google.common.base.Objects;
+import com.hanggle.frames.base.IdGenerator;
 import com.hanggle.frames.base.Page;
-import com.hanggle.frames.util.IdUtil;
+import com.hanggle.frames.config.ShiroConfig;
 import com.hanggle.frames.util.PageUtil;
-import com.oskyhang.system.dto.MenuQueryParam;
-import com.oskyhang.system.dto.MenuTreeDto;
+import com.hanggle.utils.HanggleUtil;
 import com.oskyhang.system.dto.QueryParam;
-import com.oskyhang.system.dto.SelectDto;
-import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.entity.BdUser;
-import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.mapper.BdUserMapper;
-import com.oskyhang.system.service.BdMenuService;
 import com.oskyhang.system.service.BdUserService;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import static com.hanggle.frames.util.Arguments.notNull;
 
 /**
  * Description: 菜单接口 <br/>
@@ -37,7 +30,15 @@ public class BdUserServiceImpl implements BdUserService {
     private BdUserMapper bdUserMapper;
 
     @Override
-    public void insertAndUpdate(BdUser bdUser) {
+    public void insert(BdUser bdUser) {
+        String userName = bdUser.getUsername();
+        String password = bdUser.getPassword();
+        String algorithmName = ShiroConfig.algorithmName;
+        String salt = HanggleUtil.MD5(userName);
+        int hashIteration = ShiroConfig.hashIteration;
+        SimpleHash simpleHash = new SimpleHash(algorithmName, password, salt, hashIteration);
+        bdUser.setPassword(String.valueOf(simpleHash));
+        bdUser.setId(IdGenerator.getId());
         bdUserMapper.insert(bdUser);
     }
 
@@ -68,5 +69,13 @@ public class BdUserServiceImpl implements BdUserService {
     @Override
     public int delete(Long id) {
         return bdUserMapper.delete(id);
+    }
+
+    @Override
+    public BdUser getUserInfo(String loginName, String type) {
+        Map<String, Object> hashMap = new HashMap<>();
+        hashMap.put("username", loginName);
+        hashMap.put("type", type);
+        return bdUserMapper.getUserInfo(hashMap);
     }
 }

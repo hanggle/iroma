@@ -2,7 +2,7 @@ package com.hanggle.frames.exception;
 
 import com.hanggle.frames.base.Response;
 import com.google.common.base.Throwables;
-import com.hanggle.frames.base.ResponseCode;
+import com.hanggle.frames.base.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +25,14 @@ public class GlobalDefaultExceptionHandler {
 
         //业务异常
         if(e instanceof ServiceException){
-            return Response.error(ResponseCode.FAIL.code(), e.getMessage());
+            return Response.error(ResponseStatus.FAIL.status(), e.getMessage());
         }
 
         if(e instanceof HttpRequestMethodNotSupportedException){
             log.error("GlobalDefaultExceptionHandler[]HttpRequestMethodNotSupportedException,case:{}", Throwables.getStackTraceAsString(e));
-            return Response.error(ResponseCode.REQUEST_ERROR.code(), e.getMessage());
+            return Response.error(ResponseStatus.REQUEST_ERROR.status(), e.getMessage());
         }
         log.error("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", Throwables.getStackTraceAsString(e));
-        return Response.error(ResponseCode.UNKNOWN_ERROR.code(), e.getMessage());
+        return Response.error(ResponseStatus.UNKNOWN_ERROR.status(), e.getMessage());
     }
 }

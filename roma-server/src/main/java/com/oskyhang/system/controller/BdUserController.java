@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date: 2018/3/12 <br/>
  */
 @RestController
-@RequestMapping("/base/user")
+@RequestMapping("/api/base/user")
 @Slf4j
 public class BdUserController extends BaseController {
     @Autowired
@@ -98,6 +98,13 @@ public class BdUserController extends BaseController {
             log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
             return Response.fail(ErrorCode.QUERY_FAIL);
         }
+    }
+
+    @RequestMapping(value = "/create", method= RequestMethod.POST)
+    public Response<Boolean> create(@RequestBody BdUser bdUser) {
+        bdUserService.insert(bdUser);
+
+        return Response.success();
     }
 }
 

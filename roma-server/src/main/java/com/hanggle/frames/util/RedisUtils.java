@@ -56,8 +56,9 @@ public class RedisUtils {
      * @return
      */
     public static boolean getLock(String key, String requestId, String expireTime) {
-        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/getLock.lua")));
-        Object result = stringRedisTemplate.execute(redisScript,argsSerializer,resultSerializer,Collections.singletonList(key),requestId,expireTime);
+        ClassPathResource classPathResource = new ClassPathResource("script/getLock.lua");
+        redisScript.setScriptSource(new ResourceScriptSource(classPathResource));
+        Object result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), expireTime);
         return EXEC_RESULT.equals(result);
     }
 

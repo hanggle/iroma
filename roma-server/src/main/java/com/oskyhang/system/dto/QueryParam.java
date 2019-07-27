@@ -7,6 +7,8 @@ import lombok.Data;
  * @author: hanggle
  * @date: 2018/11/25
  */
+
+
 @Data
 public class QueryParam {
     private Integer pageNo;

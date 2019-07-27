@@ -1,6 +1,7 @@
 package com.hanggle.frames.base;
 
 import lombok.Data;
+import sun.security.provider.certpath.OCSPResponse;
 
 import java.io.Serializable;
 
@@ -14,42 +15,38 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = -1277927133193484182L;
 
-    private boolean success;
-    private int code;
+    private Long timestamp=System.currentTimeMillis();
+    private int status;
     private String message;
     private T data;
 
     public Response(){}
 
-    public Response(Boolean success, int code, String message) {
-        this.success = success;
-        this.code = code;
+    public Response(int status, String message) {
+        this.status = status;
         this.message = message;
     }
 
-    public Response(Boolean success, int code, String message, T data) {
-        this.success = success;
-        this.code = code;
+    public Response(int status, String message, T data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
 
     public Response(T data) {
-        this.success = true;
-        this.code = ResponseCode.SUCCESS.code();
-        this.message = ResponseCode.SUCCESS.message();
+        this.status = ResponseStatus.SUCCESS.status();
+        this.message = ResponseStatus.SUCCESS.message();
         this.data = data;
     }
     public Response(T data, String message) {
-        this.success = true;
-        this.code = ResponseCode.SUCCESS.code();
+        this.status = ResponseStatus.SUCCESS.status();
         this.message = message;
         this.data = data;
     }
 
     /**
      *  请求成功时返回
-     * @return {"code":2000,"data":"true","message":"请求成功！"}
+     * @return {"status":2000,"data":"true","message":"请求成功！"}
      */
     public static Response<Boolean> success(){
         return new Response<>(true);
@@ -57,7 +54,7 @@ public class Response<T> implements Serializable {
     /**
      *  请求成功时返回
      * @param data 返回的结果
-     * @return {"code":2000,"data":data,"message":"请求成功！"}
+     * @return {"status":2000,"data":data,"message":"请求成功！"}
      */
     public static<T> Response<T> success(T data){
         return new Response<>(data);
@@ -66,7 +63,7 @@ public class Response<T> implements Serializable {
     /**
      *  请求成功时返回
      * @param data 返回的结果
-     * @return {"code":2000,"data":"","message":"请求成功！"}
+     * @return {"status":2000,"data":"","message":"请求成功！"}
      */
     public static<T> Response<T> success(T data, String message){
         return new Response<>(data, message);
@@ -74,26 +71,35 @@ public class Response<T> implements Serializable {
     /**
      *  请求成功，处理失败时返回
      * @param message 返回的错误信息
-     * @return {"code":2000,"data":"","message":""}
+     * @return {"status":600*,"data":"","message":""}
      */
     public static<T> Response<T> fail(String message){
-        return new Response<>(false, ResponseCode.FAIL.code(), message);
+        return new Response<>(ResponseStatus.FAIL.status(), message);
+    }
+
+    /**
+     *  请求成功，处理失败时返回
+     * @param ResponseStatus 返回的错误信息
+     * @return {"status":600*,"data":"","message":""}
+     */
+    public static<T> Response<T> fail(ResponseStatus ResponseStatus){
+        return new Response<>(ResponseStatus.status(), ResponseStatus.message());
     }
 
     /**
      *  请求成功，处理失败时返回
      * @param message 返回的错误信息
-     * @return {"code":2000,"data":"","message":""}
+     * @return {"status":600*,"data":"","message":""}
      */
-    public static<T> Response<T> fail(int code, String message){
-        return new Response<>(false, code, message);
+    public static<T> Response<T> fail(int status, String message){
+        return new Response<>(status, message);
     }
 
     /**
      * 请求失败
-     * @return {"code":5000,"message":"请求失败！"}
+     * @return {"status":5000,"message":"请求失败！"}
      */
-    public static Response error(int code, String message){
-        return new Response(false, code, message);
+    public static Response error(int status, String message){
+        return new Response(status, message);
     }
 }

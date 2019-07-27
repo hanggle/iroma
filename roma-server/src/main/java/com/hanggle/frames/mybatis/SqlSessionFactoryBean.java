@@ -237,11 +237,11 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
      * should match the one used by the {@code SqlSessionFactory}: for example, you could specify the same
      * JNDI DataSource for both.
      *
-     * A transactional JDBC {@code Connection} for this {@code DataSource} will be provided to application code
+     * A transactional JDBC {@code Connection} for this {@code DataSource} will be provided to application status
      * accessing this {@code DataSource} directly via {@code DataSourceUtils} or {@code DataSourceTransactionManager}.
      *
      * The {@code DataSource} specified here should be the target {@code DataSource} to manage transactions for, not
-     * a {@code TransactionAwareDataSourceProxy}. Only data access code may work with
+     * a {@code TransactionAwareDataSourceProxy}. Only data access status may work with
      * {@code TransactionAwareDataSourceProxy}, while the transaction manager needs to work on the
      * underlying target {@code DataSource}. If there's nevertheless a {@code TransactionAwareDataSourceProxy}
      * passed in, it will be unwrapped to extract its target {@code DataSource}.
@@ -251,7 +251,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
         if (dataSource instanceof TransactionAwareDataSourceProxy) {
             // If we got a TransactionAwareDataSourceProxy, we need to perform
             // transactions for its underlying target DataSource, else data
-            // access code won't see properly exposed transactions (i.e.
+            // access status won't see properly exposed transactions (i.e.
             // transactions for the target DataSource).
             this.dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
         } else {

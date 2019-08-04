@@ -77,8 +77,3 @@ logging:
   path: E:/IdeaProjects/logs/roma
 
 #设置属性
-com:
-  prop:
-    title: skyhang
-    description: hello world
-    cnName: hello

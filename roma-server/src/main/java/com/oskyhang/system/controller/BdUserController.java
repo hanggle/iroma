@@ -59,7 +59,7 @@ public class BdUserController extends BaseController {
         obj.put("importance", 2);
         obj.put("pageviews", 756);
         obj.put("reviewer", "Robert");
-        obj.put("status", "published");
+        obj.put("code", "published");
         obj.put("timestamp", 1545444745000L);
         obj.put("title", "Yggsquww Emht Oblxure Mxzlvnl Gbfxrd Whiryagkkb Kcjyvtsw");
 
@@ -76,7 +76,7 @@ public class BdUserController extends BaseController {
         obj2.put("importance", 2);
         obj2.put("pageviews", 756);
         obj2.put("reviewer", "Robert");
-        obj2.put("status", "published");
+        obj2.put("code", "published");
         obj2.put("timestamp", 1545444745000L);
         obj2.put("title", "Yggsquww Emht Oblxure Mxzlvnl Gbfxrd Whiryagkkb Kcjyvtsw");
 

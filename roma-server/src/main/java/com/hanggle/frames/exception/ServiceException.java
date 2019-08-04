@@ -24,7 +24,7 @@ public class ServiceException extends RuntimeException {
     public String toString() {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("status", this.getCode());
+        jsonObject.put("code", this.getCode());
         jsonObject.put("message", this.getMessage());
 
         return jsonObject.toString();

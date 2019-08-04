@@ -1,9 +1,11 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hanggle.frames.Properties.PrivilegeProperties;
 import com.hanggle.frames.base.BaseController;
 import com.hanggle.frames.base.Response;
 import com.hanggle.frames.base.ResponseStatus;
+import com.hanggle.frames.config.MyProperties;
 import com.hanggle.frames.config.RedisProperties;
 import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.entity.BdUser;
@@ -14,23 +16,31 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * description: 用户登录模块<br/>
  * author: zh <br/>
  * date: 2018/3/12 <br/>
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/base/login")
-@Slf4j
+@EnableConfigurationProperties({PrivilegeProperties.class, MyProperties.class})
 public class LoginController extends BaseController {
 
     @Autowired
     private RedisProperties redisProperties;
+//    @Autowired
+//    private PrivilegeProperties2 privailege;
+//    @Autowired
+//    private PrivilegeProperties privailege2;
+    @Autowired
+    private PrivilegeProperties testProperties;
+    @Autowired
+    private com.hanggle.frames.config.MyProperties myProperties;
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
     public Response<LoginUser> login(@RequestBody BdUser bdUser){
@@ -55,7 +65,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Response<JSONObject> logout(){
         JSONObject obj = new JSONObject();
-        obj.put("status", "1");
+        obj.put("code", "1");
         obj.put("desc", "sss");
         return Response.success(obj);
     }
@@ -65,10 +75,13 @@ public class LoginController extends BaseController {
         return Response.fail(ResponseStatus.FAIL_NOTLOGIN);
     }
 
-    @RequestMapping(value = "/token")
+    @GetMapping(value = "/token")
     public Response<String> token(){
-
-        return Response.success("OK");
+//        log.debug(privailege.toString());
+//        log.debug(privailege2.toString());
+        log.debug(testProperties.toString());
+        log.debug(myProperties.toString());
+        return Response.success(testProperties.toString());
     }
 }
 

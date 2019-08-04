@@ -6,7 +6,7 @@ package com.hanggle.frames.base;
  * @date: 2018/11/29
  */
 public enum ResponseStatus {
-    SUCCESS(200, ""),
+    SUCCESS(20000, "请求成功"),
     UNKNOWN_ERROR(50000, "内部错误！"),
     REQUEST_ERROR(40000, "请求失败！"),
     FAIL(60000, "请求失败！"),

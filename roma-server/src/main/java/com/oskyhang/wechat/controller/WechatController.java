@@ -23,7 +23,7 @@ public class WechatController {
     public void check(HttpServletRequest request, HttpServletResponse response, String echostr2){
         String echost = request.getParameter("echostr");
         JSONObject obj = new JSONObject();
-        obj.put("status", "1");
+        obj.put("code", "1");
         obj.put("desc", "sss");
         PrintWriter pw = null;
         try {

@@ -12,6 +12,7 @@
     <modules>
         <module>common-utils</module>
         <module>roma-server</module>
+        <module>roma-application</module>
     </modules>
 
     <parent>

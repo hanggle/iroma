@@ -2,44 +2,38 @@ package com.oskyhang.system.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+/**
+ * @Description: <br/>
+ * @Author: zh <br/>
+ * @Date: 2018/11/4 <br/>
+ */
 @Data
-public class BdMenu {
-    private long id;
+public class BdMenu implements Serializable {
+    private static final long serialVersionUID = -221896583108389192L;
+    private Long id;
 
-    private String menuName;
-
-    private String sname;
+    private String name;
 
     private String path;
 
     private Long parentId;
 
-    private String menuType;
-
     private Integer orderCode;
 
     private String icon;
 
-    private String param;
-
-    private String menuCode;
-
-    private String isMenu;
-
-    private String status;
-
-    private String flag;
-
     private String title;
-
-    private String component;
 
     private String description;
 
-    private String redirect;
+    private Integer level;
 
-    private String level;
+    private Boolean isDelete;
 
-    private String isCache;
+    private Date createTime;
+
+    private Date updateTime;
 
 }

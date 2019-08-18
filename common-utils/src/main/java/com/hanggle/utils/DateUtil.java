@@ -47,6 +47,13 @@ public class DateUtil {
     public static Integer getYear(LocalDateTime localDateTime, int year){
         return  getDateTimeYear(localDateTime, year).getYear();
     }
+    public static Integer getMonth(){
+        return  getMonth(LocalDateTime.now(), 0);
+    }
+
+    public static Integer getMonth(LocalDateTime localDateTime, int month){
+        return localDateTime.plusMonths(month).getMonth().getValue();
+    }
     public static Integer getYearAndMonth(){
         return  getYearAndMonth(LocalDateTime.now());
     }
@@ -54,7 +61,7 @@ public class DateUtil {
     public static Integer getYearAndMonth(LocalDateTime localDateTime){
         int year = localDateTime.getYear();
         int month = localDateTime.getMonthValue();
-        return  Integer.valueOf(Integer.toString(year) + Integer.toString(month));
+        return  year + month;
     }
     /**
      *  当前时间加减年
@@ -137,13 +144,13 @@ public class DateUtil {
     }
 
 
-    public static void main(String[] args){
-        System.out.println("10000000000000000001".length());
-        System.out.println("9223372036854775807".length());
-        System.out.println(getDate());
-        System.out.println(getDateTime(YYYY_MM_DD_HH_MM_SS));
-        System.out.println(getDateTime(getDateTime000000(), YYYY_MM_DD_HH_MM_SS));
-        System.out.println(getYearAndMonth());
-    }
+    //public static void main(String[] args){
+    //    System.out.println("10000000000000000001".length());
+    //    System.out.println("9223372036854775807".length());
+    //    System.out.println(getDate());
+    //    System.out.println(getDateTime(YYYY_MM_DD_HH_MM_SS));
+    //    System.out.println(getDateTime(getDateTime000000(), YYYY_MM_DD_HH_MM_SS));
+    //    System.out.println(getYearAndMonth());
+    //}
 
 }

@@ -1,17 +1,24 @@
 package com.oskyhang.system.service.impl;
 
+import com.google.common.base.Objects;
+import com.hanggle.frames.util.IdUtil;
+import com.oskyhang.system.dto.MenuQueryParam;
+import com.oskyhang.system.dto.SelectDto;
+import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.entity.BdMenu;
 import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.hanggle.frames.util.Arguments.notNull;
 
 /**
  * Description: 菜单接口 <br/>
- * User: z.hang <br/>
+ * @author : z.hang <br/>
  * Date: 2018-01-14 <br/>
  * Time: 18:25 <br/>
  */
@@ -19,57 +26,66 @@ import java.util.Map;
 public class BdMenuServiceImpl implements BdMenuService {
 
     @Autowired
-    private BdMenuMapper bdMenuMapper;
+    private BdMenuMapper bdMenuDao;
 
     @Override
-    public int deleteByPrimaryKey(Long id) {
-        return bdMenuMapper.deleteByPrimaryKey(id);
+    public int delete(Long id) {
+        return bdMenuDao.delete(id);
     }
 
     @Override
-    public int insert(BdMenu bdMenu) {
-        bdMenu.setId(1L);
-        return bdMenuMapper.insertSelective(bdMenu);
+    public void insertAndUpdate(BdMenu bdMenu) {
+        BdMenu parentMenu = bdMenuDao.load(bdMenu.getParentId());
+        bdMenu.setLevel(parentMenu.getLevel()+1);
+        if (notNull(bdMenu.getId())) {
+            update(bdMenu);
+        } else {
+            bdMenu.setId(IdUtil.getNextId());
+            bdMenuDao.insert(bdMenu);
+        }
     }
 
     @Override
-    public int updateByPrimaryKey(BdMenu bdMenu) {
-        return bdMenuMapper.updateByPrimaryKey(bdMenu);
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public List<BdMenu> selectMenuList() {
-
-        return bdMenuMapper.selectMenuList(null);
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public List<BdMenu> selectMenuList(Map<String, Object> params) {
-
-        return bdMenuMapper.selectMenuList(params);
+    public int update(BdMenu bdMenu) {
+        return bdMenuDao.update(bdMenu);
     }
 
     @Override
-    public List<BdMenu> selectMenuTree() {
-        return bdMenuMapper.selectMenuTree();
+    public List<SelectDto> menuSelect(MenuQueryParam menuQueryParam) {
+        return bdMenuDao.menuSelect();
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     @Override
-    public BdMenu selectByPrimaryKey(Long id) {
+    public List<BdMenu> list(MenuQueryParam menuQueryParam) {
+        Map<String, Object> params = new HashMap<>(16);
+        params.put("orderBy", "level, order_code");
+        return bdMenuDao.list(params);
+    }
 
-        return bdMenuMapper.selectByPrimaryKey(id);
+    @Override
+    public MenuTreeDto selectMenuTree() {
+        Map<String, Object> params = new HashMap<>(16);
+        List<BdMenu> bdMenus = bdMenuDao.list(params);
+        // 根菜单
+        MenuTreeDto menuTreeDto = new MenuTreeDto();
+        menuTreeDto.setId(bdMenus.get(0).getId());
+        menuTreeDto.setLabel(bdMenus.get(0).getName());
+        menuTreeDto.setLevel(bdMenus.get(0).getLevel());
+        return getChildMenu(menuTreeDto, bdMenus);
+    }
+    private MenuTreeDto getChildMenu(MenuTreeDto menuTreeDto, List<BdMenu> bdMenus) {
+        List<BdMenu> menuList = bdMenus.stream().filter(obj -> Objects.equal(menuTreeDto.getId(), obj.getParentId())).collect(Collectors.toList());
+        List<MenuTreeDto> treeDtos = menuList.stream().map(MenuTreeDto::new).collect(Collectors.toList());
+        menuTreeDto.setChildren(treeDtos);
+        for (MenuTreeDto menuTreeDto1 : treeDtos) {
+            getChildMenu(menuTreeDto1, bdMenus);
+        }
+        return menuTreeDto;
+    }
+
+    @Override
+    public BdMenu load(Long id) {
+
+        return bdMenuDao.load(id);
     }
 }

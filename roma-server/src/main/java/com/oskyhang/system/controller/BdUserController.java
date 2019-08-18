@@ -2,28 +2,36 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.frames.base.BaseController;
+import com.google.common.base.Throwables;
+import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.ErrorCode;
+import com.hanggle.frames.base.Page;
+import com.hanggle.frames.base.Response;
+import com.oskyhang.system.dto.QueryParam;
+import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.service.BdUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * description: 用户登录模块<br/>
- * author: zh <br/>
- * date: 2018/3/12 <br/>
+ * @description: 用户登录模块<br/>
+ * @author: zh <br/>
+ * @date: 2018/3/12 <br/>
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/base/user")
 @Slf4j
 public class BdUserController extends BaseController {
-
-
+    @Autowired
+    private BdUserService bdUserService;
 
     @RequestMapping(value = "/info" , method = RequestMethod.GET)
     @ResponseBody
-    public String test(HttpServletRequest request, HttpServletResponse response){
+    public Response test(HttpServletRequest request, HttpServletResponse response){
 
         JSONObject obj = new JSONObject();
         String [] roles = {"/documentation", "index",  "/permission", "admin"};
@@ -32,11 +40,12 @@ public class BdUserController extends BaseController {
         obj.put("username", "admin");
         obj.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         obj.put("introduction", "this is introduction");
-        return obj.toString();
+        obj.put("id", 123);
+        return Response.success(obj);
     }
 
-    @RequestMapping(value = "list", method= RequestMethod.GET)
-    public String select(String id, String data) {
+    @RequestMapping(value = "/temp", method= RequestMethod.GET)
+    public Response<JSONObject> select(String id, String data) {
         JSONArray arr = new JSONArray();
         JSONObject obj = new JSONObject();
         obj.put("author", "Gary");
@@ -50,13 +59,13 @@ public class BdUserController extends BaseController {
         obj.put("importance", 2);
         obj.put("pageviews", 756);
         obj.put("reviewer", "Robert");
-        obj.put("status", "published");
-        obj.put("timestamp", 160381459952L);
+        obj.put("code", "published");
+        obj.put("timestamp", 1545444745000L);
         obj.put("title", "Yggsquww Emht Oblxure Mxzlvnl Gbfxrd Whiryagkkb Kcjyvtsw");
 
         arr.add(obj);
         JSONObject obj2 = new JSONObject();
-        obj2.put("id", 2);
+        obj2.put("id", 2312342142341234l);
         obj2.put("author", "Gary");
         obj2.put("comment_disabled", true);
         obj2.put("content", "<p>我是测试数据我是测试数据</p><p><img src=\"https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943\"></p>");
@@ -67,8 +76,8 @@ public class BdUserController extends BaseController {
         obj2.put("importance", 2);
         obj2.put("pageviews", 756);
         obj2.put("reviewer", "Robert");
-        obj2.put("status", "published");
-        obj2.put("timestamp", 160381459952L);
+        obj2.put("code", "published");
+        obj2.put("timestamp", 1545444745000L);
         obj2.put("title", "Yggsquww Emht Oblxure Mxzlvnl Gbfxrd Whiryagkkb Kcjyvtsw");
 
         arr.add(obj2);
@@ -77,7 +86,25 @@ public class BdUserController extends BaseController {
         result.put("total", arr.size());
         result.put("items", arr);
 
-        return JSONObject.toJSONString(result);
+        return Response.success(result);
+    }
+
+    @RequestMapping(value = "/page", method= RequestMethod.POST)
+    public Response<Page<BdUser>> list(@RequestBody QueryParam queryParam) {
+        try {
+            Page<BdUser> page = bdUserService.page(queryParam);
+            return Response.success(page);
+        } catch (Exception e) {
+            log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
+            return Response.fail(ErrorCode.QUERY_FAIL.code());
+        }
+    }
+
+    @RequestMapping(value = "/create", method= RequestMethod.POST)
+    public Response<Boolean> create(@RequestBody BdUser bdUser) {
+        bdUserService.insert(bdUser);
+
+        return Response.success();
     }
 }
 

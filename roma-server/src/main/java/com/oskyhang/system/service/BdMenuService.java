@@ -1,10 +1,12 @@
 package com.oskyhang.system.service;
 
 
+import com.oskyhang.system.dto.MenuQueryParam;
+import com.oskyhang.system.dto.SelectDto;
+import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.entity.BdMenu;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description:
@@ -14,17 +16,41 @@ import java.util.Map;
  */
 public interface BdMenuService {
 
-    int insert(BdMenu bdMenu);
+    void insertAndUpdate(BdMenu bdMenu);
 
-    List<BdMenu> selectMenuList();
+    List<BdMenu> list(MenuQueryParam menuQueryParam);
+    /**
+     * 菜单树
+     * @return list
+     */
+    MenuTreeDto selectMenuTree();
 
-    List<BdMenu> selectMenuList(Map <String, Object> params);
+    /**
+     * 查询菜单
+     * @param id id
+     * @return menu
+     */
+    BdMenu load(Long id);
 
-    List<BdMenu> selectMenuTree();
+    /**
+     *  更新菜单
+     * @param bdMenu menu
+     * @return menu
+     */
+    int update(BdMenu bdMenu);
 
-    BdMenu selectByPrimaryKey(Long id);
+    /**
+     *  删除菜单
+     * @param id id
+     * @return menu
+     */
+    int delete(Long id);
 
-    int updateByPrimaryKey(BdMenu bdMenu);
-
-    int deleteByPrimaryKey(Long id);
+    /**
+     * 菜单下拉选择
+     *
+     * @param menuQueryParam param
+     * @return List<SelectDto>
+     */
+    List<SelectDto> menuSelect(MenuQueryParam menuQueryParam);
 }

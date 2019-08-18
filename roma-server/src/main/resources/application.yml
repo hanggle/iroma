@@ -1,11 +1,16 @@
 spring:
   profiles:
     active: dev
-    include: classpath:config/redis
+    include: privilege
 mybatis:
-  config-location: classpath:config/mybatis-config.xml
   mapper-locations: classpath:mapper/*/*.xml
 
 logging:
   config: classpath:config/logback-spring.xml
-  name: iroma
+  name: roma
+
+roma:
+  security:
+    logout: /api/base/login/logout
+
+

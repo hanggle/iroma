@@ -1,12 +1,13 @@
 package com.oskyhang;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication  //@SpringBootApplication等价于@Configuration @EnableAutoConfiguration
-// @MapperScan("com.oskyhang.*.mapper")// 正式环境需打开，并注释掉DatasourceConfig.java
+@MapperScan("com.oskyhang.*.mapper")// 正式环境需打开，并注释掉DatasourceConfig.java
 @ComponentScan(basePackages = {"com.oskyhang", "com.hanggle.frames"})
 public class Application {
 

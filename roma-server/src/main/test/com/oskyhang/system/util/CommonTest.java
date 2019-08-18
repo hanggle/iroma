@@ -1,14 +1,11 @@
 package com.oskyhang.system.util;
 
-import com.hanggle.frames.Properties.ShiroRedisConfig;
 import com.oskyhang.system.controller.BaseTestController;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * @description:

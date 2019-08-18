@@ -1,6 +1,10 @@
 package com.hanggle.frames.util;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import org.junit.Test;
+
+import java.util.Map;
 
 /**
  * description: <br/>
@@ -18,6 +22,11 @@ public class JsonUtilTest {
 
     @Test
     public void json2Class() throws Exception {
+
+        Map<String, Object> param = Maps.newHashMap();
+        param.put("autohomeId", "212341");
+        String s = JSON.toJSONString(param);
+        System.out.println(s);
     }
 
 }

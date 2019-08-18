@@ -96,7 +96,7 @@ public class BdUserController extends BaseController {
             return Response.success(page);
         } catch (Exception e) {
             log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
-            return Response.fail(ErrorCode.QUERY_FAIL);
+            return Response.fail(ErrorCode.QUERY_FAIL.code());
         }
     }
 

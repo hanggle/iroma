@@ -1,12 +1,10 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.frames.Properties.PrivilegeProperties;
+import com.hanggle.frames.properties.PrivilegeProperties;
 import com.hanggle.frames.base.BaseController;
 import com.hanggle.frames.base.Response;
 import com.hanggle.frames.base.ResponseStatus;
-import com.hanggle.frames.config.MyProperties;
-import com.hanggle.frames.config.RedisProperties;
 import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.entity.BdUser;
 import lombok.extern.slf4j.Slf4j;
@@ -28,19 +26,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/base/login")
-@EnableConfigurationProperties({PrivilegeProperties.class, MyProperties.class})
+@EnableConfigurationProperties({PrivilegeProperties.class})
 public class LoginController extends BaseController {
-
-    @Autowired
-    private RedisProperties redisProperties;
-//    @Autowired
-//    private PrivilegeProperties2 privailege;
-//    @Autowired
-//    private PrivilegeProperties privailege2;
-    @Autowired
-    private PrivilegeProperties testProperties;
-    @Autowired
-    private com.hanggle.frames.config.MyProperties myProperties;
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
     public Response<LoginUser> login(@RequestBody BdUser bdUser){
@@ -73,15 +60,6 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/notLogin")
     public Response<JSONObject> notLogin(){
         return Response.fail(ResponseStatus.FAIL_NOTLOGIN);
-    }
-
-    @GetMapping(value = "/token")
-    public Response<String> token(){
-//        log.debug(privailege.toString());
-//        log.debug(privailege2.toString());
-        log.debug(testProperties.toString());
-        log.debug(myProperties.toString());
-        return Response.success(testProperties.toString());
     }
 }
 

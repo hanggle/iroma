@@ -1,22 +1,21 @@
 package com.hanggle.frames.config;
 
-import com.hanggle.frames.mybatis.SqlSessionFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
 
 /**
  * description: mapper.xml 自动刷新，开发时打开，正式环境需关闭<br/>
@@ -24,8 +23,8 @@ import java.math.BigDecimal;
  * date: 2018/3/15 <br/>
  */
 @Slf4j
-@Configuration
-@MapperScan(basePackages="com.oskyhang.*.mapper", sqlSessionTemplateRef = "test1SqlSessionTemplate")
+//@Configuration
+//@MapperScan(basePackages="com.oskyhang.*.mapper", sqlSessionTemplateRef = "test1SqlSessionTemplate")
 public class DatasourceConfig {
 
     @Bean(name = "test1DataSource")

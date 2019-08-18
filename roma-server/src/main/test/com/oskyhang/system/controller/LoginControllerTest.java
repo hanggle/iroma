@@ -1,10 +1,8 @@
 package com.oskyhang.system.controller;
 
-import com.hanggle.frames.Properties.ShiroRedisConfig;
+import com.hanggle.frames.properties.ShiroRedisProperties;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.Assert.*;
 
 /**
  * @description:
@@ -14,11 +12,11 @@ import static org.junit.Assert.*;
 public class LoginControllerTest extends BaseTestController{
 
     @Autowired
-    private ShiroRedisConfig shiroRedisConfig;
+    private ShiroRedisProperties shiroRedisProperties;
 
     @Test
     public void notLogin() {
         System.out.println("ww");
-        System.out.println(shiroRedisConfig.getHost());
+        System.out.println(shiroRedisProperties.getHost());
     }
 }

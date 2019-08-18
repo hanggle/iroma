@@ -76,7 +76,7 @@ public class BdMenuController extends BaseController {
             return Response.success();
         } catch (Exception e) {
             log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
-            return Response.fail(ErrorCode.CREATE_FAIL);
+            return Response.fail(ErrorCode.CREATE_FAIL.code());
         }
     }
 

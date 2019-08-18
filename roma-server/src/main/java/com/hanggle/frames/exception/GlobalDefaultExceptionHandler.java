@@ -25,14 +25,29 @@ public class GlobalDefaultExceptionHandler {
 
         //业务异常
         if(e instanceof ServiceException){
-            return Response.error(ResponseStatus.FAIL.status(), e.getMessage());
+            return Response.error(ResponseStatus.FAIL.code());
         }
 
         if(e instanceof HttpRequestMethodNotSupportedException){
             log.error("GlobalDefaultExceptionHandler[]HttpRequestMethodNotSupportedException,case:{}", Throwables.getStackTraceAsString(e));
-            return Response.error(ResponseStatus.REQUEST_ERROR.status(), e.getMessage());
+            return Response.error(ResponseStatus.REQUEST_ERROR.code());
         }
         log.error("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", Throwables.getStackTraceAsString(e));
-        return Response.error(ResponseStatus.UNKNOWN_ERROR.status(), e.getMessage());
+        return Response.error(ResponseStatus.UNKNOWN_ERROR.code());
     }
+
+    @GetMapping(value = "/error/404")
+    public Response error400() {
+        log.error("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", 123444);
+        return Response.error(ResponseStatus.UNKNOWN_ERROR.code());
+    }
+
+    @GetMapping(value = "/error/500")
+    public Response error500() {
+        log.error("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", 123444);
+        return Response.error(ResponseStatus.UNKNOWN_ERROR.code());
+    }
+
+
+
 }

@@ -38,24 +38,26 @@ public class MyFilters {
 
         return registration;
     }
-}
-class MyFilter implements Filter {
-    private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
 
-    @Override
-    public void destroy() {
+    class MyFilter implements Filter {
+        private Logger logger = LoggerFactory.getLogger(MyFilter.class);
+
+        @Override
+        public void destroy() {
+        }
+
+        @Override
+        public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain)
+                throws IOException, ServletException {
+            HttpServletRequest request = (HttpServletRequest) srequest;
+            logger.debug("-his is MyFilter,url :"+request.getRequestURI());
+            filterChain.doFilter(srequest, sresponse);
+        }
+
+        @Override
+        public void init(FilterConfig arg0) {
+            System.out.println("-------------------filter is init ");
+        }
     }
 
-    @Override
-    public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) srequest;
-        logger.debug("-his is MyFilter,url :"+request.getRequestURI());
-        filterChain.doFilter(srequest, sresponse);
-    }
-
-    @Override
-    public void init(FilterConfig arg0) {
-        System.out.println("-------------------filter is init ");
-    }
 }

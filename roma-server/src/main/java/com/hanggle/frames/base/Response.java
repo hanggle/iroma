@@ -14,46 +14,61 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = -1277927133193484182L;
 
+    private static final int STATUS_SUCCESS = 200;
+    private static final int STATUS_FAIL = 400;
+    private static final int STATUS_ERROR = 500;
+
     private Long timestamp=System.currentTimeMillis();
-    private int code;
+    private int status;
+    private String code;
     private String message;
     private T data;
 
     public Response(){}
 
-    public Response(int code, String message) {
-        this.code = code;
+    public Response(int status, String message) {
+        this.status = status;
         this.message = message;
     }
 
-    public Response(int code, String message, T data) {
+    public Response(int status, String code, T data) {
+        this.status = status;
         this.code = code;
-        this.message = message;
+        this.message = code;
         this.data = data;
     }
 
     public Response(T data) {
-        this.code = ResponseStatus.SUCCESS.status();
+        this.status = STATUS_SUCCESS;
+        this.code = ResponseStatus.SUCCESS.code();
         this.message = ResponseStatus.SUCCESS.message();
         this.data = data;
     }
-    public Response(T data, String message) {
-        this.code = ResponseStatus.SUCCESS.status();
-        this.message = message;
+
+    public Response(int status, T data) {
+        this.status = status;
+        this.code = ResponseStatus.SUCCESS.code();
+        this.message = ResponseStatus.SUCCESS.message();
+        this.data = data;
+    }
+
+    public Response(T data, String code) {
+        this.status = STATUS_SUCCESS;
+        this.code = code;
         this.data = data;
     }
 
     /**
      *  请求成功时返回
-     * @return {"code":2000,"data":"true","message":"请求成功！"}
+     * @return 返回体
      */
     public static Response<Boolean> success(){
-        return new Response<>(true);
+        return new Response<>(STATUS_SUCCESS, true);
     }
     /**
      *  请求成功时返回
      * @param data 返回的结果
-     * @return {"code":2000,"data":data,"message":"请求成功！"}
+     * @return 返回体
      */
     public static<T> Response<T> success(T data){
         return new Response<>(data);
@@ -62,33 +77,33 @@ public class Response<T> implements Serializable {
     /**
      *  请求成功时返回
      * @param data 返回的结果
-     * @return {"code":2000,"data":"","message":"请求成功！"}
+     * @return 返回体
      */
-    public static<T> Response<T> success(T data, String message){
-        return new Response<>(data, message);
+    public static<T> Response<T> success(T data, String code){
+        return new Response<>(data, code);
     }
     /**
      *  请求成功，处理失败时返回
      * @param message 返回的错误信息
-     * @return {"code":600*,"data":"","message":""}
+     * @return 返回体
      */
     public static<T> Response<T> fail(String message){
-        return new Response<>(ResponseStatus.FAIL.status(), message);
+        return new Response<>(STATUS_FAIL, message);
     }
 
     /**
      *  请求成功，处理失败时返回
      * @param ResponseStatus 返回的错误信息
-     * @return {"code":600*,"data":"","message":""}
+     * @return 返回体
      */
     public static<T> Response<T> fail(ResponseStatus ResponseStatus){
-        return new Response<>(ResponseStatus.status(), ResponseStatus.message());
+        return new Response<>(STATUS_FAIL, ResponseStatus.message());
     }
 
     /**
      *  请求成功，处理失败时返回
      * @param message 返回的错误信息
-     * @return {"code":600*,"data":"","message":""}
+     * @return 返回体
      */
     public static<T> Response<T> fail(int status, String message){
         return new Response<>(status, message);
@@ -96,9 +111,17 @@ public class Response<T> implements Serializable {
 
     /**
      * 请求失败
-     * @return {"code":5000,"message":"请求失败！"}
+     * @return 返回体
      */
     public static Response error(int status, String message){
         return new Response(status, message);
+    }
+
+    /**
+     * 请求失败
+     * @return 返回体
+     */
+    public static Response error(String code){
+        return new Response(STATUS_FAIL, code);
     }
 }

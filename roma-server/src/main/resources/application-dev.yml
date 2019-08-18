@@ -75,5 +75,9 @@ shiro:
 
 logging:
   path: E:/IdeaProjects/logs/roma
-
+  level:
+    com:
+      oskyhang:
+        system:
+          mapper: debug
 #设置属性

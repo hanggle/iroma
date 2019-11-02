@@ -33,8 +33,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         log.debug("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
-        BdUser userInfo  = (BdUser) principals.getPrimaryPrincipal();
-        List<BdRole> roles = shiroService.selectRoleByUser(userInfo);
+        String username = (String) principals.getPrimaryPrincipal();
+        List<BdRole> roles = shiroService.selectRoleByUser(username);
         Set<String> rolesSet = roles.stream().map(BdRole::getRole).collect(Collectors.toSet());
         authorizationInfo.setRoles(rolesSet);
 

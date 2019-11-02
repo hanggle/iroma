@@ -91,7 +91,6 @@ public class ShiroConfig {
             String[] privilegesStr = privileges.toArray(new String[privileges.size()]);
             filterMap.put(authUrl.getPath(), "authc,roles" + Arrays.toString(privilegesStr));
         }
-
         return filterMap;
     }
 

@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,8 +39,8 @@ public class ShiroService {
         return bdUserService.getUserInfo(username, "username");
     }
 
-    public List<BdRole> selectRoleByUser(BdUser bdUser){
-        log.debug("ShiroService[]selectRoleByUser, bdUser:{}", bdUser);
+    public List<BdRole> selectRoleByUser(String username){
+        log.debug("ShiroService[]selectRoleByUser, username:{}", username);
         BdPermission bdPermission = new BdPermission();
         bdPermission.setUrl("/api/base/user/info");
 
@@ -54,7 +53,7 @@ public class ShiroService {
     public List<BdPermission> selectPermission(List<Long> roleIds){
         log.debug("ShiroService[]selectPermission, roleIds:{}" + roleIds);
         BdPermission bdPermission = new BdPermission();
-        bdPermission.setUrl("/api/base/user/info");
+        bdPermission.setUrl("1qweqw");
 
         return Collections.singletonList(bdPermission);
     }

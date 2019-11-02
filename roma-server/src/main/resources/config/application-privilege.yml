@@ -28,8 +28,8 @@ privilege:
     - path: 232we34
       methods: 22we22
   authorization:
-    - path: /aaaaa
-      methods: 2222
+    - path: /api/base/user/page
+      methods: get
       privileges:
         - 1qweqw
         - werwer

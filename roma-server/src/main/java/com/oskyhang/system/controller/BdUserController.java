@@ -89,8 +89,8 @@ public class BdUserController extends BaseController {
         return Response.success(result);
     }
 
-    @RequestMapping(value = "/page", method= RequestMethod.POST)
-    public Response<Page<BdUser>> list(@RequestBody QueryParam queryParam) {
+    @GetMapping(value = "/page")
+    public Response<Page<BdUser>> list(QueryParam queryParam) {
         try {
             Page<BdUser> page = bdUserService.page(queryParam);
             return Response.success(page);

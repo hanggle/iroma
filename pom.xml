@@ -12,7 +12,6 @@
     <modules>
         <module>common-utils</module>
         <module>roma-server</module>
-        <module>roma-application</module>
     </modules>
 
     <parent>
@@ -41,7 +40,6 @@
         <shiro.version>1.4.0</shiro.version>
         <shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
         <druid.version>1.1.10</druid.version>
-        <swagger.version>2.2.2</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -174,29 +172,10 @@
                 <version>${shiro-redis.version}</version>
             </dependency>
 
-            <!-- Swagger2.x -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
     </dependencies>
     <build>
 

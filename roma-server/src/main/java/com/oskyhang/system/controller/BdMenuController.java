@@ -5,6 +5,7 @@ import com.google.common.base.Throwables;
 import com.hanggle.frames.base.BaseController;
 import com.hanggle.frames.base.Response;
 import com.hanggle.frames.base.ErrorCode;
+import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
@@ -22,9 +23,9 @@ import java.util.*;
  * @Date: 2018-01-14
  * Time: 18:16
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/base/menu")
-@Slf4j
 public class BdMenuController extends BaseController {
 
     @Autowired
@@ -41,9 +42,11 @@ public class BdMenuController extends BaseController {
      * @param menuQueryParam 参数
      * @return 菜单list
      */
-    @RequestMapping(value="/list", method= RequestMethod.POST)
-    public Response<List<BdMenu>> list(@RequestBody MenuQueryParam menuQueryParam){
-        List<BdMenu> list = bdMenuService.list(menuQueryParam);
+    @RequestMapping(value="/list")
+    public Response<List<BdMenu>> list(MenuQueryParam menuQueryParam){
+        LoginUser loginUser = new LoginUser();
+        loginUser.setPersonName("QQQQQ");
+        List<BdMenu> list = bdMenuService.list(menuQueryParam, loginUser);
         return Response.success(list);
     }
 

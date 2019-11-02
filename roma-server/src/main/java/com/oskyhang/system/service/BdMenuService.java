@@ -1,6 +1,7 @@
 package com.oskyhang.system.service;
 
 
+import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
@@ -18,7 +19,7 @@ public interface BdMenuService {
 
     void insertAndUpdate(BdMenu bdMenu);
 
-    List<BdMenu> list(MenuQueryParam menuQueryParam);
+    List<BdMenu> list(MenuQueryParam menuQueryParam, LoginUser loginUser);
     /**
      * 菜单树
      * @return list

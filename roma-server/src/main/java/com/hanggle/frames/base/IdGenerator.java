@@ -1,24 +1,21 @@
 package com.hanggle.frames.base;
 
 /**
- * @description:
+ * @description: 全局唯一ID生成器
  * @author: hanggle
  * @date: 2018/12/21
  */
 
-/**
- * 全局唯一ID生成器
- */
 public class IdGenerator {
 
     private long workerId;
-    private long datacenterId;
+    private long dataCenterId;
     private long sequence = 0L;
     private long twepoch = 1545442152941L; //2018-12-22 9:29:50 GMT
     private long workerIdBits = 5L; //节点ID长度
     private long datacenterIdBits = 5L; //数据中心ID长度
     private long maxWorkerId = -1L ^ (-1L << workerIdBits); //最大支持机器节点数0~31，一共32个
-    private long maxDatacenterId = -1L ^ (-1L << datacenterIdBits); //最大支持数据中心节点数0~31，一共32个
+    private long maxDataCenterId = -1L ^ (-1L << datacenterIdBits); //最大支持数据中心节点数0~31，一共32个
     private long sequenceBits = 12L; //序列号12位
     private long workerIdShift = sequenceBits; //机器节点左移12位
     private long datacenterIdShift = sequenceBits + workerIdBits; //数据中心节点左移17位
@@ -41,15 +38,15 @@ public class IdGenerator {
         this(0L, 0L);
     }
 
-    public IdGenerator(long workerId, long datacenterId) {
+    public IdGenerator(long workerId, long dataCenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
-        if (datacenterId > maxDatacenterId || datacenterId < 0) {
-            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0", maxDatacenterId));
+        if (dataCenterId > maxDataCenterId || dataCenterId < 0) {
+            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0", maxDataCenterId));
         }
         this.workerId = workerId;
-        this.datacenterId = datacenterId;
+        this.dataCenterId = dataCenterId;
     }
 
     public synchronized long nextId() {
@@ -78,11 +75,11 @@ public class IdGenerator {
         // 最后按照规则拼出ID。
         // 000000000000000000000000000000000000000000  00000            00000       000000000000
         // time                                        datacenterId     workerId    sequence
-        return ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift)
+        return ((timestamp - twepoch) << timestampLeftShift) | (dataCenterId << datacenterIdShift)
                 | (workerId << workerIdShift) | sequence;
     }
 
-    protected long tilNextMillis(long lastTimestamp) {
+    private long tilNextMillis(long lastTimestamp) {
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {
             timestamp = timeGen();
@@ -90,7 +87,7 @@ public class IdGenerator {
         return timestamp;
     }
 
-    protected long timeGen() {
+    private long timeGen() {
         return System.currentTimeMillis();
     }
 }

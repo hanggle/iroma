@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Slf4j
 public class MySessionManager extends DefaultWebSessionManager {
 
-    private static final String AUTHORIZATION = "Authorization";
+    private static final String ACCESS_TOKEN = "access_token";
 
     private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
 
@@ -28,14 +28,14 @@ public class MySessionManager extends DefaultWebSessionManager {
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        String sessionId = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
-        log.info("MySessionManager[]getSessionId[]sessionId:{}", sessionId);
+        String accessToken = request.getParameter(ACCESS_TOKEN);
+        log.info("MySessionManager[]getSessionId[]sessionId:{}", accessToken);
         //如果请求头中有 Authorization 则其值为sessionId
-        if (!Strings.isEmpty(sessionId)) {
+        if (!Strings.isEmpty(accessToken)) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
-            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, accessToken);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
-            return sessionId;
+            return accessToken;
         } else {
             //否则按默认规则从cookie取sessionId
             return super.getSessionId(request, response);

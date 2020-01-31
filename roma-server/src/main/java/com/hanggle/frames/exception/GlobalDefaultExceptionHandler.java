@@ -22,18 +22,24 @@ public class GlobalDefaultExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Response defaultErrorHandler(HttpServletRequest req, Exception e)  {
-
-        //业务异常
-        if(e instanceof ServiceException){
-            return Response.error(ResponseStatus.FAIL.code());
-        }
-
         if(e instanceof HttpRequestMethodNotSupportedException){
             log.error("GlobalDefaultExceptionHandler[]HttpRequestMethodNotSupportedException,case:{}", Throwables.getStackTraceAsString(e));
             return Response.error(ResponseStatus.REQUEST_ERROR.code());
         }
         log.error("GlobalDefaultExceptionHandler[]defaultErrorHandler:{}", Throwables.getStackTraceAsString(e));
         return Response.error(ResponseStatus.UNKNOWN_ERROR.code());
+    }
+
+    /**
+     * 业务异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = ServiceException.class)
+    @ResponseBody
+    public Response serviceExceptionHandler(HttpServletRequest req, Exception e)  {
+        return Response.error(ResponseStatus.FAIL.code());
     }
 
     @GetMapping(value = "/error/404")

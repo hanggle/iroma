@@ -42,7 +42,7 @@ public class ShiroService {
     public List<BdRole> selectRoleByUser(String username){
         log.debug("ShiroService[]selectRoleByUser, username:{}", username);
         BdPermission bdPermission = new BdPermission();
-        bdPermission.setUrl("/api/base/user/info");
+        bdPermission.setUrl("/api/user/user/info");
 
         BdRole bdRole = new BdRole();
         bdRole.setRole("admin");
@@ -51,7 +51,7 @@ public class ShiroService {
     }
 
     public List<BdPermission> selectPermission(List<Long> roleIds){
-        log.debug("ShiroService[]selectPermission, roleIds:{}" + roleIds);
+        log.debug("ShiroService[]selectPermission, roleIds:{}", roleIds);
         BdPermission bdPermission = new BdPermission();
         bdPermission.setUrl("1qweqw");
 

@@ -1,6 +1,7 @@
 package com.hanggle.frames.exception;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hanggle.frames.base.ErrorMsg;
 
 /**
  * description: 自定义异常类
@@ -14,6 +15,16 @@ public class ServiceException extends RuntimeException {
     public ServiceException(ServiceExceptionEmun serviceExceptionEmun){
         super(serviceExceptionEmun.getMessge());
         this.code = serviceExceptionEmun.getCode();
+    }
+
+    public ServiceException(ErrorMsg errorMsg){
+        super(errorMsg.message());
+        this.code = Integer.valueOf(errorMsg.code());
+    }
+
+    public ServiceException(String message){
+        super(message);
+        this.code = 600;
     }
 
     Integer getCode() {

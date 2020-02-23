@@ -1,34 +1,30 @@
 privilege:
   anonymous:
-    - path: /api/base/login/login
+    - path: /api/user/login/login
       methods: post,get
-    - path: /swagger-ui.html
-      methods: get
     - path: /v2/api-docs
       methods: get
-    - path: /webjars/.*
-      methods: get
-    - path: /swagger-resources.*
+    - path: /webjars/**
       methods: get
     - path: /
       methods: get,post
     - path: /error|/login.*|/404|/favicon.ico
       methods: get,post
-    - path: //api/base/menu/.*
-      methods: get.post
+#    - path: //api/user/menu/**
+#      methods: get,post
   authentication:
-    - path: /api/base/user/info
+    - path: /api/user/user/info
       methods: 2222
-    - path: 232we34
-      methods: 22we22
+#    - path: /api/user/menu/**
+#      methods: get
   authorization:
-    - path: /api/base/user/page
+    - path: /api/user/user/page
       methods: get
       privileges:
-        - 1qweqw
-        - werwer
+        - admin
+        - admin
     - path: /zzzzzz
       methods: 22we22
       privileges:
-        - 1qweqw
-        - werwer
+        - admin
+        - admin

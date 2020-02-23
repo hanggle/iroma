@@ -1,10 +1,14 @@
 package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hanggle.frames.properties.PrivilegeProperties;
 import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.ErrorMsg;
 import com.hanggle.frames.base.Response;
-import com.hanggle.frames.base.ResponseStatus;
+import com.hanggle.frames.constant.RedisKey;
+import com.hanggle.frames.exception.ServiceException;
+import com.hanggle.frames.properties.PrivilegeProperties;
+import com.hanggle.frames.util.RedisUtils;
+import com.hanggle.utils.CommonUtil;
 import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.entity.BdUser;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +19,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -25,12 +32,16 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/base/login")
+@RequestMapping("/api/user/login")
 @EnableConfigurationProperties({PrivilegeProperties.class})
 public class LoginController extends BaseController {
 
+    @Autowired
+    private RedisUtils redisUtils;
+
+
     @RequestMapping(value = "/login", method= RequestMethod.POST)
-    public Response<LoginUser> login(@RequestBody BdUser bdUser){
+    public LoginUser login(@RequestBody BdUser bdUser){
         String loginName = bdUser.getUsername();
         String loginPwd = bdUser.getPassword();
         try {
@@ -40,12 +51,14 @@ public class LoginController extends BaseController {
             String username = (String) subject.getPrincipal();
             LoginUser loginUser = new LoginUser();
             String sessionId = String.valueOf(subject.getSession().getId());
-            loginUser.setToken(sessionId);
-            return Response.success(loginUser);
+            String userToken = CommonUtil.UUID();
+            loginUser.setToken(userToken);
+            redisUtils.set(RedisKey.REDIS_KEY_TOKEN + userToken, sessionId);
+            return loginUser;
         } catch (DisabledAccountException e) {
-            return Response.fail(ResponseStatus.ACCOUNT_FREEZE_ERROR);
+            throw new ServiceException(ErrorMsg.ACCOUNT_FREEZE_ERROR);
         } catch (AuthenticationException e) {
-            return Response.fail(ResponseStatus.ACCOUNT_AUTH_ERROR);
+            throw new ServiceException(ErrorMsg.ACCOUNT_AUTH_ERROR);
         }
     }
 
@@ -59,7 +72,7 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/notLogin")
     public Response<JSONObject> notLogin(){
-        return Response.fail(ResponseStatus.FAIL_NOTLOGIN);
+        return Response.fail(ErrorMsg.FAIL_NOT_LOGIN);
     }
 }
 

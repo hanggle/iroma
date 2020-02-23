@@ -1,4 +1,4 @@
-package com.oskyhang.utils;
+package com.hanggle.utils;
 
 import org.junit.Test;
 

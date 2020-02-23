@@ -1,6 +1,5 @@
-package com.oskyhang.utils;
+package com.hanggle.utils;
 
-import com.hanggle.utils.HanggleUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +8,6 @@ public class ZhUtilTest {
     private static Logger logger = LoggerFactory.getLogger(ZhUtilTest.class);
     @Test
     public void getUUID() {
-       logger.debug(HanggleUtil.getUUID());
+       logger.debug(CommonUtil.UUID());
     }
 }

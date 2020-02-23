@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "roma.security")
-public class SeccrityProperties {
+public class SecurityProperties {
     private String logout;
 }

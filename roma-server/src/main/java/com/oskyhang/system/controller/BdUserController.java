@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date: 2018/3/12 <br/>
  */
 @RestController
-@RequestMapping("/api/base/user")
+@RequestMapping("/api/user/user")
 @Slf4j
 public class BdUserController extends BaseController {
     @Autowired
@@ -90,21 +90,18 @@ public class BdUserController extends BaseController {
     }
 
     @GetMapping(value = "/page")
-    public Response<Page<BdUser>> list(QueryParam queryParam) {
-        try {
-            Page<BdUser> page = bdUserService.page(queryParam);
-            return Response.success(page);
-        } catch (Exception e) {
-            log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
-            return Response.fail(ErrorCode.QUERY_FAIL.code());
-        }
+    public Page<BdUser> list(QueryParam queryParam) {
+        return bdUserService.page(queryParam);
     }
 
     @RequestMapping(value = "/create", method= RequestMethod.POST)
-    public Response<Boolean> create(@RequestBody BdUser bdUser) {
-        bdUserService.insert(bdUser);
+    public String create(@RequestBody BdUser bdUser) {
+        return String.valueOf(bdUserService.insert(bdUser));
+    }
 
-        return Response.success();
+    @RequestMapping(value = "/test", method= RequestMethod.POST)
+    public Object create() {
+        return "String.valueOf(bdUserService.insert(bdUser))";
     }
 }
 

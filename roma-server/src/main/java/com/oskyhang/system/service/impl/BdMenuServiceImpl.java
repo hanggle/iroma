@@ -2,7 +2,6 @@ package com.oskyhang.system.service.impl;
 
 import com.google.common.base.Objects;
 import com.hanggle.frames.annotation.RomaCache;
-import com.hanggle.frames.base.ErrorCode;
 import com.hanggle.frames.util.IdUtil;
 import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
@@ -13,13 +12,12 @@ import com.oskyhang.system.mapper.BdMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.hanggle.frames.util.Arguments.notNull;
+import static com.hanggle.utils.Arguments.notNull;
 
 /**
  * Description: 菜单接口 <br/>

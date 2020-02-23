@@ -40,15 +40,15 @@ public class Response<T> implements Serializable {
 
     public Response(T data) {
         this.status = STATUS_SUCCESS;
-        this.code = ResponseStatus.SUCCESS.code();
-        this.message = ResponseStatus.SUCCESS.message();
+        this.code = ErrorMsg.SUCCESS.code();
+        this.message = ErrorMsg.SUCCESS.message();
         this.data = data;
     }
 
     public Response(int status, T data) {
         this.status = status;
-        this.code = ResponseStatus.SUCCESS.code();
-        this.message = ResponseStatus.SUCCESS.message();
+        this.code = ErrorMsg.SUCCESS.code();
+        this.message = ErrorMsg.SUCCESS.message();
         this.data = data;
     }
 
@@ -93,11 +93,11 @@ public class Response<T> implements Serializable {
 
     /**
      *  请求成功，处理失败时返回
-     * @param ResponseStatus 返回的错误信息
+     * @param ErrorMsg 返回的错误信息
      * @return 返回体
      */
-    public static<T> Response<T> fail(ResponseStatus ResponseStatus){
-        return new Response<>(STATUS_FAIL, ResponseStatus.message());
+    public static<T> Response<T> fail(ErrorMsg ErrorMsg){
+        return new Response<>(STATUS_FAIL, ErrorMsg.message());
     }
 
     /**

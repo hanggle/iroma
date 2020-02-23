@@ -2,18 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oskyhang.system.mapper.BdUserMapper" >
   <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdUser" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="tel" property="tel" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="is_delete" property="isDelete" jdbcType="BIT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="cellphone" property="cellphone" />
+    <result column="username" property="username" />
+    <result column="password" property="password" />
+    <result column="email" property="email" />
+    <result column="gender" property="gender" />
+    <result column="status" property="status" />
+    <result column="is_delete" property="isDelete" />
+    <result column="create_time" property="createTime" />
+    <result column="create_by" property="createBy" />
+    <result column="modify_time" property="modifyTime" />
+    <result column="modify_by" property="modifyBy" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, username, password, email, tel, status, is_delete, create_time, update_time
+  <sql id="Base_Column" >
+    id,
+    <include refid="Base_Column_exclude_id"/>
+  </sql>
+
+  <sql id="Base_Column_exclude_id" >
+    name, cellphone, username, password, email, gender, status, create_time, create_by, modify_time, modify_by, is_delete
   </sql>
 
   <sql id="condition" >
@@ -27,26 +36,26 @@
 
   <select id="load" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column" />
     from bd_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
 
   <select id="getUserInfo" resultMap="BaseResultMap" parameterType="map" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column" />
     from bd_user
     where
     <if test="type == null" >1=0</if>
     <if test='type == "username"' >username = #{username}</if>
-    <if test='type == "tel"' >tel = #{username}</if>
+    <if test='type == "cellphone"' >cellphone = #{username}</if>
     <if test='type == "email"' >email = #{username}</if>
   </select>
 
 
   <select id="list" resultMap="BaseResultMap" parameterType="map" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column" />
     from bd_user
     <where>
       <include refid="condition" />
@@ -55,7 +64,7 @@
 
   <select id="page" resultMap="BaseResultMap" parameterType="map" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column" />
     from bd_user
     <where>
       <include refid="condition" />
@@ -75,8 +84,8 @@
   </select>
 
   <delete id="delete" parameterType="java.lang.Long" >
-    update bd_user set is_delete = 1
-    where id = #{id,jdbcType=BIGINT}
+    update bd_user set is_delete = true
+    where id = #{id}
   </delete>
 
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdUser" >
@@ -85,17 +94,17 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="username != null" >
-        username,
-      </if>
+      <if test="name != null" >name,</if>
+      <if test="cellphone != null" >cellphone,</if>
+      <if test="username != null" >username,</if>
       <if test="password != null" >
         password,
       </if>
       <if test="email != null" >
         email,
       </if>
-      <if test="tel != null" >
-        tel,
+      <if test="gender != null" >
+        gender,
       </if>
       <if test="status != null" >
         status,
@@ -106,68 +115,89 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+        #{id},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="cellphone != null" >
+        #{cellphone},
       </if>
       <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+        #{username},
       </if>
       <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+        #{password},
       </if>
       <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
+        #{email},
       </if>
-      <if test="tel != null" >
-        #{tel,jdbcType=VARCHAR},
+      <if test="gender != null" >
+        #{gender},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status},
       </if>
       <if test="isDelete != null" >
-        #{isDelete,jdbcType=BIT},
+        #{isDelete},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createBy != null" >
+        #{createBy},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy},
       </if>
     </trim>
   </insert>
   <update id="update" parameterType="com.oskyhang.system.entity.BdUser" >
     update bd_user
     <set >
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
+      <if test="id != null" >
+        id = #{id},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="cellphone != null" >
+        cellphone = #{cellphone},
       </if>
       <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+        password = #{password},
       </if>
       <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="tel != null" >
-        tel = #{tel,jdbcType=VARCHAR},
+        email = #{email},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status},
       </if>
       <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=BIT},
+        is_delete = #{isDelete},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </update>
 </mapper>

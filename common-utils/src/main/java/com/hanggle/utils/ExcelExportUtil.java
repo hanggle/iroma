@@ -99,7 +99,7 @@ public class ExcelExportUtil {
         if (workbook instanceof SXSSFWorkbook) {
             suffix = ".xlsx";
         }
-		String fileName = HanggleUtil.getUUID() + suffix;
+		String fileName = CommonUtil.UUID() + suffix;
 		filePath = folderPath + File.separator + fileName;
 
 		path = new File(filePath);

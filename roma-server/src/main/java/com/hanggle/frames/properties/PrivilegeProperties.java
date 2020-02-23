@@ -1,8 +1,13 @@
 package com.hanggle.frames.properties;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +16,9 @@ import java.util.List;
  * @author: hanggle
  * @date: 2019/7/27
  */
+@Slf4j
 @Data
+@Component
 @ConfigurationProperties(prefix = "privilege", ignoreUnknownFields = false)
 public class PrivilegeProperties {
 
@@ -30,5 +37,10 @@ public class PrivilegeProperties {
         private String path;
         private String methods;
         private List<String> privileges;
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info("PrivilegeProperties:{}", this.toString());
     }
 }

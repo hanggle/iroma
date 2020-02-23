@@ -2,9 +2,9 @@ package com.oskyhang.system.service.impl;
 
 import com.hanggle.frames.base.IdGenerator;
 import com.hanggle.frames.base.Page;
-import com.hanggle.frames.config.ShiroConfig;
+import com.hanggle.frames.shiro.ShiroConfig;
 import com.hanggle.frames.util.PageUtil;
-import com.hanggle.utils.HanggleUtil;
+import com.hanggle.utils.CommonUtil;
 import com.oskyhang.system.dto.QueryParam;
 import com.oskyhang.system.entity.BdUser;
 import com.oskyhang.system.mapper.BdUserMapper;
@@ -30,16 +30,17 @@ public class BdUserServiceImpl implements BdUserService {
     private BdUserMapper bdUserMapper;
 
     @Override
-    public void insert(BdUser bdUser) {
+    public Long insert(BdUser bdUser) {
         String userName = bdUser.getUsername();
-        String password = bdUser.getPassword();
+        String password = "123456";
         String algorithmName = ShiroConfig.algorithmName;
-        String salt = HanggleUtil.MD5(userName);
+        String salt = CommonUtil.MD5(userName);
         int hashIteration = ShiroConfig.hashIteration;
         SimpleHash simpleHash = new SimpleHash(algorithmName, password, salt, hashIteration);
         bdUser.setPassword(String.valueOf(simpleHash));
         bdUser.setId(IdGenerator.getId());
         bdUserMapper.insert(bdUser);
+        return bdUser.getId();
     }
 
     @Override

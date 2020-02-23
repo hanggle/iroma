@@ -25,16 +25,22 @@ import java.util.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/base/menu")
+@RequestMapping("/api/user/menu")
 public class BdMenuController extends BaseController {
 
     @Autowired
     private BdMenuService bdMenuService;
 
     @RequestMapping(value = "/get", method= RequestMethod.GET)
-    public Response<BdMenu> select(@RequestParam Long id) {
+    public BdMenu select(@RequestParam Long id) {
         BdMenu bdMenu = bdMenuService.load(id);
-        return Response.success(bdMenu);
+        return bdMenu;
+    }
+
+    @RequestMapping(value = "/test", method= RequestMethod.POST)
+    public Long test(@RequestParam Long id) {
+        BdMenu bdMenu = bdMenuService.load(id);
+        return 89L;
     }
 
     /**
@@ -43,17 +49,17 @@ public class BdMenuController extends BaseController {
      * @return 菜单list
      */
     @RequestMapping(value="/list")
-    public Response<List<BdMenu>> list(MenuQueryParam menuQueryParam){
+    public List<BdMenu> list(MenuQueryParam menuQueryParam){
         LoginUser loginUser = new LoginUser();
         loginUser.setPersonName("QQQQQ");
         List<BdMenu> list = bdMenuService.list(menuQueryParam, loginUser);
-        return Response.success(list);
+        return list;
     }
 
     @RequestMapping(value="/menuTree", method= RequestMethod.GET)
-    public Response<MenuTreeDto> menuTree(){
+    public MenuTreeDto menuTree(){
         MenuTreeDto menuTreeDto = bdMenuService.selectMenuTree();
-        return Response.success(menuTreeDto);
+        return menuTreeDto;
     }
 
     /**
@@ -61,9 +67,9 @@ public class BdMenuController extends BaseController {
      * @return
      */
     @RequestMapping(value="/menuSelect", method= RequestMethod.GET)
-    public Response<List<SelectDto>> menuSelect(MenuQueryParam menuQueryParam){
+    public List<SelectDto> menuSelect(MenuQueryParam menuQueryParam){
         List<SelectDto> menuTreeDto = bdMenuService.menuSelect(menuQueryParam);
-        return Response.success(menuTreeDto);
+        return menuTreeDto;
     }
 
     /**
@@ -72,15 +78,9 @@ public class BdMenuController extends BaseController {
      * @return id
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
-    public Response<Boolean> insert(@RequestBody BdMenu bdMenu){
-
-        try {
-            bdMenuService.insertAndUpdate(bdMenu);
-            return Response.success();
-        } catch (Exception e) {
-            log.error("roma[]BdMenuController[]insert find exception! case:{}", Throwables.getStackTraceAsString(e));
-            return Response.fail(ErrorCode.CREATE_FAIL.code());
-        }
+    public Boolean insert(@RequestBody BdMenu bdMenu){
+        bdMenuService.insertAndUpdate(bdMenu);
+        return true;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -92,6 +92,6 @@ public class BdMenuController extends BaseController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(@RequestParam Long id) {
         bdMenuService.delete(id);
-        return JSONObject.toJSONString(Response.success(""));
+        return JSONObject.toJSONString("");
     }
 }

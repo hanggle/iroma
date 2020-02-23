@@ -2,34 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oskyhang.system.mapper.BdRoleMapper" >
   <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdRole" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="role" property="role" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="available" property="available" jdbcType="BIT" />
-    <result column="is_delete" property="isDelete" jdbcType="BIT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <id column="id" property="id" />
+    <result column="role" property="role"/>
+    <result column="description" property="description" />
+    <result column="available" property="available" />
+    <result column="is_delete" property="isDelete" />
+    <result column="create_time" property="createTime" />
+    <result column="modify_time" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, role, description, available, is_delete, create_time, update_time
+    id, role, description, available, is_delete, create_time, modify_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from bd_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from bd_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdRole" >
     insert into bd_role (id, role, description, 
       available, is_delete, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{available,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      modify_time)
+    values (#{id}, #{role}, #{description},
+      #{available}, #{isDelete}, #{createTime},
+      #{modifyTime})
   </insert>
   <insert id="insertSelective" parameterType="com.oskyhang.system.entity.BdRole" >
     insert into bd_role
@@ -52,31 +52,31 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifyTime != null" >
+        modify_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+        #{id},
       </if>
       <if test="role != null" >
-        #{role,jdbcType=VARCHAR},
+        #{role},
       </if>
       <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
+        #{description},
       </if>
       <if test="available != null" >
-        #{available,jdbcType=BIT},
+        #{available},
       </if>
       <if test="isDelete != null" >
-        #{isDelete,jdbcType=BIT},
+        #{isDelete},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifyTime != null" >
+        #{modifyTime},
       </if>
     </trim>
   </insert>
@@ -84,34 +84,34 @@
     update bd_role
     <set >
       <if test="role != null" >
-        role = #{role,jdbcType=VARCHAR},
+        role = #{role},
       </if>
       <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
+        description = #{description},
       </if>
       <if test="available != null" >
-        available = #{available,jdbcType=BIT},
+        available = #{available},
       </if>
       <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=BIT},
+        is_delete = #{isDelete},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.BdRole" >
     update bd_role
-    set role = #{role,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      available = #{available,jdbcType=BIT},
-      is_delete = #{isDelete,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    set role = #{role},
+      description = #{description},
+      available = #{available},
+      is_delete = #{isDelete},
+      create_time = #{createTime},
+      modify_time = #{modifyTime}
+    where id = #{id}
   </update>
 </mapper>

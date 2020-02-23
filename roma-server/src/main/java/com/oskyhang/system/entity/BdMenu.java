@@ -1,6 +1,7 @@
 package com.oskyhang.system.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,9 +11,9 @@ import java.util.Date;
  * @Date: 2018/11/4 <br/>
  */
 @Data
-public class BdMenu implements Serializable {
+@ToString(callSuper = true)
+public class BdMenu extends BaseDo implements Serializable {
     private static final long serialVersionUID = -221896583108389192L;
-    private Long id;
 
     private String name;
 
@@ -29,11 +30,4 @@ public class BdMenu implements Serializable {
     private String description;
 
     private Integer level;
-
-    private Boolean isDelete;
-
-    private Date createTime;
-
-    private Date updateTime;
-
 }

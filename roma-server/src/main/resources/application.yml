@@ -8,9 +8,19 @@ mybatis:
 logging:
   config: classpath:config/logback-spring.xml
   name: roma
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            mvc:
+              method:
+                annotation:
+                  RequestMappingHandlerMapping: trace
+
 
 roma:
   security:
-    logout: /api/base/login/logout
+    logout: /api/user/login/logout
 
 

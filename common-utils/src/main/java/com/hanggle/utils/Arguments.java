@@ -1,4 +1,4 @@
-package com.hanggle.frames.util;
+package com.hanggle.utils;
 
 import java.util.Collection;
 import java.util.Objects;

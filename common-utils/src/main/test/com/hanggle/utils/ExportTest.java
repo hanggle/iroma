@@ -1,38 +1,16 @@
 package com.hanggle.utils;
 
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.*;
 
-/**
- * @description:
- * @author: hanggle
- * @date: 2019/1/4
- */
-public class Export {
+import static org.junit.Assert.*;
 
-    public static String doExport(String exportType, String sheetName, List<?> list, String rootPath,
-                           Map<String, String> fieldMap, Map<String, Object> formatMap)
+public class ExportTest {
 
-            throws IllegalArgumentException,
-            ClassNotFoundException,
-            IllegalAccessException,
-            IOException {
-
-        /**
-         * 以下是导出数据到excel
-         */
-        ExcelExportUtil excelExportUtil = new ExcelExportUtil();
-        //String filePath  = excelExportUtil.exportXLS(sheetName, list, rootPath, fieldMap, formatMap);
-        //XSSFWorkbook workbook = new XSSFWorkbook();
-        SXSSFWorkbook workbook = new SXSSFWorkbook();
-        String filePath  = excelExportUtil.exportXLSX(workbook, sheetName, list, rootPath, fieldMap, formatMap);
-        return filePath;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
+    @Test
+    public void doExport() {
 
         List<TempDto> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -60,7 +38,7 @@ public class Export {
             new Thread(() -> {
                 long begin = System.currentTimeMillis();
                 try {
-                    doExport(exportType, sheetName, list, rootPath, fieldMap, formatMap);
+                    ExportUtil.doExport(exportType, sheetName, list, rootPath, fieldMap, formatMap);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {

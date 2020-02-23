@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.frames.base.ExpireTime;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -23,18 +25,19 @@ import java.util.stream.Stream;
  * @Author: zh <br/>
  * @Date: 2018/10/27 <br/>
  */
+@Component
 public class RedisUtils {
     /**
      * 默认过期时长，单位：秒
      */
-    public static final long DEFAULT_EXPIRE = 60 * 60 * 24;
-    private static final String SET_IF_NOT_EXIST = "NX";
-    private static final String SET_WITH_EXPIRE_TIME = "PX";
-    private static DefaultRedisScript<String> redisScript;
-    private static RedisSerializer<String> argsSerializer;
-    private static RedisSerializer resultSerializer;
-    private static final Long EXEC_RESULT = 1L;
-    static {
+    public final long DEFAULT_EXPIRE = 60 * 60 * 24;
+    private final String SET_IF_NOT_EXIST = "NX";
+    private final String SET_WITH_EXPIRE_TIME = "PX";
+    private DefaultRedisScript<String> redisScript;
+    private RedisSerializer<String> argsSerializer;
+    private RedisSerializer resultSerializer;
+    private final Long EXEC_RESULT = 1L;
+    {
         redisScript = new DefaultRedisScript<String>();
         redisScript.setResultType(String.class);
         argsSerializer = new StringRedisSerializer();
@@ -43,9 +46,11 @@ public class RedisUtils {
     /**
      * 不设置过期时长
      */
-    public static final long NOT_EXPIRE = -1;
+    public final long NOT_EXPIRE = -1;
 
-    private static StringRedisTemplate stringRedisTemplate = SpringContextUtils.getBeanByType(StringRedisTemplate.class);
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
 
 
     /**
@@ -55,7 +60,7 @@ public class RedisUtils {
      * @param expireTime
      * @return
      */
-    public static boolean getLock(String key, String requestId, String expireTime) {
+    public boolean getLock(String key, String requestId, String expireTime) {
         ClassPathResource classPathResource = new ClassPathResource("script/getLock.lua");
         redisScript.setScriptSource(new ResourceScriptSource(classPathResource));
         Object result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), expireTime);
@@ -67,7 +72,7 @@ public class RedisUtils {
      * 根据key精确匹配删除
      * @param key 删除的key
      */
-    public static void del(String... key){
+    public void del(String... key){
         if(key!=null && key.length > 0){
             if(key.length == 1){
                 stringRedisTemplate.delete(key[0]);
@@ -82,7 +87,7 @@ public class RedisUtils {
      * （该操作会执行模糊查询，请尽量不要使用，以免影响性能或误删）
      * @param pattern 删除字段
      */
-    public static void batchDel(String... pattern){
+    public void batchDel(String... pattern){
         for (String kp : pattern) {
             stringRedisTemplate.delete(stringRedisTemplate.keys(kp + "*"));
         }
@@ -93,7 +98,7 @@ public class RedisUtils {
      * @param key key
      * @return data
      */
-    public static Integer getInt(String key){
+    public Integer getInt(String key){
         String value = stringRedisTemplate.boundValueOps(key).get();
         if(StringUtils.isNotBlank(value)){
             return Integer.valueOf(value);
@@ -106,7 +111,7 @@ public class RedisUtils {
      * @param key key
      * @return data
      */
-    public static String getStr(String key){
+    public String getStr(String key){
         return stringRedisTemplate.boundValueOps(key).get();
     }
 
@@ -115,7 +120,7 @@ public class RedisUtils {
      * @param key key
      * @return data
      */
-    public static String getStr(String key, boolean retain){
+    public String getStr(String key, boolean retain){
         String value = stringRedisTemplate.boundValueOps(key).get();
         if(!retain){
             stringRedisTemplate.delete(key);
@@ -129,7 +134,7 @@ public class RedisUtils {
      * @param key key
      * @return data
      */
-    public static Object getObj(String key){
+    public Object getObj(String key){
         return stringRedisTemplate.boundValueOps(key).get();
     }
 
@@ -140,7 +145,7 @@ public class RedisUtils {
      * @param retain    是否保留
      * @return data
      */
-    public static Object getObj(String key, boolean retain){
+    public Object getObj(String key, boolean retain){
         Object obj = stringRedisTemplate.boundValueOps(key).get();
         if(!retain){
             stringRedisTemplate.delete(key);
@@ -156,7 +161,7 @@ public class RedisUtils {
      * @return data
      */
     @SuppressWarnings("unchecked")
-    public static <T> T get(String key, Class<T> clazz) {
+    public <T> T get(String key, Class<T> clazz) {
         return (T)stringRedisTemplate.boundValueOps(key).get();
     }
 
@@ -166,7 +171,7 @@ public class RedisUtils {
      * @param clazz 类型
      * @return data
      */
-    public static <T> T getJson(String key, Class<T> clazz) {
+    public <T> T getJson(String key, Class<T> clazz) {
         return JsonMapper.fromJsonString(stringRedisTemplate.boundValueOps(key).get(), clazz);
     }
 
@@ -176,7 +181,7 @@ public class RedisUtils {
      * @param value value
      * @param time 失效时间(秒)
      */
-    public static void set(String key,Object value,Long time){
+    public void set(String key,Object value,Long time){
         if(value.getClass().equals(String.class)){
             stringRedisTemplate.opsForValue().set(key, value.toString());
         }else if(value.getClass().equals(Integer.class)){
@@ -205,7 +210,7 @@ public class RedisUtils {
      * @param value
      * @param time 失效时间(秒)
      */
-    public static void setJson(String key,Object value,ExpireTime time){
+    public void setJson(String key,Object value,ExpireTime time){
         stringRedisTemplate.opsForValue().set(key, JsonMapper.toJsonString(value));
         if(time.getTime() > 0){
             stringRedisTemplate.expire(key, time.getTime(), TimeUnit.SECONDS);
@@ -218,7 +223,7 @@ public class RedisUtils {
      * @param field 缓存对象field
      * @param value 缓存对象field值
      */
-    public static void setJsonField(String key, String field, String value){
+    public void setJsonField(String key, String field, String value){
         JSONObject obj = JSON.parseObject(stringRedisTemplate.boundValueOps(key).get());
         obj.put(field, value);
         stringRedisTemplate.opsForValue().set(key, obj.toJSONString());
@@ -231,7 +236,7 @@ public class RedisUtils {
      * @param by
      * @return
      */
-    public static double decr(String key, double by){
+    public double decr(String key, double by){
         return stringRedisTemplate.opsForValue().increment(key, -by);
     }
 
@@ -241,7 +246,7 @@ public class RedisUtils {
      * @param by
      * @return
      */
-    public static double incr(String key, double by){
+    public double incr(String key, double by){
         return stringRedisTemplate.opsForValue().increment(key, by);
     }
 
@@ -250,7 +255,7 @@ public class RedisUtils {
      * @param key
      * @return
      */
-    public static double getDouble(String key) {
+    public double getDouble(String key) {
         String value = stringRedisTemplate.boundValueOps(key).get();
         if(StringUtils.isNotBlank(value)){
             return Double.valueOf(value);
@@ -264,7 +269,7 @@ public class RedisUtils {
      * @param value
      * @param time 失效时间(秒)
      */
-    public static void setDouble(String key, double value, ExpireTime time) {
+    public void setDouble(String key, double value, ExpireTime time) {
         stringRedisTemplate.opsForValue().set(key, String.valueOf(value));
         if(time.getTime() > 0){
             stringRedisTemplate.expire(key, time.getTime(), TimeUnit.SECONDS);
@@ -277,7 +282,7 @@ public class RedisUtils {
      * @param value
      * @param time 失效时间(秒)
      */
-    public static void setInt(String key, int value, ExpireTime time) {
+    public void setInt(String key, int value, ExpireTime time) {
         stringRedisTemplate.opsForValue().set(key, String.valueOf(value));
         if(time.getTime() > 0){
             stringRedisTemplate.expire(key, time.getTime(), TimeUnit.SECONDS);
@@ -290,7 +295,7 @@ public class RedisUtils {
      * @param map
      * @param time 失效时间(秒)
      */
-    public static <T> void setMap(String key, Map<String, T> map, ExpireTime time){
+    public <T> void setMap(String key, Map<String, T> map, ExpireTime time){
         stringRedisTemplate.opsForHash().putAll(key, map);
     }
 
@@ -300,7 +305,7 @@ public class RedisUtils {
      * @param time 失效时间(秒)
      */
     @SuppressWarnings("unchecked")
-    public static <T> void setMap(String key, T obj, ExpireTime time){
+    public <T> void setMap(String key, T obj, ExpireTime time){
         Map<String, String> map = (Map<String, String>)JsonMapper.parseObject(obj, Map.class);
         stringRedisTemplate.opsForHash().putAll(key, map);
     }
@@ -312,7 +317,7 @@ public class RedisUtils {
      * @param key
      * @param map
      */
-    public static <T> void addMap(String key, Map<String, T> map){
+    public <T> void addMap(String key, Map<String, T> map){
         stringRedisTemplate.opsForHash().putAll(key, map);
     }
 
@@ -322,7 +327,7 @@ public class RedisUtils {
      * @param field map对应的key
      * @param value     值
      */
-    public static void addMap(String key, String field, String value){
+    public void addMap(String key, String field, String value){
         stringRedisTemplate.opsForHash().put(key, field, value);
     }
 
@@ -332,7 +337,7 @@ public class RedisUtils {
      * @param field map对应的key
      * @param obj   对象
      */
-    public static <T> void addMap(String key, String field, T obj){
+    public <T> void addMap(String key, String field, T obj){
         stringRedisTemplate.opsForHash().put(key, field, obj);
     }
 
@@ -342,7 +347,7 @@ public class RedisUtils {
      * @param clazz
      * @return
      */
-    public static <T> Map<String, T> mget(String key, Class<T> clazz){
+    public <T> Map<String, T> mget(String key, Class<T> clazz){
         BoundHashOperations<String, String, T> boundHashOperations = stringRedisTemplate.boundHashOps(key);
         return boundHashOperations.entries();
     }
@@ -353,7 +358,7 @@ public class RedisUtils {
      * @param clazz
      * @return
      */
-    public static <T> T getMap(String key, Class<T> clazz){
+    public <T> T getMap(String key, Class<T> clazz){
         BoundHashOperations<String, String, String> boundHashOperations = stringRedisTemplate.boundHashOps(key);
         Map<String, String> map = boundHashOperations.entries();
         return JsonMapper.parseObject(map, clazz);
@@ -367,7 +372,7 @@ public class RedisUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getMapField(String key, String field, Class<T> clazz){
+    public <T> T getMapField(String key, String field, Class<T> clazz){
         return (T)stringRedisTemplate.boundHashOps(key).get(field);
     }
 
@@ -379,7 +384,7 @@ public class RedisUtils {
      * @param key 缓存KEY
      * @param time 失效时间(秒)
      */
-    public static void expire(String key, ExpireTime time) {
+    public void expire(String key, ExpireTime time) {
         if(time.getTime() > 0){
             stringRedisTemplate.expire(key, time.getTime(), TimeUnit.SECONDS);
         }
@@ -390,7 +395,7 @@ public class RedisUtils {
      * @param key
      * @param value
      */
-    public static void sadd(String key, String... value) {
+    public void sadd(String key, String... value) {
         stringRedisTemplate.boundSetOps(key).add(value);
     }
 
@@ -399,7 +404,7 @@ public class RedisUtils {
      * @param oldkey
      * @param newkey
      */
-    public static void srename(String oldkey, String newkey){
+    public void srename(String oldkey, String newkey){
         stringRedisTemplate.boundSetOps(oldkey).rename(newkey);
     }
 
@@ -411,7 +416,7 @@ public class RedisUtils {
      * @param value
      * @param time
      */
-    public static void setIntForPhone(String key,Object value,int time){
+    public void setIntForPhone(String key,Object value,int time){
         stringRedisTemplate.opsForValue().set(key, JsonMapper.toJsonString(value));
         if(time > 0){
             stringRedisTemplate.expire(key, time, TimeUnit.SECONDS);
@@ -422,7 +427,7 @@ public class RedisUtils {
      * @param pattern
      * @return
      */
-    public static Set<String> keys(String pattern){
+    public Set<String> keys(String pattern){
         return stringRedisTemplate.keys(pattern);
     }
 
@@ -588,7 +593,7 @@ public class RedisUtils {
      * @param value
      * @param time 失效时间(秒)
      */
-    //public static void setJson(String key,Object value,ExpireTime time){
+    //public void setJson(String key,Object value,ExpireTime time){
     //    stringRedisTemplate.opsForValue().set(key, JsonMapper.toJsonString(value));
     //    if(time.getTime() > 0){
     //        stringRedisTemplate.expire(key, time.getTime(), TimeUnit.SECONDS);

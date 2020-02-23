@@ -15,15 +15,18 @@ import static org.junit.Assert.*;
  */
 public class RedisUtilTest extends BaseTestController {
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Test
     public void RedisUtilss() {
-        String a = RedisUtils.getStr("a");
+        String a = redisUtils.getStr("a");
         System.out.println(a);
     }
 
     @Test
     public void test2() {
-        boolean a = RedisUtils.getLock("a", "2222","100");
+        boolean a = redisUtils.getLock("a", "2222","100");
         System.out.println(a);
     }
 

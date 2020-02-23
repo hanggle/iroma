@@ -14,7 +14,7 @@ import java.util.List;
  * @date: 2018/12/23
  */
 public interface BdUserService {
-    void insert(BdUser bdUser);
+    Long insert(BdUser bdUser);
 
     List<BdUser> list(QueryParam queryParam);
 

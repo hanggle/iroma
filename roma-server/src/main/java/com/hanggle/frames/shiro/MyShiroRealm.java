@@ -1,6 +1,6 @@
 package com.hanggle.frames.shiro;
 
-import com.hanggle.utils.HanggleUtil;
+import com.hanggle.utils.CommonUtil;
 import com.oskyhang.system.entity.BdPermission;
 import com.oskyhang.system.entity.BdRole;
 import com.oskyhang.system.entity.BdUser;
@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -55,7 +56,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         String password = bdUser.getPassword();
 
         // 获取盐值，即用户名
-        ByteSource salt = ByteSource.Util.bytes(HanggleUtil.MD5(username));
+        ByteSource salt = ByteSource.Util.bytes(CommonUtil.MD5(username));
         if (password != null) {
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                     username,   //认证通过后，存放在session,一般存放user对象

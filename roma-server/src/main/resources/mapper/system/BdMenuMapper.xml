@@ -3,21 +3,21 @@
 <mapper namespace="com.oskyhang.system.mapper.BdMenuMapper" >
   <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdMenu" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="name" property="name" />
+    <result column="path" property="path" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
-    <result column="order_code" property="orderCode" jdbcType="INTEGER" />
-    <result column="icon" property="icon" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="INTEGER" />
-    <result column="is_delete" property="isDelete" jdbcType="BIT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_code" property="orderCode" />
+    <result column="icon" property="icon" />
+    <result column="title" property="title" />
+    <result column="description" property="description" />
+    <result column="level" property="level" />
+    <result column="is_delete" property="isDelete" />
+    <result column="create_time" property="createTime" />
+    <result column="modify_time" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, path, parent_id, order_code, icon, title, description, level,
-    is_delete, create_time, update_time
+    is_delete, create_time, modify_time
   </sql>
 
   <sql id="table_name">bd_menu</sql>
@@ -26,7 +26,7 @@
     select
     <include refid="Base_Column_List" />
     from bd_menu
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
 
   <select id="list" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -61,8 +61,8 @@
 
   <delete id="delete" parameterType="java.lang.Long" >
     update bd_menu
-    set is_delete = 1, update_time = now()
-    where id = #{id,jdbcType=BIGINT}
+    set is_delete = 1, modify_time = now()
+    where id = #{id}
   </delete>
 
   <insert id="insert" parameterType="com.oskyhang.system.entity.BdMenu" >
@@ -102,8 +102,8 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifyTime != null" >
+        modify_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -140,8 +140,8 @@
       <if test="createTime != null" >
         #{createTime},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime},
+      <if test="modifyTime != null" >
+        #{modifyTime},
       </if>
     </trim>
   </insert>
@@ -180,8 +180,8 @@
       <if test="createTime != null" >
         create_time = #{createTime},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime},
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime},
       </if>
     </set>
     where id = #{id}

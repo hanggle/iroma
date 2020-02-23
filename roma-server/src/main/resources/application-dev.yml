@@ -61,11 +61,10 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 12345
-  resources:
-    chain:
-      enabled: true
-      gzipped: true
-    static-locations: classpath:/META-INF/resources/
+#  resources:
+#    chain:
+#      enabled: true
+#    static-locations: classpath:/META-INF/resources/
 
   redis:
     host: 127.0.0.1

@@ -14,47 +14,42 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = -1277927133193484182L;
 
-    private static final int STATUS_SUCCESS = 200;
-    private static final int STATUS_FAIL = 400;
-    private static final int STATUS_ERROR = 500;
+    private static final int CODE_SUCCESS = 200;
+    private static final int CODE_FAIL = 400;
+    private static final int CODE_ERROR = 500;
 
     private Long timestamp=System.currentTimeMillis();
-    private int status;
-    private String code;
+    private int code;
     private String message;
     private T data;
 
     public Response(){}
 
-    public Response(int status, String message) {
-        this.status = status;
+    public Response(int code, String message) {
+        this.code = code;
         this.message = message;
     }
 
-    public Response(int status, String code, T data) {
-        this.status = status;
+    public Response(int code, String msg, T data) {
         this.code = code;
-        this.message = code;
+        this.message = msg;
         this.data = data;
     }
 
     public Response(T data) {
-        this.status = STATUS_SUCCESS;
-        this.code = ErrorMsg.SUCCESS.code();
+        this.code = CODE_SUCCESS;
         this.message = ErrorMsg.SUCCESS.message();
         this.data = data;
     }
 
-    public Response(int status, T data) {
-        this.status = status;
-        this.code = ErrorMsg.SUCCESS.code();
+    public Response(int code, T data) {
+        this.code = code;
         this.message = ErrorMsg.SUCCESS.message();
         this.data = data;
     }
 
     public Response(T data, String code) {
-        this.status = STATUS_SUCCESS;
-        this.code = code;
+        this.code = CODE_SUCCESS;
         this.data = data;
     }
 
@@ -63,7 +58,7 @@ public class Response<T> implements Serializable {
      * @return 返回体
      */
     public static Response<Boolean> success(){
-        return new Response<>(STATUS_SUCCESS, true);
+        return new Response<>(CODE_SUCCESS, true);
     }
     /**
      *  请求成功时返回
@@ -88,7 +83,7 @@ public class Response<T> implements Serializable {
      * @return 返回体
      */
     public static<T> Response<T> fail(String message){
-        return new Response<>(STATUS_FAIL, message);
+        return new Response<>(CODE_FAIL, message);
     }
 
     /**
@@ -97,7 +92,7 @@ public class Response<T> implements Serializable {
      * @return 返回体
      */
     public static<T> Response<T> fail(ErrorMsg ErrorMsg){
-        return new Response<>(STATUS_FAIL, ErrorMsg.message());
+        return new Response<>(CODE_FAIL, ErrorMsg.message());
     }
 
     /**
@@ -122,6 +117,6 @@ public class Response<T> implements Serializable {
      * @return 返回体
      */
     public static Response error(String code){
-        return new Response(STATUS_FAIL, code);
+        return new Response(CODE_FAIL, code);
     }
 }

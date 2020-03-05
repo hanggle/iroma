@@ -29,9 +29,8 @@ public class BdUserController extends BaseController {
     @Autowired
     private BdUserService bdUserService;
 
-    @RequestMapping(value = "/info" , method = RequestMethod.GET)
-    @ResponseBody
-    public Response test(HttpServletRequest request, HttpServletResponse response){
+    @GetMapping(value = "/info")
+    public Response test(){
 
         JSONObject obj = new JSONObject();
         String [] roles = {"/documentation", "index",  "/permission", "admin"};
@@ -99,9 +98,9 @@ public class BdUserController extends BaseController {
         return String.valueOf(bdUserService.insert(bdUser));
     }
 
-    @RequestMapping(value = "/test", method= RequestMethod.POST)
-    public Object create() {
-        return "String.valueOf(bdUserService.insert(bdUser))";
+    @PostMapping(value = "/delete")
+    public String delete(@RequestBody Long id) {
+        return String.valueOf(bdUserService.delete(id));
     }
 }
 

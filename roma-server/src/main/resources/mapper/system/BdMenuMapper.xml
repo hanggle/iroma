@@ -61,7 +61,7 @@
 
   <delete id="delete" parameterType="java.lang.Long" >
     update bd_menu
-    set is_delete = 1, modify_time = now()
+    set is_delete = true, modify_time = now()
     where id = #{id}
   </delete>
 

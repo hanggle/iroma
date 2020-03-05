@@ -21,7 +21,7 @@ public class GlobalResponseAdvisor implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if (o instanceof String) {
-            return Response.success(JSON.toJSONString(o));
+            return JSON.toJSONString(Response.success(o));
         }
 
         if (o instanceof Response) {

@@ -37,12 +37,6 @@ public class BdMenuController extends BaseController {
         return bdMenu;
     }
 
-    @RequestMapping(value = "/test", method= RequestMethod.POST)
-    public Long test(@RequestParam Long id) {
-        BdMenu bdMenu = bdMenuService.load(id);
-        return 89L;
-    }
-
     /**
      * 查询菜单列表
      * @param menuQueryParam 参数
@@ -68,8 +62,7 @@ public class BdMenuController extends BaseController {
      */
     @RequestMapping(value="/menuSelect", method= RequestMethod.GET)
     public List<SelectDto> menuSelect(MenuQueryParam menuQueryParam){
-        List<SelectDto> menuTreeDto = bdMenuService.menuSelect(menuQueryParam);
-        return menuTreeDto;
+        return bdMenuService.menuSelect(menuQueryParam);
     }
 
     /**
@@ -77,21 +70,19 @@ public class BdMenuController extends BaseController {
      * @param bdMenu 菜单
      * @return id
      */
-    @RequestMapping(value = "/insert", method= RequestMethod.POST)
+    @PostMapping(value = "/insert")
     public Boolean insert(@RequestBody BdMenu bdMenu){
         bdMenuService.insertAndUpdate(bdMenu);
         return true;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(BdMenu bdMenu) {
-        bdMenuService.update(bdMenu);
-        return "";
+    @PostMapping(value = "/update")
+    public Boolean update(BdMenu bdMenu) {
+        return bdMenuService.update(bdMenu) > 0;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam Long id) {
-        bdMenuService.delete(id);
-        return JSONObject.toJSONString("");
+    @PostMapping(value = "/delete")
+    public Boolean delete(@RequestBody Long id) {
+        return bdMenuService.delete(id) > 0;
     }
 }

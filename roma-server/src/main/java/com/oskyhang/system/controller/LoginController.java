@@ -2,6 +2,7 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hanggle.frames.base.BaseController;
+import com.hanggle.frames.base.DataThreadLocal;
 import com.hanggle.frames.base.ErrorMsg;
 import com.hanggle.frames.base.Response;
 import com.hanggle.frames.constant.RedisKey;
@@ -54,6 +55,7 @@ public class LoginController extends BaseController {
             String userToken = CommonUtil.UUID();
             loginUser.setToken(userToken);
             redisUtils.set(RedisKey.REDIS_KEY_TOKEN + userToken, sessionId);
+            DataThreadLocal.putCurrentLoginUser(loginUser);
             return loginUser;
         } catch (DisabledAccountException e) {
             throw new ServiceException(ErrorMsg.ACCOUNT_FREEZE_ERROR);
@@ -67,6 +69,7 @@ public class LoginController extends BaseController {
         JSONObject obj = new JSONObject();
         obj.put("code", "1");
         obj.put("desc", "sss");
+        DataThreadLocal.removeLoginUser();
         return Response.success(obj);
     }
 

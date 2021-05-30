@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.oskyhang.system.mapper.BdPermissionMapper" >
-  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdPermission" >
+<mapper namespace="com.oskyhang.system.mapper.SysPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.SysPermission" >
     <id column="id" property="id" />
     <result column="name" property="name"/>
     <result column="resource_type" property="resourceType" jdbcType="CHAR" />
@@ -20,13 +20,13 @@
     delete from bd_permission
     where id = #{id}
   </delete>
-  <insert id="insert" parameterType="com.oskyhang.system.entity.BdPermission" >
+  <insert id="insert" parameterType="com.oskyhang.system.entity.SysPermission" >
     insert into bd_permission (id, name, resource_type, 
       url)
     values (#{id}, #{name}, #{resourceType,jdbcType=CHAR},
       #{url})
   </insert>
-  <insert id="insertSelective" parameterType="com.oskyhang.system.entity.BdPermission" >
+  <insert id="insertSelective" parameterType="com.oskyhang.system.entity.SysPermission" >
     insert into bd_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.BdPermission" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.SysPermission" >
     update bd_permission
     <set >
       <if test="name != null" >
@@ -72,7 +72,7 @@
     </set>
     where id = #{id}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.BdPermission" >
+  <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.SysPermission" >
     update bd_permission
     set name = #{name},
       resource_type = #{resourceType,jdbcType=CHAR},

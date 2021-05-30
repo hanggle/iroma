@@ -1,9 +1,6 @@
 package com.oskyhang.system.dto;
 
-import com.oskyhang.system.entity.BdMenu;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @description:

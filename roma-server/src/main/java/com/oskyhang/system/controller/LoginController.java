@@ -11,7 +11,7 @@ import com.hanggle.frames.properties.PrivilegeProperties;
 import com.hanggle.frames.util.RedisUtils;
 import com.hanggle.utils.CommonUtil;
 import com.oskyhang.system.dto.LoginUser;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -42,9 +42,9 @@ public class LoginController extends BaseController {
 
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
-    public LoginUser login(@RequestBody BdUser bdUser){
-        String loginName = bdUser.getUsername();
-        String loginPwd = bdUser.getPassword();
+    public LoginUser login(@RequestBody SysUser sysUser){
+        String loginName = sysUser.getUsername();
+        String loginPwd = sysUser.getPassword();
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(loginName, loginPwd);
             Subject subject = SecurityUtils.getSubject();

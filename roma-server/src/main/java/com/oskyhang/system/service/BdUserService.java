@@ -1,10 +1,8 @@
 package com.oskyhang.system.service;
 
 import com.hanggle.frames.base.Page;
-import com.oskyhang.system.dto.MenuQueryParam;
-import com.oskyhang.system.dto.MenuTreeDto;
 import com.oskyhang.system.dto.QueryParam;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysUser;
 
 import java.util.List;
 
@@ -14,25 +12,25 @@ import java.util.List;
  * @date: 2018/12/23
  */
 public interface BdUserService {
-    Long insert(BdUser bdUser);
+    Long insert(SysUser sysUser);
 
-    List<BdUser> list(QueryParam queryParam);
+    List<SysUser> list(QueryParam queryParam);
 
-    Page<BdUser> page(QueryParam queryParam);
+    Page<SysUser> page(QueryParam queryParam);
 
     /**
      * 查询菜单
      * @param id id
      * @return menu
      */
-    BdUser load(Long id);
+    SysUser load(Long id);
 
     /**
      *  更新菜单
-     * @param bdUser menu
+     * @param sysUser menu
      * @return menu
      */
-    int update(BdUser bdUser);
+    int update(SysUser sysUser);
 
     /**
      *  删除菜单
@@ -47,5 +45,5 @@ public interface BdUserService {
      * @param type
      * @return
      */
-    BdUser getUserInfo(String loginName, String type);
+    SysUser getUserInfo(String loginName, String type);
 }

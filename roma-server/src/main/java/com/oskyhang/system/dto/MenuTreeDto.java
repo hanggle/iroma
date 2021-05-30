@@ -1,6 +1,6 @@
 package com.oskyhang.system.dto;
 
-import com.oskyhang.system.entity.BdMenu;
+import com.oskyhang.system.entity.SysMenu;
 import lombok.Data;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public class MenuTreeDto {
 
     public MenuTreeDto() {
     }
-    public MenuTreeDto(BdMenu bdMenu) {
-        this.id = bdMenu.getId();
-        this.label = bdMenu.getName();
-        this.level = bdMenu.getLevel();
+    public MenuTreeDto(SysMenu sysMenu) {
+        this.id = sysMenu.getId();
+        this.label = sysMenu.getName();
+        this.level = sysMenu.getLevel();
     }
 }

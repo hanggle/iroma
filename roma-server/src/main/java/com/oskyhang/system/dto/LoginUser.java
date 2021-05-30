@@ -1,6 +1,6 @@
 package com.oskyhang.system.dto;
 
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysUser;
 import lombok.Data;
 
 /**
@@ -19,7 +19,7 @@ public class LoginUser {
     public LoginUser() {
     }
 
-    public LoginUser(BdUser bdUser) {
-        this.userId = bdUser.getId();
+    public LoginUser(SysUser sysUser) {
+        this.userId = sysUser.getId();
     }
 }

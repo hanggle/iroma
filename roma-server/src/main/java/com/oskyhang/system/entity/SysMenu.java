@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Data
 @ToString(callSuper = true)
-public class BdMenu extends BaseDo implements Serializable {
+public class SysMenu extends BaseDo implements Serializable {
     private static final long serialVersionUID = -221896583108389192L;
 
     private String name;

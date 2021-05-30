@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.oskyhang.system.mapper.BdUserMapper" >
-  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdUser" >
+<mapper namespace="com.oskyhang.system.mapper.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.SysUser" >
     <id column="id" property="id" />
     <result column="name" property="name" />
     <result column="cellphone" property="cellphone" />
@@ -87,7 +87,7 @@
     where id = #{id}
   </delete>
 
-  <insert id="insert" parameterType="com.oskyhang.system.entity.BdUser" >
+  <insert id="insert" parameterType="com.oskyhang.system.entity.SysUser" >
     insert into bd_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <update id="update" parameterType="com.oskyhang.system.entity.BdUser" >
+  <update id="update" parameterType="com.oskyhang.system.entity.SysUser" >
     update bd_user
     <set >
       <if test="id != null" >

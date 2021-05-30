@@ -13,10 +13,10 @@ spring:
     # 使用阿里的Druid连接池
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    # 填写你数据库的url、登录名、密码和数据库名
+    # 填写你数据库的url、登录名、密码和数据库名create_by
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/iroma?useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/roma?useSSL=false&characterEncoding=utf8
     druid:
       # 连接池的配置信息
       # 初始化大小，最小，最大

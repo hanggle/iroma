@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author zh
  */
 @Data
-public class BdMenuDto implements Serializable {
+public class SysMenuDto implements Serializable {
     private static final long serialVersionUID = 4831737375641480965L;
     private Long id;
 

@@ -7,8 +7,8 @@ import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
-import com.oskyhang.system.entity.BdMenu;
-import com.oskyhang.system.mapper.BdMenuMapper;
+import com.oskyhang.system.entity.SysMenu;
+import com.oskyhang.system.mapper.SysMenuMapper;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import static com.hanggle.utils.Arguments.notNull;
 public class BdMenuServiceImpl implements BdMenuService {
 
     @Autowired
-    private BdMenuMapper bdMenuDao;
+    private SysMenuMapper bdMenuDao;
     private final String cache_load = "test_";
 
     @Override
@@ -39,20 +39,20 @@ public class BdMenuServiceImpl implements BdMenuService {
     }
 
     @Override
-    public void insertAndUpdate(BdMenu bdMenu) {
-        BdMenu parentMenu = bdMenuDao.load(bdMenu.getParentId());
-        bdMenu.setLevel(parentMenu.getLevel()+1);
-        if (notNull(bdMenu.getId())) {
-            update(bdMenu);
+    public void insertAndUpdate(SysMenu sysMenu) {
+        SysMenu parentMenu = bdMenuDao.load(sysMenu.getParentId());
+        sysMenu.setLevel(parentMenu.getLevel()+1);
+        if (notNull(sysMenu.getId())) {
+            update(sysMenu);
         } else {
-            bdMenu.setId(IdUtil.getNextId());
-            bdMenuDao.insert(bdMenu);
+            sysMenu.setId(IdUtil.getNextId());
+            bdMenuDao.insert(sysMenu);
         }
     }
 
     @Override
-    public int update(BdMenu bdMenu) {
-        return bdMenuDao.update(bdMenu);
+    public int update(SysMenu sysMenu) {
+        return bdMenuDao.update(sysMenu);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class BdMenuServiceImpl implements BdMenuService {
 
     @RomaCache(key = {"#menuQueryParam", "#loginUser"}, prefix = cache_load)
     @Override
-    public List<BdMenu> list(MenuQueryParam menuQueryParam, LoginUser loginUser) {
+    public List<SysMenu> list(MenuQueryParam menuQueryParam, LoginUser loginUser) {
         Map<String, Object> params = new HashMap<>(16);
         params.put("orderBy", "level, order_code");
         return bdMenuDao.list(params);
@@ -71,27 +71,27 @@ public class BdMenuServiceImpl implements BdMenuService {
     @Override
     public MenuTreeDto selectMenuTree() {
         Map<String, Object> params = new HashMap<>(16);
-        List<BdMenu> bdMenus = bdMenuDao.list(params);
+        List<SysMenu> sysMenus = bdMenuDao.list(params);
         // 根菜单
         MenuTreeDto menuTreeDto = new MenuTreeDto();
-        menuTreeDto.setId(bdMenus.get(0).getId());
-        menuTreeDto.setLabel(bdMenus.get(0).getName());
-        menuTreeDto.setLevel(bdMenus.get(0).getLevel());
-        return getChildMenu(menuTreeDto, bdMenus);
+        menuTreeDto.setId(sysMenus.get(0).getId());
+        menuTreeDto.setLabel(sysMenus.get(0).getName());
+        menuTreeDto.setLevel(sysMenus.get(0).getLevel());
+        return getChildMenu(menuTreeDto, sysMenus);
     }
-    private MenuTreeDto getChildMenu(MenuTreeDto menuTreeDto, List<BdMenu> bdMenus) {
-        List<BdMenu> menuList = bdMenus.stream().filter(obj -> Objects.equal(menuTreeDto.getId(), obj.getParentId())).collect(Collectors.toList());
+    private MenuTreeDto getChildMenu(MenuTreeDto menuTreeDto, List<SysMenu> sysMenus) {
+        List<SysMenu> menuList = sysMenus.stream().filter(obj -> Objects.equal(menuTreeDto.getId(), obj.getParentId())).collect(Collectors.toList());
         List<MenuTreeDto> treeDtos = menuList.stream().map(MenuTreeDto::new).collect(Collectors.toList());
         menuTreeDto.setChildren(treeDtos);
         for (MenuTreeDto menuTreeDto1 : treeDtos) {
-            getChildMenu(menuTreeDto1, bdMenus);
+            getChildMenu(menuTreeDto1, sysMenus);
         }
         return menuTreeDto;
     }
 
     @RomaCache(key = "#id", prefix= cache_load)
     @Override
-    public BdMenu load(Long id) {
+    public SysMenu load(Long id) {
         log.info("111111");
 
         return bdMenuDao.load(id);

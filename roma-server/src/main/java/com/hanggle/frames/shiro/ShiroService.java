@@ -1,9 +1,9 @@
 package com.hanggle.frames.shiro;
 
 import com.hanggle.frames.util.AccountValidatorUtil;
-import com.oskyhang.system.entity.BdPermission;
-import com.oskyhang.system.entity.BdRole;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysPermission;
+import com.oskyhang.system.entity.SysRole;
+import com.oskyhang.system.entity.SysUser;
 import com.oskyhang.system.service.BdUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ShiroService {
     @Autowired
     private BdUserService bdUserService;
 
-    public BdUser getUserInfoByUsername(String username){
+    public SysUser getUserInfoByUsername(String username){
         log.debug("ShiroService[]getUserInfoByUsername, username:{}" + username);
         // 手机号
         if (AccountValidatorUtil.isMobile(username)) {
@@ -39,22 +39,22 @@ public class ShiroService {
         return bdUserService.getUserInfo(username, "username");
     }
 
-    public List<BdRole> selectRoleByUser(String username){
+    public List<SysRole> selectRoleByUser(String username){
         log.debug("ShiroService[]selectRoleByUser, username:{}", username);
-        BdPermission bdPermission = new BdPermission();
-        bdPermission.setUrl("/api/user/user/info");
+        SysPermission sysPermission = new SysPermission();
+        sysPermission.setUrl("/api/user/user/info");
 
-        BdRole bdRole = new BdRole();
+        SysRole bdRole = new SysRole();
         bdRole.setRole("admin");
 
         return Collections.singletonList(bdRole);
     }
 
-    public List<BdPermission> selectPermission(List<Long> roleIds){
+    public List<SysPermission> selectPermission(List<Long> roleIds){
         log.debug("ShiroService[]selectPermission, roleIds:{}", roleIds);
-        BdPermission bdPermission = new BdPermission();
-        bdPermission.setUrl("1qweqw");
+        SysPermission sysPermission = new SysPermission();
+        sysPermission.setUrl("1qweqw");
 
-        return Collections.singletonList(bdPermission);
+        return Collections.singletonList(sysPermission);
     }
 }

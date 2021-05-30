@@ -2,20 +2,15 @@ package com.oskyhang.system.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Throwables;
 import com.hanggle.frames.base.BaseController;
-import com.hanggle.frames.base.ErrorCode;
 import com.hanggle.frames.base.Page;
 import com.hanggle.frames.base.Response;
 import com.oskyhang.system.dto.QueryParam;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysUser;
 import com.oskyhang.system.service.BdUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @description: 用户登录模块<br/>
@@ -25,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api/user/user")
 @Slf4j
-public class BdUserController extends BaseController {
+public class SysUserController extends BaseController {
     @Autowired
     private BdUserService bdUserService;
 
@@ -89,13 +84,13 @@ public class BdUserController extends BaseController {
     }
 
     @GetMapping(value = "/page")
-    public Page<BdUser> list(QueryParam queryParam) {
+    public Page<SysUser> list(QueryParam queryParam) {
         return bdUserService.page(queryParam);
     }
 
     @RequestMapping(value = "/create", method= RequestMethod.POST)
-    public String create(@RequestBody BdUser bdUser) {
-        return String.valueOf(bdUserService.insert(bdUser));
+    public String create(@RequestBody SysUser sysUser) {
+        return String.valueOf(bdUserService.insert(sysUser));
     }
 
     @PostMapping(value = "/delete")

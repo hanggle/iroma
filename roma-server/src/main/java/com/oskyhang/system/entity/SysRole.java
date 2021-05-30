@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @ToString(callSuper = true)
-public class BdRole extends BaseDo{
+public class SysRole extends BaseDo{
 
     private String role;
 

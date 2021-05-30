@@ -3,7 +3,7 @@ package com.oskyhang.system.entity;
 import lombok.Data;
 
 @Data
-public class BdPermission {
+public class SysPermission {
     private Long id;
 
     private String name;

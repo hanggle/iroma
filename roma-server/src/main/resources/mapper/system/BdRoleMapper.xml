@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.oskyhang.system.mapper.BdRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.BdRole" >
+<mapper namespace="com.oskyhang.system.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.oskyhang.system.entity.SysRole" >
     <id column="id" property="id" />
     <result column="role" property="role"/>
     <result column="description" property="description" />
@@ -23,7 +23,7 @@
     delete from bd_role
     where id = #{id}
   </delete>
-  <insert id="insert" parameterType="com.oskyhang.system.entity.BdRole" >
+  <insert id="insert" parameterType="com.oskyhang.system.entity.SysRole" >
     insert into bd_role (id, role, description, 
       available, is_delete, create_time, 
       modify_time)
@@ -31,7 +31,7 @@
       #{available}, #{isDelete}, #{createTime},
       #{modifyTime})
   </insert>
-  <insert id="insertSelective" parameterType="com.oskyhang.system.entity.BdRole" >
+  <insert id="insertSelective" parameterType="com.oskyhang.system.entity.SysRole" >
     insert into bd_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.BdRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.oskyhang.system.entity.SysRole" >
     update bd_role
     <set >
       <if test="role != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.BdRole" >
+  <update id="updateByPrimaryKey" parameterType="com.oskyhang.system.entity.SysRole" >
     update bd_role
     set role = #{role},
       description = #{description},

@@ -5,7 +5,7 @@ import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
-import com.oskyhang.system.entity.BdMenu;
+import com.oskyhang.system.entity.SysMenu;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public interface BdMenuService {
 
-    void insertAndUpdate(BdMenu bdMenu);
+    void insertAndUpdate(SysMenu sysMenu);
 
-    List<BdMenu> list(MenuQueryParam menuQueryParam, LoginUser loginUser);
+    List<SysMenu> list(MenuQueryParam menuQueryParam, LoginUser loginUser);
     /**
      * 菜单树
      * @return list
@@ -31,14 +31,14 @@ public interface BdMenuService {
      * @param id id
      * @return menu
      */
-    BdMenu load(Long id);
+    SysMenu load(Long id);
 
     /**
      *  更新菜单
-     * @param bdMenu menu
+     * @param sysMenu menu
      * @return menu
      */
-    int update(BdMenu bdMenu);
+    int update(SysMenu sysMenu);
 
     /**
      *  删除菜单

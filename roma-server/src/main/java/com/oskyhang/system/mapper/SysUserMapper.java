@@ -1,7 +1,7 @@
 package com.oskyhang.system.mapper;
 
 import com.hanggle.frames.base.BaseMapper;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author hanggle
  */
 @Repository
-public interface BdUserMapper extends BaseMapper<BdUser> {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    BdUser getUserInfo(Map<String, Object> params);
+    SysUser getUserInfo(Map<String, Object> params);
 }

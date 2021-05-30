@@ -1,14 +1,13 @@
 package com.hanggle.frames.shiro;
 
 import com.hanggle.utils.CommonUtil;
-import com.oskyhang.system.entity.BdPermission;
-import com.oskyhang.system.entity.BdRole;
-import com.oskyhang.system.entity.BdUser;
+import com.oskyhang.system.entity.SysPermission;
+import com.oskyhang.system.entity.SysRole;
+import com.oskyhang.system.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -35,13 +34,13 @@ public class MyShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
         String username = (String) principals.getPrimaryPrincipal();
-        List<BdRole> roles = shiroService.selectRoleByUser(username);
-        Set<String> rolesSet = roles.stream().map(BdRole::getRole).collect(Collectors.toSet());
+        List<SysRole> roles = shiroService.selectRoleByUser(username);
+        Set<String> rolesSet = roles.stream().map(SysRole::getRole).collect(Collectors.toSet());
         authorizationInfo.setRoles(rolesSet);
 
-        List<Long> roleIds = roles.stream().map(BdRole::getId).collect(Collectors.toList());
-        List<BdPermission> bdPermissions = shiroService.selectPermission(roleIds);
-        Set<String> permissions = bdPermissions.stream().map(BdPermission::getUrl).collect(Collectors.toSet());
+        List<Long> roleIds = roles.stream().map(SysRole::getId).collect(Collectors.toList());
+        List<SysPermission> sysPermissions = shiroService.selectPermission(roleIds);
+        Set<String> permissions = sysPermissions.stream().map(SysPermission::getUrl).collect(Collectors.toSet());
         authorizationInfo.setStringPermissions(permissions);
 
         return authorizationInfo;
@@ -52,8 +51,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         log.debug("账号认证-->MyShiroRealm.doGetAuthenticationInfo()");
         //获取用户账号
         String username = String.valueOf(token.getPrincipal());
-        BdUser bdUser = shiroService.getUserInfoByUsername(username);
-        String password = bdUser.getPassword();
+        SysUser sysUser = shiroService.getUserInfoByUsername(username);
+        String password = sysUser.getPassword();
 
         // 获取盐值，即用户名
         ByteSource salt = ByteSource.Util.bytes(CommonUtil.MD5(username));

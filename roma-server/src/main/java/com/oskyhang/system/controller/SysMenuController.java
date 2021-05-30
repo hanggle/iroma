@@ -1,15 +1,11 @@
 package com.oskyhang.system.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Throwables;
 import com.hanggle.frames.base.BaseController;
-import com.hanggle.frames.base.Response;
-import com.hanggle.frames.base.ErrorCode;
 import com.oskyhang.system.dto.LoginUser;
 import com.oskyhang.system.dto.MenuQueryParam;
 import com.oskyhang.system.dto.SelectDto;
 import com.oskyhang.system.dto.MenuTreeDto;
-import com.oskyhang.system.entity.BdMenu;
+import com.oskyhang.system.entity.SysMenu;
 import com.oskyhang.system.service.BdMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +22,15 @@ import java.util.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/user/menu")
-public class BdMenuController extends BaseController {
+public class SysMenuController extends BaseController {
 
     @Autowired
     private BdMenuService bdMenuService;
 
     @RequestMapping(value = "/get", method= RequestMethod.GET)
-    public BdMenu select(@RequestParam Long id) {
-        BdMenu bdMenu = bdMenuService.load(id);
-        return bdMenu;
+    public SysMenu select(@RequestParam Long id) {
+        SysMenu sysMenu = bdMenuService.load(id);
+        return sysMenu;
     }
 
     /**
@@ -43,10 +39,10 @@ public class BdMenuController extends BaseController {
      * @return 菜单list
      */
     @RequestMapping(value="/list")
-    public List<BdMenu> list(MenuQueryParam menuQueryParam){
+    public List<SysMenu> list(MenuQueryParam menuQueryParam){
         LoginUser loginUser = new LoginUser();
         loginUser.setPersonName("QQQQQ");
-        List<BdMenu> list = bdMenuService.list(menuQueryParam, loginUser);
+        List<SysMenu> list = bdMenuService.list(menuQueryParam, loginUser);
         return list;
     }
 
@@ -67,18 +63,18 @@ public class BdMenuController extends BaseController {
 
     /**
      *
-     * @param bdMenu 菜单
+     * @param sysMenu 菜单
      * @return id
      */
     @PostMapping(value = "/insert")
-    public Boolean insert(@RequestBody BdMenu bdMenu){
-        bdMenuService.insertAndUpdate(bdMenu);
+    public Boolean insert(@RequestBody SysMenu sysMenu){
+        bdMenuService.insertAndUpdate(sysMenu);
         return true;
     }
 
     @PostMapping(value = "/update")
-    public Boolean update(BdMenu bdMenu) {
-        return bdMenuService.update(bdMenu) > 0;
+    public Boolean update(SysMenu sysMenu) {
+        return bdMenuService.update(sysMenu) > 0;
     }
 
     @PostMapping(value = "/delete")

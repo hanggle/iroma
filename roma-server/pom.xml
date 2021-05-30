@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>roma-server</artifactId>
     <packaging>jar</packaging>
-    <name>roma-server Maven Webapp</name>
+    <name>roma-server</name>
 
     <dependencies>
 

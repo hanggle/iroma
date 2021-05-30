@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @ToString(callSuper = true)
-public class BdUser extends BaseDo implements Serializable {
+public class SysUser extends BaseDo implements Serializable {
 
     /**
      * 姓名

@@ -23,7 +23,7 @@
     <!--集中定义依赖版本号-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <springboottest.version>2.0.5.RELEASE</springboottest.version>
         <java.version>1.8</java.version>
         <springboot.version>2.0.5.RELEASE</springboot.version>

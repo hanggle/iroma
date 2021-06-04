@@ -34,7 +34,7 @@
         <commons-lang3.version>3.4</commons-lang3.version>
         <mysql-connector.version>5.1.6</mysql-connector.version>
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
-        <httpclient.version>4.5.2</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <lombok.version>1.16.22</lombok.version>
         <poi.version>3.17</poi.version>
         <shiro.version>1.4.0</shiro.version>
